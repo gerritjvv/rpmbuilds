@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.reducedata</groupId>
-	<artifactId>hadoop</artifactId>
-	<version>1.0.3</version>
+	<artifactId>hbase</artifactId>
+	<version>0.94.0</version>
 	<packaging>jar</packaging>
 
 	<name>hadoop</name>
@@ -32,7 +32,7 @@
 					<group>utilities</group>
 					<packager>newtecnia</packager>
 					<provides>
-						<provide>hadoop</provide>
+						<provide>hbase</provide>
 					</provides>
 					<requires>
 						<require>hadoopgpl</require>
@@ -46,7 +46,7 @@
 					<defaultUsername>hadoop</defaultUsername>
 					<mappings>
 						<mapping>
-							<directory>/opt/hadoop/conf</directory>
+							<directory>/opt/hbase/conf</directory>
 							<filemode>444</filemode>
 							<configuration>true</configuration>
 							<sources>
@@ -55,6 +55,17 @@
 								</source>
 							</sources>
 						</mapping>
+                                                <mapping>
+                                                        <directory>/opt/hbase/logs</directory>
+                                                        <filemode>775</filemode>
+                                                        <configuration>true</configuration>
+                                                        <sources>
+                                                                <source>
+                                                                        <location>src/main/resources/logs</location>
+                                                                </source>
+                                                        </sources>
+                                                </mapping>
+
 						<mapping>
                             <directory>/etc/init.d/</directory>
                             <directoryIncluded>false</directoryIncluded>
@@ -63,7 +74,7 @@
                             <filemode>775</filemode>
                             <sources>
                                 <source>
-                                    <location>src/main/resources/init.d/hadoop-secondarynamenode</location>
+                                    <location>src/main/resources/init.d/hbase-master</location>
                                 </source>
                             </sources>
                         </mapping>
@@ -75,7 +86,7 @@
                             <filemode>775</filemode>
                             <sources>
                                 <source>
-                                    <location>src/main/resources/init.d/hadoop-namenode</location>
+                                    <location>src/main/resources/init.d/hbase-master-backup</location>
                                 </source>
                             </sources>
                         </mapping>
@@ -87,7 +98,7 @@
                             <filemode>775</filemode>
                             <sources>
                                 <source>
-                                    <location>src/main/resources/init.d/hadoop-jobtracker</location>
+                                    <location>src/main/resources/init.d/hbase-zookeeper</location>
                                 </source>
                             </sources>
                         </mapping>
@@ -100,25 +111,13 @@
                             <filemode>775</filemode>
                             <sources>
                                 <source>
-                                    <location>src/main/resources/init.d/hadoop-datanode</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/etc/init.d/</directory>
-                            <directoryIncluded>false</directoryIncluded>
-                            <username>root</username>
-                            <groupname>root</groupname>
-                            <filemode>775</filemode>
-                            <sources>
-                                <source>
-                                    <location>src/main/resources/init.d/hadoop-tasktracker</location>
+                                    <location>src/main/resources/init.d/hbase-regionserver</location>
                                 </source>
                             </sources>
                         </mapping>
 
 						<mapping>
-							<directory>/opt/hadoop/bin</directory>
+							<directory>/opt/hbase/bin</directory>
 							<directoryIncluded>false</directoryIncluded>
 							<filemode>777</filemode>
 							<sources>
@@ -129,52 +128,28 @@
 						</mapping>
 
 						<mapping>
-							<directory>/opt/hadoop</directory>
+							<directory>/opt/hbase</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/hadoop-ant-1.0.3.jar</location>
+									<location>src/main/resources/hbase-0.94.0.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-core-1.0.3.jar</location>
-								</source>
-								<source>
-									<location>src/main/resources/hadoop-examples-1.0.3.jar</location>
-								</source>
-								<source>
-									<location>src/main/resources/hadoop-test-1.0.3.jar</location>
-								</source>
-								<source>
-									<location>src/main/resources/hadoop-tools-1.0.3.jar</location>
-								</source>
-								 <source>
-                                                                        <location>src/main/resources/hadoop-client-1.0.3.jar</location>
-                                                                </source>
-								<source>
-                                                                        <location>src/main/resources/hadoop-minicluster-1.0.3.jar</location>
-                                                                </source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/hadoop/c++</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/c++</location>
+									<location>src/main/resources/hbase-0.94.0-tests.jar</location>
 								</source>
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/hadoop/contrib</directory>
+							<directory>/opt/hbase/sbin</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/contrib</location>
+									<location>src/main/resources/sbin</location>
 								</source>
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/hadoop/docs</directory>
+							<directory>/opt/hbase/docs</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
@@ -183,54 +158,29 @@
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/hadoop/ivy</directory>
+							<directory>/opt/hbase/security</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/ivy</location>
+									<location>src/main/resources/security</location>
 								</source>
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/hadoop/lib</directory>
+							<directory>/opt/hbase/lib</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
 									<location>src/main/resources/lib</location>
 								</source>
-								<softlinkSource>
-                                    <destination>hadoop-1.0.3-fairscheduler.jar</destination>
-                                    <location>/opt/hadoop/contrib/fairscheduler/hadoop-1.0.3-fairscheduler.jar</location>
-                                </softlinkSource>
-								<softlinkSource>
-                                    <destination>hadoop-1.0.3-capacity-scheduler.jar</destination>
-                                    <location>/opt/hadoop/contrib/capacity-scheduler/hadoop-1.0.3-capacity-scheduler.jar</location>
-                                </softlinkSource>
-								<softlinkSource>
-									<destination>/</destination>
-									<location>/opt/hadoopgpl/lib/*.jar</location>
-								</softlinkSource>
-								<softlinkSource>
-									<destination>native</destination>
-									<location>/opt/hadoopgpl/native</location>
-								</softlinkSource>
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/hadoop/pids</directory>
+							<directory>/opt/hbase/hbase-webapps</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/pids</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/hadoop/webapps</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/webapps</location>
+									<location>src/main/resources/hbase-webapps</location>
 								</source>
 							</sources>
 						</mapping>

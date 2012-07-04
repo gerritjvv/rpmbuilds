@@ -1,6 +1,6 @@
 #!/bin/bash
 # chkconfig: 2345 20 80
-# description: hadoop data node
+# description: hadoop namenode
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -22,33 +22,38 @@ if [ -f /etc/init.d/functions ] ; then
         . /etc/init.d/functions
 elif [ -f /etc/rc.d/init.d/functions ] ; then
         . /etc/rc.d/init.d/functions
-else
-        exit 0
 fi
 
-prog=${0/*\/hadoop-/}
+prog=${0/*\/hbase-/}
 case $prog in
-    datanode )      DAEMON="DataNode"       ;;
-    jobtracker )        DAEMON="JobTracker"     ;;
-    namenode )      DAEMON="NameNode"       ;;
-    secondarynamenode ) DAEMON="SecondaryNameNode"  ;;
-    tasktracker )       DAEMON="TaskTracker"        ;;
+    master )      DAEMON="Master"       ;;
+    regionserver )        DAEMON="RegionServer"     ;;
+    master-backup )      DAEMON="MasterBackup"       ;;
+    zookeeper ) DAEMON="Zookeeper"  ;;
     * )
         echo "No such node type; stopping"
         exit 1
         ;;
 esac
 
-config () {
-    . /etc/profile.d/java.sh
-    . /etc/profile.d/hadoop.sh
+config (){
+
+    [ -f /etc/profile.d/java.sh ] && . /etc/profile.d/java.sh
+    [ -f /etc/profile.d/hbase.sh] && . /etc/profile.d/hbase.sh
+
+    if [ -z $HBASE_HOME ]; then
+      export HBASE_HOME="/opt/hbase"
+    fi
+  
+    echo "Using HBASE_HOME=$HBASE_HOME"
+
 }
 
 start () {
         echo -n $"Starting $prog: "
         config
         # start daemon
-        su - hadoop -c "$HADOOP_HOME/bin/hadoop-daemon.sh start $prog"
+        su - hadoop -c "$HBASE_HOME/bin/hbase-daemon.sh start $prog"
         RETVAL=$?
         echo
         [ $RETVAL = 0 ] && touch /var/lock/subsys/$prog
@@ -59,7 +64,7 @@ stop () {
         # stop daemon
         echo -n $"Stopping $prog: "
         config
-    su - hadoop -c "$HADOOP_HOME/bin/hadoop-daemon.sh stop $prog"
+        su - hadoop -c "$HBASE_HOME/bin/hbase-daemon.sh stop $prog"
         RETVAL=$?
         echo
         [ $RETVAL = 0 ] && rm -f /var/lock/subsys/$prog
