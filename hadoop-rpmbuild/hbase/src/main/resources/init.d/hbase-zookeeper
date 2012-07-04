@@ -39,7 +39,7 @@ esac
 config (){
 
     [ -f /etc/profile.d/java.sh ] && . /etc/profile.d/java.sh
-    [ -f /etc/profile.d/hbase.sh] && . /etc/profile.d/hbase.sh
+    [ -f /etc/profile.d/hbase.sh ] && . /etc/profile.d/hbase.sh
 
     if [ -z $HBASE_HOME ]; then
       export HBASE_HOME="/opt/hbase"
