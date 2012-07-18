@@ -19,7 +19,6 @@ package org.apache.zookeeper.server.persistence;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,9 +40,10 @@ import org.apache.jute.BinaryOutputArchive;
 import org.apache.jute.InputArchive;
 import org.apache.jute.OutputArchive;
 import org.apache.jute.Record;
-import org.apache.log4j.Logger;
 import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.TxnHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements the TxnLog interface. It provides api's
@@ -101,7 +101,7 @@ public class FileTxnLog implements TxnLog {
     private final static long fsyncWarningThresholdMS;
 
     static {
-        LOG = Logger.getLogger(FileTxnLog.class);
+        LOG = LoggerFactory.getLogger(FileTxnLog.class);
 
         String size = System.getProperty("zookeeper.preAllocSize");
         if (size != null) {
@@ -601,8 +601,9 @@ public class FileTxnLog implements TxnLog {
                 long crcValue = ia.readLong("crcvalue");
                 byte[] bytes = Util.readTxnBytes(ia);
                 // Since we preallocate, we define EOF to be an
-                if (bytes == null || bytes.length==0)
-                   throw new EOFException("Failed to read");
+                if (bytes == null || bytes.length==0) {
+                    throw new EOFException("Failed to read " + logFile);
+                }
                 // EOF or corrupted record
                 // validate CRC
                 Checksum crc = makeChecksumAlgorithm();
@@ -611,18 +612,16 @@ public class FileTxnLog implements TxnLog {
                     throw new IOException(CRC_ERROR);
                 if (bytes == null || bytes.length == 0)
                     return false;
-                InputArchive iab = BinaryInputArchive
-                                    .getArchive(new ByteArrayInputStream(bytes));
                 hdr = new TxnHeader();
-                record = SerializeUtils.deserializeTxn(iab, hdr);
+                record = SerializeUtils.deserializeTxn(bytes, hdr);
             } catch (EOFException e) {
                 LOG.debug("EOF excepton " + e);
                 inputStream.close();
                 inputStream = null;
                 ia = null;
                 hdr = null;
-                // thsi means that the file has ended
-                // we shoud go to the next file
+                // this means that the file has ended
+                // we should go to the next file
                 if (!goToNextLog()) {
                     return false;
                 }

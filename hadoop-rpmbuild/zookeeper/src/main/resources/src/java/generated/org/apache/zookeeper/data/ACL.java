@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.data;
 
-import java.util.*;
 import org.apache.jute.*;
 public class ACL implements Record {
   private int perms;

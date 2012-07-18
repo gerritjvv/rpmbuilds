@@ -18,15 +18,18 @@
 
 package org.apache.zookeeper.server;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.RandomAccessFile;
 
-import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.test.ClientBase;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This test checks that the server works even if the last snapshot is
@@ -34,7 +37,8 @@ import org.junit.Test;
  * snapshot.
  */
 public class InvalidSnapshotTest extends ClientBase {
-    private static final Logger LOG = Logger.getLogger(InvalidSnapshotTest.class);
+    private static final Logger LOG =
+            LoggerFactory.getLogger(InvalidSnapshotTest.class);
 
     public InvalidSnapshotTest() {
         SyncRequestProcessor.setSnapCount(100);
@@ -55,11 +59,11 @@ public class InvalidSnapshotTest extends ClientBase {
         } finally {
             zk.close();
         }
-        NIOServerCnxn.Factory factory = serverFactory;
+        NIOServerCnxnFactory factory = (NIOServerCnxnFactory)serverFactory;
         stopServer();
 
         // now corrupt the snapshot
-        File snapFile = factory.zks.getTxnLogFactory().findMostRecentSnapshot();
+        File snapFile = factory.zkServer.getTxnLogFactory().findMostRecentSnapshot();
         LOG.info("Corrupting " + snapFile);
         RandomAccessFile raf = new RandomAccessFile(snapFile, "rws");
         raf.setLength(3);

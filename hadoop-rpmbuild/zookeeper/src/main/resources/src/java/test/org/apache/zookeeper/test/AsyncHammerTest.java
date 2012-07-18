@@ -23,11 +23,13 @@ import static org.apache.zookeeper.test.ClientBase.verifyThreadTerminated;
 
 import java.util.LinkedList;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.TestableZooKeeper;
 import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.AsyncCallback.DataCallback;
 import org.apache.zookeeper.AsyncCallback.StringCallback;
 import org.apache.zookeeper.AsyncCallback.VoidCallback;
@@ -37,20 +39,21 @@ import org.apache.zookeeper.test.ClientBase.CountdownWatcher;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class AsyncHammerTest
+public class AsyncHammerTest extends ZKTestCase
     implements StringCallback, VoidCallback, DataCallback
 {
-    private static final Logger LOG = Logger.getLogger(AsyncHammerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AsyncHammerTest.class);
 
     private QuorumBase qb = new QuorumBase();
 
     private volatile boolean bang;
 
-    public void setUp(boolean withObservers) throws Exception {        
+    public void setUp(boolean withObservers) throws Exception {
         qb.setUp(withObservers);
     }
 
     protected void restart() throws Exception {
+        LOG.info("RESTARTING " + getTestName());
         qb.tearDown();
 
         // don't call setup - we don't want to reassign ports/dirs, etc...
@@ -91,11 +94,11 @@ public class AsyncHammerTest
                 }
             } catch (InterruptedException e) {
                 if (bang) {
-                    LOG.error("sanity check failed!!!"); // sanity check
+                    LOG.error("sanity check Assert.failed!!!"); // sanity check
                     return;
                 }
             } catch (Exception e) {
-                LOG.error("Client create operation failed", e);
+                LOG.error("Client create operation Assert.failed", e);
                 return;
             } finally {
                 if (zk != null) {
@@ -120,7 +123,7 @@ public class AsyncHammerTest
         }
 
         private synchronized void decOutstanding() {
-            outstanding--;            
+            outstanding--;
             Assert.assertTrue("outstanding >= 0", outstanding >= 0);
             notifyAll();
         }
@@ -133,7 +136,7 @@ public class AsyncHammerTest
             if (rc != KeeperException.Code.OK.intValue()) {
                 if (bang) {
                     failed = true;
-                    LOG.error("Create failed for 0x"
+                    LOG.error("Create Assert.failed for 0x"
                             + Long.toHexString(zk.getSessionId())
                             + "with rc:" + rc + " path:" + path);
                 }
@@ -146,7 +149,7 @@ public class AsyncHammerTest
             } catch (Exception e) {
                 if (bang) {
                     failed = true;
-                    LOG.error("Client delete failed", e);
+                    LOG.error("Client delete Assert.failed", e);
                 }
             }
         }
@@ -155,7 +158,7 @@ public class AsyncHammerTest
             if (rc != KeeperException.Code.OK.intValue()) {
                 if (bang) {
                     failed = true;
-                    LOG.error("Delete failed for 0x"
+                    LOG.error("Delete Assert.failed for 0x"
                             + Long.toHexString(zk.getSessionId())
                             + "with rc:" + rc + " path:" + path);
                 }
@@ -194,7 +197,7 @@ public class AsyncHammerTest
         qb.verifyRootOfAllServersMatch(qb.hostPort);
         tearDown();
     }
-    
+
     @Test
     public void testObserversHammer() throws Exception {
         setUp(true);

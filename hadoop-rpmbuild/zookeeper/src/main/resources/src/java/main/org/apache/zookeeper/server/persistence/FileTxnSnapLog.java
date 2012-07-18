@@ -25,19 +25,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.jute.Record;
-import org.apache.log4j.Logger;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.KeeperException.Code;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.DataTree;
+import org.apache.zookeeper.server.DataTree.ProcessTxnResult;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.ZooTrace;
 import org.apache.zookeeper.server.persistence.TxnLog.TxnIterator;
 import org.apache.zookeeper.txn.CreateSessionTxn;
 import org.apache.zookeeper.txn.TxnHeader;
-import org.apache.zookeeper.KeeperException.Code;
-import org.apache.zookeeper.KeeperException.NoNodeException;
-import org.apache.zookeeper.server.DataTree.ProcessTxnResult;
-import org.apache.zookeeper.KeeperException.NoNodeException;
-import org.apache.zookeeper.KeeperException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a helper class 
@@ -57,7 +56,7 @@ public class FileTxnSnapLog {
     public final static int VERSION = 2;
     public final static String version = "version-";
     
-    private static final Logger LOG = Logger.getLogger(FileTxnSnapLog.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileTxnSnapLog.class);
     
     /**
      * This listener helps
@@ -147,11 +146,12 @@ public class FileTxnSnapLog {
                 highestZxid = hdr.getZxid();
             }
             try {
-            	processTransaction(hdr,dt,sessions, itr.getTxn());
+                processTransaction(hdr,dt,sessions, itr.getTxn());
             } catch(KeeperException.NoNodeException e) {
-            	throw new IOException("Failed to process transaction type: " +
-            			hdr.getType() + " error: " + e.getMessage());
+               throw new IOException("Failed to process transaction type: " +
+                     hdr.getType() + " error: " + e.getMessage(), e);
             }
+            listener.onTxnLoaded(hdr, itr.getTxn());
             if (!itr.next()) 
                 break;
         }
@@ -175,7 +175,7 @@ public class FileTxnSnapLog {
                     ((CreateSessionTxn) txn).getTimeOut());
             if (LOG.isTraceEnabled()) {
                 ZooTrace.logTraceMessage(LOG,ZooTrace.SESSION_TRACE_MASK,
-                        "playLog --- create session in log: "
+                        "playLog --- create session in log: 0x"
                                 + Long.toHexString(hdr.getClientId())
                                 + " with timeout: "
                                 + ((CreateSessionTxn) txn).getTimeOut());
@@ -187,7 +187,7 @@ public class FileTxnSnapLog {
             sessions.remove(hdr.getClientId());
             if (LOG.isTraceEnabled()) {
                 ZooTrace.logTraceMessage(LOG,ZooTrace.SESSION_TRACE_MASK,
-                        "playLog --- close session in log: "
+                        "playLog --- close session in log: 0x"
                                 + Long.toHexString(hdr.getClientId()));
             }
             rc = dt.processTxn(hdr, txn);
@@ -197,37 +197,20 @@ public class FileTxnSnapLog {
         }
 
         /**
-         * Snapshots are taken lazily. It can happen that the child
-         * znodes of a parent are modified (deleted or created) after the parent
-         * is serialized. Therefore, while replaying logs during restore, a
-         * delete/create might fail because the node was already
-         * deleted/created.
-         *
-         * After seeing this failure, we should increment
-         * the cversion of the parent znode since the parent was serialized
-         * before its children.
-         *
-         * Note, such failures on DT should be seen only during
-         * restore.
+         * This should never happen. A NONODE can never show up in the 
+         * transaction logs. This is more indicative of a corrupt transaction
+         * log. Refer ZOOKEEPER-1333 for more info.
          */
-        if ((hdr.getType() == OpCode.delete &&
-                 rc.err == Code.NONODE.intValue()) ||
-            (hdr.getType() == OpCode.create &&
-                rc.err == Code.NODEEXISTS.intValue())) {
-            LOG.debug("Failed Txn: " + hdr.getType() + " path:" +
-                  rc.path + " err: " + rc.err);
-            int lastSlash = rc.path.lastIndexOf('/');
-            String parentName = rc.path.substring(0, lastSlash);
-            try {
-                dt.incrementCversion(parentName, hdr.getZxid());
-            } catch (KeeperException.NoNodeException e) {
-                LOG.error("Failed to increment parent cversion for: " +
-                      parentName, e);
-                throw e;
+        if (rc.err != Code.OK.intValue()) {          
+            if (hdr.getType() == OpCode.create && rc.err == Code.NONODE.intValue()) {
+                int lastSlash = rc.path.lastIndexOf('/');
+                String parentName = rc.path.substring(0, lastSlash);
+                LOG.error("Parent {} missing for {}", parentName, rc.path);
+                throw new KeeperException.NoNodeException(parentName);
+            } else {
+                LOG.debug("Ignoring processTxn failure hdr: " + hdr.getType() +
+                        " : error: " + rc.err);
             }
-        } else if (rc.err != Code.OK.intValue()) {
-            LOG.debug("Ignoring processTxn failure hdr: " + hdr.getType() +
-                  " : error: " + rc.err);
         }
     }
     
@@ -251,10 +234,10 @@ public class FileTxnSnapLog {
             ConcurrentHashMap<Long, Integer> sessionsWithTimeouts)
         throws IOException {
         long lastZxid = dataTree.lastProcessedZxid;
-        LOG.info("Snapshotting: " + Long.toHexString(lastZxid));
-        File snapshot=new File(
-                snapDir, Util.makeSnapshotName(lastZxid));
-        snapLog.serialize(dataTree, sessionsWithTimeouts, snapshot);
+        File snapshotFile = new File(snapDir, Util.makeSnapshotName(lastZxid));
+        LOG.info("Snapshotting: 0x{} to {}", Long.toHexString(lastZxid),
+                snapshotFile);
+        snapLog.serialize(dataTree, sessionsWithTimeouts, snapshotFile);
         
     }
 

@@ -21,7 +21,8 @@ package org.apache.zookeeper.server.quorum;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.ZooDefs.OpCode;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
@@ -33,7 +34,7 @@ import org.apache.zookeeper.server.RequestProcessor;
  * so we need to match them up.
  */
 public class CommitProcessor extends Thread implements RequestProcessor {
-    private static final Logger LOG = Logger.getLogger(CommitProcessor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CommitProcessor.class);
 
     /**
      * Requests that we are holding until the commit comes in.
@@ -122,6 +123,7 @@ public class CommitProcessor extends Thread implements RequestProcessor {
                         case OpCode.create:
                         case OpCode.delete:
                         case OpCode.setData:
+                        case OpCode.multi:
                         case OpCode.setACL:
                         case OpCode.createSession:
                         case OpCode.closeSession:
@@ -176,6 +178,7 @@ public class CommitProcessor extends Thread implements RequestProcessor {
     }
 
     public void shutdown() {
+        LOG.info("Shutting down");
         synchronized (this) {
             finished = true;
             queuedRequests.clear();

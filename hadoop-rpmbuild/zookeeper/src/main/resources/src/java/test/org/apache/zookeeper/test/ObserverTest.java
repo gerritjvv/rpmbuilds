@@ -22,7 +22,8 @@ import static org.apache.zookeeper.test.ClientBase.CONNECTION_TIMEOUT;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException.ConnectionLossException;
 import org.apache.zookeeper.PortAssignment;
@@ -36,13 +37,9 @@ import org.apache.zookeeper.server.quorum.QuorumPeerTestBase;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Test Observer behaviour and specific code paths.
- *
- */
 public class ObserverTest extends QuorumPeerTestBase implements Watcher{
     protected static final Logger LOG =
-        Logger.getLogger(ObserverTest.class);    
+        LoggerFactory.getLogger(ObserverTest.class);    
       
     CountDownLatch latch;
     ZooKeeper zk;
@@ -89,13 +86,13 @@ public class ObserverTest extends QuorumPeerTestBase implements Watcher{
         q1.start();
         q2.start();
         q3.start();
-        assertTrue("waiting for server 1 being up",
+        Assert.assertTrue("waiting for server 1 being up",
                 ClientBase.waitForServerUp("127.0.0.1:" + CLIENT_PORT_QP1,
                         CONNECTION_TIMEOUT));
-        assertTrue("waiting for server 2 being up",
+        Assert.assertTrue("waiting for server 2 being up",
                 ClientBase.waitForServerUp("127.0.0.1:" + CLIENT_PORT_QP2,
                         CONNECTION_TIMEOUT));
-        assertTrue("waiting for server 3 being up",
+        Assert.assertTrue("waiting for server 3 being up",
                 ClientBase.waitForServerUp("127.0.0.1:" + CLIENT_PORT_OBS,
                         CONNECTION_TIMEOUT));        
         
@@ -105,29 +102,34 @@ public class ObserverTest extends QuorumPeerTestBase implements Watcher{
                 CreateMode.PERSISTENT);
         
         // Assert that commands are getting forwarded correctly
-        assertEquals(new String(zk.getData("/obstest", null, null)), "test");
+        Assert.assertEquals(new String(zk.getData("/obstest", null, null)), "test");
         
         // Now check that other commands don't blow everything up
         zk.sync("/", null, null);
         zk.setData("/obstest", "test2".getBytes(), -1);
         zk.getChildren("/", false);
         
-        assertEquals(zk.getState(), States.CONNECTED);
+        Assert.assertEquals(zk.getState(), States.CONNECTED);
         
+        LOG.info("Shutting down server 2");
         // Now kill one of the other real servers        
         q2.shutdown();
                 
-        assertTrue("Waiting for server 2 to shut down",
+        Assert.assertTrue("Waiting for server 2 to shut down",
                     ClientBase.waitForServerDown("127.0.0.1:"+CLIENT_PORT_QP2, 
                                     ClientBase.CONNECTION_TIMEOUT));
-        
+
+        LOG.info("Server 2 down");
+
         // Now the resulting ensemble shouldn't be quorate         
         latch.await();        
-        assertNotSame("Client is still connected to non-quorate cluster", 
+        Assert.assertNotSame("Client is still connected to non-quorate cluster", 
                 KeeperState.SyncConnected,lastEvent.getState());
 
+        LOG.info("Latch returned");
+
         try {
-            assertFalse("Shouldn't get a response when cluster not quorate!",
+            Assert.assertFalse("Shouldn't get a response when cluster not quorate!",
                     new String(zk.getData("/obstest", null, null)).equals("test"));
         }
         catch (ConnectionLossException c) {
@@ -136,34 +138,43 @@ public class ObserverTest extends QuorumPeerTestBase implements Watcher{
         
         latch = new CountDownLatch(1);
 
+        LOG.info("Restarting server 2");
+
         // Bring it back
         q2 = new MainThread(2, CLIENT_PORT_QP2, quorumCfgSection);
         q2.start();
+        
         LOG.info("Waiting for server 2 to come up");
-        assertTrue("waiting for server 2 being up",
+        Assert.assertTrue("waiting for server 2 being up",
                 ClientBase.waitForServerUp("127.0.0.1:" + CLIENT_PORT_QP2,
                         CONNECTION_TIMEOUT));
         
+        LOG.info("Server 2 started, waiting for latch");
+
         latch.await();
         // It's possible our session expired - but this is ok, shows we 
         // were able to talk to the ensemble
-        assertTrue("Client didn't reconnect to quorate ensemble (state was" +
+        Assert.assertTrue("Client didn't reconnect to quorate ensemble (state was" +
                 lastEvent.getState() + ")",
                 (KeeperState.SyncConnected==lastEvent.getState() ||
                 KeeperState.Expired==lastEvent.getState())); 
+
+        LOG.info("Shutting down all servers");
 
         q1.shutdown();
         q2.shutdown();
         q3.shutdown();
         
+        LOG.info("Closing zk client");
+
         zk.close();        
-        assertTrue("Waiting for server 1 to shut down",
+        Assert.assertTrue("Waiting for server 1 to shut down",
                 ClientBase.waitForServerDown("127.0.0.1:"+CLIENT_PORT_QP1, 
                                 ClientBase.CONNECTION_TIMEOUT));
-        assertTrue("Waiting for server 2 to shut down",
+        Assert.assertTrue("Waiting for server 2 to shut down",
                 ClientBase.waitForServerDown("127.0.0.1:"+CLIENT_PORT_QP2, 
                                 ClientBase.CONNECTION_TIMEOUT));
-        assertTrue("Waiting for server 3 to shut down",
+        Assert.assertTrue("Waiting for server 3 to shut down",
                 ClientBase.waitForServerDown("127.0.0.1:"+CLIENT_PORT_OBS, 
                                 ClientBase.CONNECTION_TIMEOUT));
     

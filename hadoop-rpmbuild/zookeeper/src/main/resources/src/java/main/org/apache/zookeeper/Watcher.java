@@ -18,8 +18,6 @@
 
 package org.apache.zookeeper;
 
-import org.apache.zookeeper.Watcher.Event.KeeperState;
-
 /**
  * This interface specifies the public interface an event handler class must
  * implement. A ZooKeeper client will get various events from the ZooKeepr
@@ -55,12 +53,27 @@ public interface Watcher {
              * in the host connection parameter during ZooKeeper client
              * creation). */
             SyncConnected (3),
-            
+
             /**
              * Auth failed state
-             * 
              */
-            AuthFailed(4),
+            AuthFailed (4),
+
+            /**
+             * The client is connected to a read-only server, that is the
+             * server which is not currently connected to the majority.
+             * The only operations allowed after receiving this state is
+             * read operations.
+             * This state is generated for read-only clients only since
+             * read/write clients aren't allowed to connect to r/o servers.
+             */
+            ConnectedReadOnly (5),
+
+            /**
+              * SaslAuthenticated: used to notify clients that they are SASL-authenticated,
+              * so that they can perform Zookeeper actions with their SASL-authorized permissions.
+              */
+            SaslAuthenticated(6),
 
             /** The serving cluster has expired this session. The ZooKeeper
              * client connection (the session) is no longer valid. You must
@@ -86,6 +99,8 @@ public interface Watcher {
                     case    1: return KeeperState.NoSyncConnected;
                     case    3: return KeeperState.SyncConnected;
                     case    4: return KeeperState.AuthFailed;
+                    case    5: return KeeperState.ConnectedReadOnly;
+                    case    6: return KeeperState.SaslAuthenticated;
                     case -112: return KeeperState.Expired;
 
                     default:

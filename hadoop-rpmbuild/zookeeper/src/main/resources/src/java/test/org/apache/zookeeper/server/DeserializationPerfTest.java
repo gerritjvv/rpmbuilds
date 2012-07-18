@@ -22,16 +22,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.apache.jute.BinaryInputArchive;
 import org.apache.jute.BinaryOutputArchive;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZKTestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
-public class DeserializationPerfTest extends TestCase {
-    protected static final Logger LOG = Logger.getLogger(DeserializationPerfTest.class);
+public class DeserializationPerfTest extends ZKTestCase {
+    protected static final Logger LOG = LoggerFactory.getLogger(DeserializationPerfTest.class);
 
     private static void deserializeTree(int depth, int width, int len)
             throws InterruptedException, IOException, KeeperException.NodeExistsException, KeeperException.NoNodeException {
@@ -39,7 +40,7 @@ public class DeserializationPerfTest extends TestCase {
         int count;
         {
             DataTree tree = new DataTree();
-            SerializationPerfTest.createNodes(tree, "/", depth, width, new byte[len]);
+            SerializationPerfTest.createNodes(tree, "/", depth, tree.getNode("/").stat.getCversion(), width, new byte[len]);
             count = tree.getNodeCount();
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -60,7 +61,7 @@ public class DeserializationPerfTest extends TestCase {
         long durationms = (end - start) / 1000000L;
         long pernodeus = ((end - start) / 1000L) / count;
 
-        assertEquals(count, dserTree.getNodeCount());
+        Assert.assertEquals(count, dserTree.getNodeCount());
 
         LOG.info("Deserialized " + count + " nodes in " + durationms
                 + " ms (" + pernodeus + "us/node), depth=" + depth + " width="

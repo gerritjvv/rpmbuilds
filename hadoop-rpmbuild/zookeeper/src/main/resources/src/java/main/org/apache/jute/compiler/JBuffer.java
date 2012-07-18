@@ -25,7 +25,7 @@ public class JBuffer extends JCompType {
     
     /** Creates a new instance of JBuffer */
     public JBuffer() {
-        super("struct buffer", " ::std::string", "byte[]", "Buffer", "byte[]");
+        super("struct buffer", " ::std::string", "byte[]", "byte[]", "Buffer", "byte[]", "byte[]");
     }
     
     public String genCppGetSet(String fname, int fIdx) {
@@ -76,7 +76,7 @@ public class JBuffer extends JCompType {
     }
     
     public String genJavaHashCode(String fname) {
-        return "    ret = Arrays.toString("+fname+").hashCode();\n";
+        return "    ret = java.util.Arrays.toString("+fname+").hashCode();\n";
     }
     
     public String genJavaSlurpBytes(String b, String s, String l) {

@@ -18,51 +18,34 @@
 
 package org.apache.zookeeper.test;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.data.Stat;
 import org.apache.zookeeper.server.DataTree;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.apache.zookeeper.server.DataNode;
 
-public class DataTreeTest extends TestCase {
-    protected static final Logger LOG = Logger.getLogger(DataTreeTest.class);
+public class DataTreeTest extends ZKTestCase {
+    protected static final Logger LOG = LoggerFactory.getLogger(DataTreeTest.class);
 
     private DataTree dt;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        LOG.info("STARTING " + getName());
         dt=new DataTree();
     }
 
-    @Override
+    @After
     public void tearDown() throws Exception {
         dt=null;
-        LOG.info("FINISHED " + getName());
     }
 
-    /**
-     * For ZOOKEEPER-1046 test if cversion is getting incremented correctly.
-     */
-    @Test
-    public void testIncrementCversion() throws Exception {
-        dt.createNode("/test", new byte[0], null, 0, 1, 1);
-        DataNode zk = dt.getNode("/test");
-        long prevCversion = zk.stat.getCversion();
-        long prevPzxid = zk.stat.getPzxid();
-        dt.incrementCversion("/test/",  prevPzxid + 1);
-        long newCversion = zk.stat.getCversion();
-        long newPzxid = zk.stat.getPzxid();
-        Assert.assertTrue("<cversion, pzxid> verification failed. Expected: <" +
-                (prevCversion + 1) + ", " + (prevPzxid + 1) + ">, found: <" +
-                newCversion + ", " + newPzxid + ">",
-                (newCversion == prevCversion + 1 && newPzxid == prevPzxid + 1));
-    }
     @Test
     public void testRootWatchTriggered() throws Exception {
         class MyWatcher implements Watcher{
@@ -76,8 +59,25 @@ public class DataTreeTest extends TestCase {
         // set a watch on the root node
         dt.getChildren("/", new Stat(), watcher);
         // add a new node, should trigger a watch
-        dt.createNode("/xyz", new byte[0], null, 0, 1, 1);
-        assertFalse("Root node watch not triggered",!watcher.fired);
+        dt.createNode("/xyz", new byte[0], null, 0, dt.getNode("/").stat.getCversion()+1, 1, 1);
+        Assert.assertFalse("Root node watch not triggered",!watcher.fired);
     }
 
+    /**
+     * For ZOOKEEPER-1046 test if cversion is getting incremented correctly.
+     */
+    @Test
+    public void testIncrementCversion() throws Exception {
+        dt.createNode("/test", new byte[0], null, 0, dt.getNode("/").stat.getCversion()+1, 1, 1);
+        DataNode zk = dt.getNode("/test");
+        int prevCversion = zk.stat.getCversion();
+        long prevPzxid = zk.stat.getPzxid();
+        dt.setCversionPzxid("/test/",  prevCversion + 1, prevPzxid + 1);
+        int newCversion = zk.stat.getCversion();
+        long newPzxid = zk.stat.getPzxid();
+        Assert.assertTrue("<cversion, pzxid> verification failed. Expected: <" +
+                (prevCversion + 1) + ", " + (prevPzxid + 1) + ">, found: <" +
+                newCversion + ", " + newPzxid + ">",
+                (newCversion == prevCversion + 1 && newPzxid == prevPzxid + 1));
+    }
 }

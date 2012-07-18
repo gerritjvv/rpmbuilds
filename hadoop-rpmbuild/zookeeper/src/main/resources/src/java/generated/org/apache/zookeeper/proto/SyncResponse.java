@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class SyncResponse implements Record {
   private String path;

@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class CreateRequest implements Record {
   private String path;
@@ -160,7 +159,7 @@ public class CreateRequest implements Record {
     int ret;
     ret = path.hashCode();
     result = 37*result + ret;
-    ret = Arrays.toString(data).hashCode();
+    ret = java.util.Arrays.toString(data).hashCode();
     result = 37*result + ret;
     ret = acl.hashCode();
     result = 37*result + ret;

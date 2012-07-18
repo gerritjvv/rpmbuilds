@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.server.persistence;
 
-import java.util.*;
 import org.apache.jute.*;
 public class FileHeader implements Record {
   private int magic;

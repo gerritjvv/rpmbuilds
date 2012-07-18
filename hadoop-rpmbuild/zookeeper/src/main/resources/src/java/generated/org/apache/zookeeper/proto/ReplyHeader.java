@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class ReplyHeader implements Record {
   private int xid;

@@ -18,7 +18,6 @@
 
 package org.apache.zookeeper.test;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -26,36 +25,108 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.AsyncCallback;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.TestableZooKeeper;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.Watcher.Event;
-import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.quorum.Leader;
 import org.apache.zookeeper.test.ClientBase.CountdownWatcher;
+import org.junit.Assert;
 import org.junit.Test;
 
 
-public class FollowerResyncConcurrencyTest extends QuorumBase {
+public class FollowerResyncConcurrencyTest extends ZKTestCase {
     private static final Logger LOG = Logger.getLogger(FollowerResyncConcurrencyTest.class);
     public static final long CONNECTION_TIMEOUT = ClientTest.CONNECTION_TIMEOUT;
 
     private volatile int counter = 0;
-    private volatile int errors = 0; 
+    private volatile int errors = 0;
+
+    /**
+     * See ZOOKEEPER-1319 - verify that a lagging follwer resyncs correctly
+     * 
+     * 1) start with down quorum
+     * 2) start leader/follower1, add some data
+     * 3) restart leader/follower1
+     * 4) start follower2
+     * 5) verify data consistency across the ensemble
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testLaggingFollowerResyncsUnderNewEpoch() throws Exception {
+        CountdownWatcher watcher1 = new CountdownWatcher();
+        CountdownWatcher watcher2 = new CountdownWatcher();
+        CountdownWatcher watcher3 = new CountdownWatcher();
+
+        QuorumUtil qu = new QuorumUtil(1);
+        qu.shutdownAll();
+
+        qu.start(1);
+        qu.start(2);
+        Assert.assertTrue("Waiting for server up", ClientBase.waitForServerUp("127.0.0.1:"
+                + qu.getPeer(1).clientPort, ClientBase.CONNECTION_TIMEOUT));
+        Assert.assertTrue("Waiting for server up", ClientBase.waitForServerUp("127.0.0.1:"
+                + qu.getPeer(2).clientPort, ClientBase.CONNECTION_TIMEOUT));
+
+        ZooKeeper zk1 =
+                createClient(qu.getPeer(1).peer.getClientPort(), watcher1);
+        LOG.info("zk1 has session id 0x" + Long.toHexString(zk1.getSessionId()));
+
+        final String resyncPath = "/resyncundernewepoch";
+        zk1.create(resyncPath, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        zk1.close();
+
+        qu.shutdown(1);
+        qu.shutdown(2);
+        Assert.assertTrue("Waiting for server down", ClientBase.waitForServerDown("127.0.0.1:"
+                + qu.getPeer(1).clientPort, ClientBase.CONNECTION_TIMEOUT));
+        Assert.assertTrue("Waiting for server down", ClientBase.waitForServerDown("127.0.0.1:"
+                + qu.getPeer(2).clientPort, ClientBase.CONNECTION_TIMEOUT));
+        
+        qu.start(1);
+        qu.start(2);
+        Assert.assertTrue("Waiting for server up", ClientBase.waitForServerUp("127.0.0.1:"
+                + qu.getPeer(1).clientPort, ClientBase.CONNECTION_TIMEOUT));
+        Assert.assertTrue("Waiting for server up", ClientBase.waitForServerUp("127.0.0.1:"
+                + qu.getPeer(2).clientPort, ClientBase.CONNECTION_TIMEOUT));
+
+        qu.start(3);
+        Assert.assertTrue("Waiting for server up", ClientBase.waitForServerUp("127.0.0.1:"
+                + qu.getPeer(3).clientPort, ClientBase.CONNECTION_TIMEOUT));
+
+        zk1 = createClient(qu.getPeer(1).peer.getClientPort(), watcher1);
+        LOG.info("zk1 has session id 0x" + Long.toHexString(zk1.getSessionId()));
+        
+        assertNotNull("zk1 has data", zk1.exists(resyncPath, false));
+
+        final ZooKeeper zk2 =
+                createClient(qu.getPeer(2).peer.getClientPort(), watcher2);
+        LOG.info("zk2 has session id 0x" + Long.toHexString(zk2.getSessionId()));
+
+        assertNotNull("zk2 has data", zk2.exists(resyncPath, false));
+
+        final ZooKeeper zk3 =
+            createClient(qu.getPeer(3).peer.getClientPort(), watcher3);
+        LOG.info("zk3 has session id 0x" + Long.toHexString(zk3.getSessionId()));
+
+        assertNotNull("zk3 has data", zk3.exists(resyncPath, false));
+
+        zk1.close();
+        zk2.close();
+        zk3.close();
+        
+        qu.shutdownAll();
+    }      
 
     /**
      * See ZOOKEEPER-962. This tests for one of the bugs hit while fixing this,
@@ -116,7 +187,7 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
 
             @Override
             public void run() {
-                for(int i = 0; i < 1000; i++) {
+                for(int i = 0; i < 3000; i++) {
                     zk3.create("/mytestfoo", null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL, new AsyncCallback.StringCallback() {
 
                         @Override
@@ -125,7 +196,7 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
                             if (rc != 0) {
                                 errors++;
                             }
-                            if(counter == 14200){
+                            if(counter == 16200){
                                 sem.release();
                             }
                         }
@@ -151,7 +222,7 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
                     if (rc != 0) {
                         errors++;
                     }
-                    if(counter == 14200){
+                    if(counter == 16200){
                         sem.release();
                     }
                 }
@@ -163,10 +234,10 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
             }
             if(i == 12000){
                 //Restart off of snap, then get some txns for a log, then shut down
+                mytestfooThread.start();
                 qu.restart(index);       
                 Thread.sleep(300);
-                qu.shutdown(index);
-                mytestfooThread.start();
+                qu.shutdown(index);               
                 Thread.sleep(300);                
                 qu.restart(index);
                 LOG.info("Setting up server: " + index);
@@ -183,7 +254,7 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
                         if (rc != 0) {
                             errors++;
                         }
-                        if(counter == 14200){
+                        if(counter == 16200){
                             sem.release();
                         }
                     }
@@ -427,85 +498,4 @@ public class FollowerResyncConcurrencyTest extends QuorumBase {
             assertEquals("Leader should equal follower", lead.getEphemerals(l).size(), cleanEphemerals.size());
         }
     }      
-
-    /**
-     * Verify that the server is sending the proper zxid. See ZOOKEEPER-1412.
-     */
-    @Test
-    public void testFollowerSendsLastZxid() throws Exception {
-        QuorumUtil qu = new QuorumUtil(1);
-        qu.startAll();
-
-        int index = 1;
-        while(qu.getPeer(index).peer.follower == null) {
-            index++;
-        }
-        LOG.info("Connecting to follower:" + index);
-
-        TestableZooKeeper zk =
-                createClient("localhost:" + qu.getPeer(index).peer.getClientPort());
-
-        assertEquals(0L, zk.testableLastZxid());
-        zk.exists("/", false);
-        long lzxid = zk.testableLastZxid();
-        assertTrue("lzxid:" + lzxid + " > 0", lzxid > 0);
-        zk.close();
-    }
-
-    private class MyWatcher extends CountdownWatcher {
-        LinkedBlockingQueue<WatchedEvent> events =
-            new LinkedBlockingQueue<WatchedEvent>();
-
-        public void process(WatchedEvent event) {
-            super.process(event);
-            if (event.getType() != Event.EventType.None) {
-                try {
-                    events.put(event);
-                } catch (InterruptedException e) {
-                    LOG.warn("ignoring interrupt during event.put");
-                }
-            }
-        }
-    }
-
-    /**
-     * Verify that the server is sending the proper zxid, and as a result
-     * the watch doesn't fire. See ZOOKEEPER-1412.
-     */
-    @Test
-    public void testFollowerWatcherResync() throws Exception {
-        QuorumUtil qu = new QuorumUtil(1);
-        qu.startAll();
-
-        int index = 1;
-        while(qu.getPeer(index).peer.follower == null) {
-            index++;
-        }
-        LOG.info("Connecting to follower:" + index);
-
-        TestableZooKeeper zk1 = createClient(
-                "localhost:" + qu.getPeer(index).peer.getClientPort());
-        zk1.create("/foo", "foo".getBytes(), Ids.OPEN_ACL_UNSAFE,
-                    CreateMode.PERSISTENT);
-
-        MyWatcher watcher = new MyWatcher();
-        TestableZooKeeper zk2 = createClient(watcher,
-                "localhost:" + qu.getPeer(index).peer.getClientPort());
-
-        zk2.exists("/foo", true);
-
-        watcher.reset();
-        zk2.testableConnloss();
-        if (!watcher.clientConnected.await(CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS))
-        {
-            fail("Unable to connect to server");
-        }
-        assertArrayEquals("foo".getBytes(), zk2.getData("/foo", false, null));
-
-        assertNull(watcher.events.poll(5, TimeUnit.SECONDS));
-
-        zk1.close();
-        zk2.close();
-    }
-
 }

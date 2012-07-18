@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.data;
 
-import java.util.*;
 import org.apache.jute.*;
 public class StatPersistedV1 implements Record {
   private long czxid;

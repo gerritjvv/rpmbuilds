@@ -24,17 +24,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import junit.framework.TestCase;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.PortAssignment;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.server.quorum.LeaderElection;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
 import org.apache.zookeeper.server.quorum.Vote;
 import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class LETest extends TestCase {
-    private static final Logger LOG = Logger.getLogger(LETest.class);
+public class LETest extends ZKTestCase {
+    private static final Logger LOG = LoggerFactory.getLogger(LETest.class);
     volatile Vote votes[];
     volatile boolean leaderDies;
     volatile long leader = -1;
@@ -54,7 +56,7 @@ public class LETest extends TestCase {
                 while(true) {
                     v = le.lookForLeader();
                     votes[i] = v;
-                    if (v.id == i) {
+                    if (v.getId() == i) {
                         synchronized(LETest.this) {
                             if (leaderDies) {
                                 leaderDies = false;
@@ -72,7 +74,7 @@ public class LETest extends TestCase {
                         if (leader == -1) {
                             LETest.this.wait();
                         }
-                        if (leader == v.id) {
+                        if (leader == v.getId()) {
                             break;
                         }
                     }
@@ -85,6 +87,8 @@ public class LETest extends TestCase {
             }
         }
     }
+
+    @Test
     public void testLE() throws Exception {
         int count = 30;
         HashMap<Long,QuorumServer> peers = new HashMap<Long,QuorumServer>(count);
@@ -115,19 +119,19 @@ public class LETest extends TestCase {
         for(int i = 0; i < threads.size(); i++) {
             threads.get(i).join(15000);
             if (threads.get(i).isAlive()) {
-                fail("Threads didn't join");
+                Assert.fail("Threads didn't join");
             }
         }
-        long id = votes[0].id;
+        long id = votes[0].getId();
         for(int i = 1; i < votes.length; i++) {
             if (votes[i] == null) {
-                fail("Thread " + i + " had a null vote");
+                Assert.fail("Thread " + i + " had a null vote");
             }
-            if (votes[i].id != id) {
-                if (allowOneBadLeader && votes[i].id == i) {
+            if (votes[i].getId() != id) {
+                if (allowOneBadLeader && votes[i].getId() == i) {
                     allowOneBadLeader = false;
                 } else {
-                    fail("Thread " + i + " got " + votes[i].id + " expected " + id);
+                    Assert.fail("Thread " + i + " got " + votes[i].getId() + " expected " + id);
                 }
             }
         }

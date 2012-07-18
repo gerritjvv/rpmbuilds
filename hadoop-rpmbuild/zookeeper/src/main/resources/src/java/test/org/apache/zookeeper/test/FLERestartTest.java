@@ -26,19 +26,22 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
-import junit.framework.TestCase;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.PortAssignment;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.server.quorum.FastLeaderElection;
 import org.apache.zookeeper.server.quorum.QuorumPeer;
 import org.apache.zookeeper.server.quorum.Vote;
 import org.apache.zookeeper.server.quorum.QuorumPeer.QuorumServer;
 import org.apache.zookeeper.server.quorum.QuorumPeer.ServerState;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-public class FLERestartTest extends TestCase {
-    protected static final Logger LOG = Logger.getLogger(FLETest.class);
+public class FLERestartTest extends ZKTestCase {
+    protected static final Logger LOG = LoggerFactory.getLogger(FLETest.class);
 
     static class TestVote {
         TestVote(int id, long leader) {
@@ -74,7 +77,7 @@ public class FLERestartTest extends TestCase {
     //volatile int round = 1;
     Random rand = new Random();
 
-    @Override
+    @Before
     public void setUp() throws Exception {
         count = 3;
 
@@ -86,16 +89,13 @@ public class FLERestartTest extends TestCase {
         port = new int[count];
         successCount = 0;
         finish = new Semaphore(0);
-
-        LOG.info("SetUp " + getName());
     }
 
-    @Override
+    @After
     public void tearDown() throws Exception {
         for(int i = 0; i < restartThreads.size(); i++) {
             ((FastLeaderElection) restartThreads.get(i).peer.getElectionAlg()).shutdown();
         }
-        LOG.info("FINISHED " + getName());
     }
 
     class FLERestartThread extends Thread {
@@ -126,7 +126,7 @@ public class FLERestartTest extends TestCase {
                      */
                     peer.setCurrentVote(v);
 
-                    LOG.info("Finished election: " + i + ", " + v.id);
+                    LOG.info("Finished election: " + i + ", " + v.getId());
                     //votes[i] = v;
 
                     switch(i){
@@ -175,7 +175,7 @@ public class FLERestartTest extends TestCase {
         leaderDies = true;
         boolean allowOneBadLeader = leaderDies;
 
-        LOG.info("TestLE: " + getName()+ ", " + count);
+        LOG.info("TestLE: " + getTestName()+ ", " + count);
         for(int i = 0; i < count; i++) {
             peers.put(Long.valueOf(i),
                     new QuorumServer(i,
@@ -192,11 +192,11 @@ public class FLERestartTest extends TestCase {
             thread.start();
             restartThreads.add(thread);
         }
-        LOG.info("Started threads " + getName());
+        LOG.info("Started threads " + getTestName());
         for(int i = 0; i < restartThreads.size(); i++) {
             restartThreads.get(i).join(10000);
             if (restartThreads.get(i).isAlive()) {
-                fail("Threads didn't join");
+                Assert.fail("Threads didn't join");
             }
 
         }

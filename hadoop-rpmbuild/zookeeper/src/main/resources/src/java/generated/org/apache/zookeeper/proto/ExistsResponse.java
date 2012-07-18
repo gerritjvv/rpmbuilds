@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class ExistsResponse implements Record {
   private org.apache.zookeeper.data.Stat stat;

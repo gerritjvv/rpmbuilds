@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.data;
 
-import java.util.*;
 import org.apache.jute.*;
 public class Stat implements Record {
   private long czxid;

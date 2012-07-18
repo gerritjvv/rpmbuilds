@@ -3,11 +3,11 @@ include $(top_srcdir)/aminclude.am
 
 AM_CPPFLAGS = -I${srcdir}/include -I${srcdir}/tests -I${srcdir}/generated
 AM_CFLAGS = -Wall -Werror 
-CXXFLAGS = -Wall -g $(USEIPV6)
+AM_CXXFLAGS = -Wall $(USEIPV6)
 
 LIB_LDFLAGS = -no-undefined -version-info 2
 
-pkginclude_HEADERS = include/zookeeper.h include/zookeeper_version.h include/zookeeper_log.h include/recordio.h generated/zookeeper.jute.h
+pkginclude_HEADERS = include/zookeeper.h include/zookeeper_version.h include/zookeeper_log.h include/proto.h include/recordio.h generated/zookeeper.jute.h
 EXTRA_DIST=LICENSE
 
 HASHTABLE_SRC = src/hashtable/hashtable_itr.h src/hashtable/hashtable_itr.c \
@@ -75,7 +75,7 @@ TEST_SOURCES = tests/TestDriver.cc tests/LibCMocks.cc tests/LibCSymTable.cc \
     tests/TestClientRetry.cc \
     tests/TestOperations.cc tests/TestZookeeperInit.cc \
     tests/TestZookeeperClose.cc tests/TestClient.cc \
-    tests/TestWatchers.cc
+    tests/TestMulti.cc tests/TestWatchers.cc
 
 
 SYMBOL_WRAPPERS=$(shell cat ${srcdir}/tests/wrappers.opt)

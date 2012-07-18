@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class AuthPacket implements Record {
   private int type;
@@ -134,7 +133,7 @@ public class AuthPacket implements Record {
     result = 37*result + ret;
     ret = scheme.hashCode();
     result = 37*result + ret;
-    ret = Arrays.toString(auth).hashCode();
+    ret = java.util.Arrays.toString(auth).hashCode();
     result = 37*result + ret;
     return result;
   }

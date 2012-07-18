@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class GetDataResponse implements Record {
   private byte[] data;
@@ -115,7 +114,7 @@ public class GetDataResponse implements Record {
   public int hashCode() {
     int result = 17;
     int ret;
-    ret = Arrays.toString(data).hashCode();
+    ret = java.util.Arrays.toString(data).hashCode();
     result = 37*result + ret;
     ret = stat.hashCode();
     result = 37*result + ret;

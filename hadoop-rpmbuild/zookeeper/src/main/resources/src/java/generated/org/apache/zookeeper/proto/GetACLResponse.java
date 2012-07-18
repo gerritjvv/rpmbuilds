@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class GetACLResponse implements Record {
   private java.util.List<org.apache.zookeeper.data.ACL> acl;

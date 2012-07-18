@@ -9,10 +9,10 @@
 /* Define to 1 if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
-/* Define to 1 if you have the file `generated/zookeeper.jute.c'. */
+/* Define to 1 if you have the file `AC_File'. */
 #undef HAVE_GENERATED_ZOOKEEPER_JUTE_C
 
-/* Define to 1 if you have the file `generated/zookeeper.jute.h'. */
+/* Define to 1 if you have the file `AC_File'. */
 #undef HAVE_GENERATED_ZOOKEEPER_JUTE_H
 
 /* Define to 1 if you have the `getcwd' function. */
@@ -102,10 +102,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
-#undef LT_OBJDIR
-
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 #undef NO_MINUS_C_MINUS_O
 
@@ -123,9 +119,6 @@
 
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
-
-/* Define to the home page for this package. */
-#undef PACKAGE_URL
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION

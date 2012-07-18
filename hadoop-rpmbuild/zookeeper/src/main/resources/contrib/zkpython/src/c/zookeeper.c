@@ -436,7 +436,7 @@ void watcher_dispatch(zhandle_t *zzh, int type, int state,
   if (PyObject_CallObject((PyObject*)callback, arglist) == NULL) {
     PyErr_Print();
   }
-  if (pyw->permanent == 0 && (type != ZOO_SESSION_EVENT || is_unrecoverable(zzh) == ZINVALIDSTATE)) {
+  if (pyw->permanent == 0 && (type != ZOO_SESSION_EVENT || is_unrecoverable(zzh))) {
     free_pywatcher(pyw);
   }
   PyGILState_Release(gstate);
@@ -1143,14 +1143,14 @@ static PyObject *pyzoo_set2(PyObject *self, PyObject *args)
     return NULL;
   }
   CHECK_ZHANDLE(zkhid);
-  struct Stat *stat = NULL;
-  int err = zoo_set2(zhandles[zkhid], path, buffer, buflen, version, stat);
+  struct Stat stat;
+  int err = zoo_set2(zhandles[zkhid], path, buffer, buflen, version, &stat);
   if (err != ZOK) {
     PyErr_SetString(err_to_exception(err), zerror(err));
     return NULL;
   }
 
-  return build_stat(stat);
+  return build_stat(&stat);
 }
 
 /* As per ZK documentation, datanodes are limited to 1Mb. Why not do a
@@ -1387,7 +1387,7 @@ PyObject *pyzoo_recv_timeout(PyObject *self, PyObject *args)
   return Py_BuildValue("i",recv_timeout);  
 }
 
-/* Returns > 0 if connection is unrecoverable, 0 otherwise */
+/* Returns True if connection is unrecoverable, False otherwise */
 PyObject *pyis_unrecoverable(PyObject *self, PyObject *args)
 {
   int zkhid;
@@ -1395,7 +1395,9 @@ PyObject *pyis_unrecoverable(PyObject *self, PyObject *args)
     return NULL;
   CHECK_ZHANDLE(zkhid);
   int ret = is_unrecoverable(zhandles[zkhid]);
-  return Py_BuildValue("i",ret); // TODO: make this a boolean
+  if (ret == ZINVALIDSTATE)
+    Py_RETURN_TRUE;
+  Py_RETURN_FALSE;
 }
 
 /* Set the debug level for logging, returns None */
@@ -1513,6 +1515,12 @@ PyMODINIT_FUNC initzookeeper(void) {
 
   PyModule_AddObject(module, "ZooKeeperException", ZooKeeperException);
   Py_INCREF(ZooKeeperException);
+
+  int size = 10;
+  char version_str[size];
+  snprintf(version_str, size, "%i.%i.%i", ZOO_MAJOR_VERSION, ZOO_MINOR_VERSION, ZOO_PATCH_VERSION);
+
+  PyModule_AddStringConstant(module, "__version__", version_str);
 
   ADD_INTCONSTANT(PERM_READ);
   ADD_INTCONSTANT(PERM_WRITE);

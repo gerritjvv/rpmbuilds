@@ -40,7 +40,7 @@ public class JRecord extends JCompType {
      */
     public JRecord(String name, ArrayList<JField> flist) {
         super("struct " + name.substring(name.lastIndexOf('.')+1),
-                name.replaceAll("\\.","::"), name, "Record", name);
+                name.replaceAll("\\.","::"), getCsharpFQName(name), name, "Record", name, getCsharpFQName("IRecord"));
         mFQName = name;
         int idx = name.lastIndexOf('.');
         mName = name.substring(idx+1);
@@ -50,6 +50,10 @@ public class JRecord extends JCompType {
 
     public String getName() {
         return mName;
+    }
+
+    public String getCsharpName() {
+        return "Id".equals(mName) ? "ZKId" : mName;
     }
 
     public String getJavaFQName() {
@@ -66,6 +70,17 @@ public class JRecord extends JCompType {
 
     public String getCppNameSpace() {
         return mModule.replaceAll("\\.", "::");
+    }
+
+    public String getCsharpNameSpace() {
+        String[] parts = mModule.split("\\.");
+        StringBuffer namespace = new StringBuffer();
+        for (int i = 0; i < parts.length; i++) {
+            String capitalized = parts[i].substring(0, 1).toUpperCase() + parts[i].substring(1).toLowerCase();
+            namespace.append(capitalized);
+            if (i != parts.length - 1) namespace.append(".");
+        }
+        return namespace.toString();
     }
 
     public ArrayList<JField> getFields() {
@@ -103,6 +118,25 @@ public class JRecord extends JCompType {
 
     public String genJavaWriteWrapper(String fname, String tag) {
         return "    a_.writeRecord("+fname+",\""+tag+"\");\n";
+    }
+
+    String genCsharpReadMethod(String fname, String tag) {
+        //return "    "+capitalize(fname)+"=a_.Read"+mMethodSuffix+"(" + capitalize(fname) + ",\""+tag+"\");\n";
+        return genCsharpReadWrapper(capitalize(fname), tag, false);
+    }
+
+    public String genCsharpReadWrapper(String fname, String tag, boolean decl) {
+        StringBuilder ret = new StringBuilder("");
+        if (decl) {
+            ret.append("    "+getCsharpFQName(mFQName)+" "+fname+";\n");
+        }
+        ret.append("    "+fname+"= new "+getCsharpFQName(mFQName)+"();\n");
+        ret.append("    a_.ReadRecord("+fname+",\""+tag+"\");\n");
+        return ret.toString();
+    }
+
+    public String genCsharpWriteWrapper(String fname, String tag) {
+        return "    a_.WriteRecord("+fname+",\""+tag+"\");\n";
     }
 
     static HashMap<String, String> vectorStructs = new HashMap<String, String>();
@@ -149,7 +183,7 @@ public class JRecord extends JCompType {
                     c.write("    for(i=0;i<v->count;i++) {\n");
                     genSerialize(c, jvType, "data", "data[i]");
                     c.write("    }\n");
-                    c.write("    rc = rc ? : out->end_vector(out, tag);\n");
+                    c.write("    rc = rc ? rc : out->end_vector(out, tag);\n");
                     c.write("    return rc;\n");
                     c.write("}\n");
                     c.write("int deserialize_" + struct_name + "(struct iarchive *in, const char *tag, struct " + struct_name + " *v)\n");
@@ -184,7 +218,7 @@ public class JRecord extends JCompType {
         for(JField f : mFields) {
             genSerialize(c, f.getType(), f.getTag(), f.getName());
         }
-        c.write("    rc = rc ? : out->end_record(out, tag);\n");
+        c.write("    rc = rc ? rc : out->end_record(out, tag);\n");
         c.write("    return rc;\n");
         c.write("}\n");
         c.write("int deserialize_" + rec_name + "(struct iarchive *in, const char *tag, struct " + rec_name + "*v)");
@@ -194,7 +228,7 @@ public class JRecord extends JCompType {
         for(JField f : mFields) {
             genDeserialize(c, f.getType(), f.getTag(), f.getName());
         }
-        c.write("    rc = rc ? : in->end_record(in, tag);\n");
+        c.write("    rc = rc ? rc : in->end_record(in, tag);\n");
         c.write("    return rc;\n");
         c.write("}\n");
         c.write("void deallocate_" + rec_name + "(struct " + rec_name + "*v)");
@@ -214,21 +248,21 @@ public class JRecord extends JCompType {
 
     private void genSerialize(FileWriter c, JType type, String tag, String name) throws IOException {
         if (type instanceof JRecord) {
-            c.write("    rc = rc ? : serialize_" + extractStructName(type) + "(out, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : serialize_" + extractStructName(type) + "(out, \"" + tag + "\", &v->" + name + ");\n");
         } else if (type instanceof JVector) {
-            c.write("    rc = rc ? : serialize_" + JVector.extractVectorName(((JVector)type).getElementType()) + "(out, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : serialize_" + JVector.extractVectorName(((JVector)type).getElementType()) + "(out, \"" + tag + "\", &v->" + name + ");\n");
         } else {
-            c.write("    rc = rc ? : out->serialize_" + extractMethodSuffix(type) + "(out, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : out->serialize_" + extractMethodSuffix(type) + "(out, \"" + tag + "\", &v->" + name + ");\n");
         }
     }
 
     private void genDeserialize(FileWriter c, JType type, String tag, String name) throws IOException {
         if (type instanceof JRecord) {
-            c.write("    rc = rc ? : deserialize_" + extractStructName(type) + "(in, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : deserialize_" + extractStructName(type) + "(in, \"" + tag + "\", &v->" + name + ");\n");
         } else if (type instanceof JVector) {
-            c.write("    rc = rc ? : deserialize_" + JVector.extractVectorName(((JVector)type).getElementType()) + "(in, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : deserialize_" + JVector.extractVectorName(((JVector)type).getElementType()) + "(in, \"" + tag + "\", &v->" + name + ");\n");
         } else {
-            c.write("    rc = rc ? : in->deserialize_" + extractMethodSuffix(type) + "(in, \"" + tag + "\", &v->" + name + ");\n");
+            c.write("    rc = rc ? rc : in->deserialize_" + extractMethodSuffix(type) + "(in, \"" + tag + "\", &v->" + name + ");\n");
         }
     }
 
@@ -315,7 +349,7 @@ public class JRecord extends JCompType {
 
         cc.write("bool "+getCppFQName()+"::validate() const {\n");
         cc.write("  if (bs_.size() != bs_.count()) return false;\n");
-        for (Iterator i = mFields.iterator(); i.hasNext(); fIdx++) {
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
             JField jf = (JField) i.next();
             JType type = jf.getType();
             if (type instanceof JRecord) {
@@ -391,7 +425,6 @@ public class JRecord extends JCompType {
         jj.write("*/\n");
         jj.write("\n");
         jj.write("package "+getJavaPackage()+";\n\n");
-        jj.write("import java.util.*;\n");
         jj.write("import org.apache.jute.*;\n");
         jj.write("public class "+getName()+" implements Record {\n");
         for (Iterator<JField> i = mFields.iterator(); i.hasNext();) {
@@ -533,4 +566,196 @@ public class JRecord extends JCompType {
 
         jj.close();
     }
+
+    public void genCsharpCode(File outputDirectory) throws IOException {
+        if (!outputDirectory.exists()) {
+            // create the pkg directory
+            if (!outputDirectory.mkdirs()) {
+                throw new IOException("Cannnot create directory: " + outputDirectory);
+            }
+        } else if (!outputDirectory.isDirectory()) {
+            throw new IOException(outputDirectory + " is not a directory.");
+        }
+        File csharpFile = new File(outputDirectory, getName()+".cs");
+        FileWriter cs = new FileWriter(csharpFile);
+        cs.write("// File generated by hadoop record compiler. Do not edit.\n");
+        cs.write("/**\n");
+        cs.write("* Licensed to the Apache Software Foundation (ASF) under one\n");
+        cs.write("* or more contributor license agreements.  See the NOTICE file\n");
+        cs.write("* distributed with this work for additional information\n");
+        cs.write("* regarding copyright ownership.  The ASF licenses this file\n");
+        cs.write("* to you under the Apache License, Version 2.0 (the\n");
+        cs.write("* \"License\"); you may not use this file except in compliance\n");
+        cs.write("* with the License.  You may obtain a copy of the License at\n");
+        cs.write("*\n");
+        cs.write("*     http://www.apache.org/licenses/LICENSE-2.0\n");
+        cs.write("*\n");
+        cs.write("* Unless required by applicable law or agreed to in writing, software\n");
+        cs.write("* distributed under the License is distributed on an \"AS IS\" BASIS,\n");
+        cs.write("* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n");
+        cs.write("* See the License for the specific language governing permissions and\n");
+        cs.write("* limitations under the License.\n");
+        cs.write("*/\n");
+        cs.write("\n");
+        cs.write("using System;\n");
+        cs.write("using Org.Apache.Jute;\n");
+        cs.write("\n");        
+        cs.write("namespace "+getCsharpNameSpace()+"\n");
+        cs.write("{\n");
+
+        String className = getCsharpName();
+        cs.write("public class "+className+" : IRecord, IComparable \n");
+        cs.write("{\n");
+        cs.write("  public "+ className +"() {\n");
+        cs.write("  }\n");
+
+        cs.write("  public "+className+"(\n");
+        int fIdx = 0;
+        int fLen = mFields.size();
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpConstructorParam(jf.getCsharpName()));
+            cs.write((fLen-1 == fIdx)?"":",\n");
+        }
+        cs.write(") {\n");
+        fIdx = 0;
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpConstructorSet(jf.getCsharpName()));
+        }
+        cs.write("  }\n");
+        fIdx = 0;
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpGetSet(fIdx));
+            cs.write("\n");
+        }
+        cs.write("  public void Serialize(IOutputArchive a_, String tag) {\n");
+        cs.write("    a_.StartRecord(this,tag);\n");
+        fIdx = 0;
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpWriteMethodName());
+        }
+        cs.write("    a_.EndRecord(this,tag);\n");
+        cs.write("  }\n");
+
+        cs.write("  public void Deserialize(IInputArchive a_, String tag) {\n");
+        cs.write("    a_.StartRecord(tag);\n");
+        fIdx = 0;
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpReadMethodName());
+        }
+        cs.write("    a_.EndRecord(tag);\n");
+        cs.write("}\n");
+
+        cs.write("  public override String ToString() {\n");
+        cs.write("    try {\n");
+        cs.write("      System.IO.MemoryStream ms = new System.IO.MemoryStream();\n");
+        cs.write("      MiscUtil.IO.EndianBinaryWriter writer =\n");
+        cs.write("        new MiscUtil.IO.EndianBinaryWriter(MiscUtil.Conversion.EndianBitConverter.Big, ms, System.Text.Encoding.UTF8);\n");
+        cs.write("      BinaryOutputArchive a_ = \n");
+        cs.write("        new BinaryOutputArchive(writer);\n");
+        cs.write("      a_.StartRecord(this,\"\");\n");
+        fIdx = 0;
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpWriteMethodName());
+        }
+        cs.write("      a_.EndRecord(this,\"\");\n");
+        cs.write("      ms.Position = 0;\n");
+        cs.write("      return System.Text.Encoding.UTF8.GetString(ms.ToArray());\n");
+        cs.write("    } catch (Exception ex) {\n");
+        cs.write("      Console.WriteLine(ex.StackTrace);\n");
+        cs.write("    }\n");
+        cs.write("    return \"ERROR\";\n");
+        cs.write("  }\n");
+
+        cs.write("  public void Write(MiscUtil.IO.EndianBinaryWriter writer) {\n");
+        cs.write("    BinaryOutputArchive archive = new BinaryOutputArchive(writer);\n");
+        cs.write("    Serialize(archive, \"\");\n");
+        cs.write("  }\n");
+
+        cs.write("  public void ReadFields(MiscUtil.IO.EndianBinaryReader reader) {\n");
+        cs.write("    BinaryInputArchive archive = new BinaryInputArchive(reader);\n");
+        cs.write("    Deserialize(archive, \"\");\n");
+        cs.write("  }\n");
+
+        cs.write("  public int CompareTo (object peer_) {\n");
+        boolean unimplemented = false;
+        for (JField f : mFields) {
+            if ((f.getType() instanceof JMap)
+                    || (f.getType() instanceof JVector))
+            {
+                unimplemented = true;
+            }
+        }
+        if (unimplemented) {
+            cs.write("    throw new InvalidOperationException(\"comparing "
+                    + getCsharpName() + " is unimplemented\");\n");
+        } else {
+            cs.write("    if (!(peer_ is "+getCsharpName()+")) {\n");
+            cs.write("      throw new InvalidOperationException(\"Comparing different types of records.\");\n");
+            cs.write("    }\n");
+            cs.write("    "+getCsharpName()+" peer = ("+getCsharpName()+") peer_;\n");
+            cs.write("    int ret = 0;\n");
+            for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+                JField jf = i.next();
+                cs.write(jf.genCsharpCompareTo());
+                cs.write("    if (ret != 0) return ret;\n");
+            }
+            cs.write("     return ret;\n");
+        }
+        cs.write("  }\n");
+
+        cs.write("  public override bool Equals(object peer_) {\n");
+        cs.write("    if (!(peer_ is "+getCsharpName()+")) {\n");
+        cs.write("      return false;\n");
+        cs.write("    }\n");
+        cs.write("    if (peer_ == this) {\n");
+        cs.write("      return true;\n");
+        cs.write("    }\n");
+        cs.write("    bool ret = false;\n");
+        cs.write("    " + getCsharpName() + " peer = (" + getCsharpName() + ")peer_;\n");
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpEquals());
+            cs.write("    if (!ret) return ret;\n");
+        }
+        cs.write("     return ret;\n");
+        cs.write("  }\n");
+
+        cs.write("  public override int GetHashCode() {\n");
+        cs.write("    int result = 17;\n");
+        cs.write("    int ret;\n");
+        for (Iterator<JField> i = mFields.iterator(); i.hasNext(); fIdx++) {
+            JField jf = i.next();
+            cs.write(jf.genCsharpHashCode());
+            cs.write("    result = 37*result + ret;\n");
+        }
+        cs.write("    return result;\n");
+        cs.write("  }\n");
+        cs.write("  public static string Signature() {\n");
+        cs.write("    return \""+getSignature()+"\";\n");
+        cs.write("  }\n");
+
+        cs.write("}\n");
+        cs.write("}\n");
+
+        cs.close();
+    }
+
+    public static String getCsharpFQName(String name) {
+        String[] packages = name.split("\\.");
+        StringBuffer fQName = new StringBuffer();
+        for (int i = 0; i < packages.length; i++) {
+            String pack = packages[i];
+            pack = capitalize(pack);
+            pack = "Id".equals(pack) ? "ZKId" : pack;
+            fQName.append(capitalize(pack));
+            if (i != packages.length - 1) fQName.append(".");
+        }
+        return fQName.toString();
+    }    
 }

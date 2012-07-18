@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class ConnectRequest implements Record {
   private int protocolVersion;
@@ -170,7 +169,7 @@ public class ConnectRequest implements Record {
     result = 37*result + ret;
     ret = (int) (sessionId^(sessionId>>>32));
     result = 37*result + ret;
-    ret = Arrays.toString(passwd).hashCode();
+    ret = java.util.Arrays.toString(passwd).hashCode();
     result = 37*result + ret;
     return result;
   }

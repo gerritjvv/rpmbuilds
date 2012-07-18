@@ -19,45 +19,41 @@
 package org.apache.zookeeper.test;
 
 import java.io.File;
-import java.net.InetSocketAddress;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.PortAssignment;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
-import org.apache.zookeeper.server.NIOServerCnxn;
 import org.apache.zookeeper.server.PurgeTxnLog;
+import org.apache.zookeeper.server.ServerCnxnFactory;
 import org.apache.zookeeper.server.SyncRequestProcessor;
 import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
+import org.junit.Assert;
+import org.junit.Test;
 
-/**
- * test the purging of the logs
- * and purging of the snapshots.
- */
-public class PurgeTxnTest extends TestCase implements  Watcher {
-    //private static final Logger LOG = Logger.getLogger(PurgeTxnTest.class);
+public class PurgeTxnTest extends ZKTestCase implements  Watcher {
+    //private static final Logger LOG = LoggerFactory.getLogger(PurgeTxnTest.class);
     private static String HOSTPORT = "127.0.0.1:" + PortAssignment.unique();
     private static final int CONNECTION_TIMEOUT = 3000;
     /**
      * test the purge
      * @throws Exception an exception might be thrown here
      */
+    @Test
     public void testPurge() throws Exception {
         File tmpDir = ClientBase.createTmpDir();
         ClientBase.setupTestEnv();
         ZooKeeperServer zks = new ZooKeeperServer(tmpDir, tmpDir, 3000);
         SyncRequestProcessor.setSnapCount(100);
         final int PORT = Integer.parseInt(HOSTPORT.split(":")[1]);
-        NIOServerCnxn.Factory f = new NIOServerCnxn.Factory(
-                new InetSocketAddress(PORT));
+        ServerCnxnFactory f = ServerCnxnFactory.createFactory(PORT, -1);
         f.startup(zks);
-        assertTrue("waiting for server being up ",
+        Assert.assertTrue("waiting for server being up ",
                 ClientBase.waitForServerUp(HOSTPORT,CONNECTION_TIMEOUT));
         ZooKeeper zk = new ZooKeeper(HOSTPORT, CONNECTION_TIMEOUT, this);
         try {
@@ -69,7 +65,7 @@ public class PurgeTxnTest extends TestCase implements  Watcher {
             zk.close();
         }
         f.shutdown();
-        assertTrue("waiting for server to shutdown",
+        Assert.assertTrue("waiting for server to shutdown",
                 ClientBase.waitForServerDown(HOSTPORT, CONNECTION_TIMEOUT));
         // now corrupt the snapshot
         PurgeTxnLog.purge(tmpDir, tmpDir, 3);
@@ -81,7 +77,7 @@ public class PurgeTxnTest extends TestCase implements  Watcher {
                 numSnaps++;
             }
         }
-        assertTrue("exactly 3 snapshots ", (numSnaps == 3));
+        Assert.assertTrue("exactly 3 snapshots ", (numSnaps == 3));
     }
 
     public void process(WatchedEvent event) {

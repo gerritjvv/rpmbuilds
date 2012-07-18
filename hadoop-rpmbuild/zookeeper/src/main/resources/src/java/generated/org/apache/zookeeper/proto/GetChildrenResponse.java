@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.proto;
 
-import java.util.*;
 import org.apache.jute.*;
 public class GetChildrenResponse implements Record {
   private java.util.List<String> children;

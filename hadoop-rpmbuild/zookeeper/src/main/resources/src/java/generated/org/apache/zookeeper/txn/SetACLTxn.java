@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.txn;
 
-import java.util.*;
 import org.apache.jute.*;
 public class SetACLTxn implements Record {
   private String path;

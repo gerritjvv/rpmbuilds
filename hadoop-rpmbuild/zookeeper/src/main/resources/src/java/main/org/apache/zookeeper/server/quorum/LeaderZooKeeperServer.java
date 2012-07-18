@@ -167,7 +167,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
     
     @Override
     protected void revalidateSession(ServerCnxn cnxn, long sessionId,
-        int sessionTimeout) throws IOException, InterruptedException {
+        int sessionTimeout) throws IOException {
         super.revalidateSession(cnxn, sessionId, sessionTimeout);
         try {
             // setowner as the leader itself, unless updated

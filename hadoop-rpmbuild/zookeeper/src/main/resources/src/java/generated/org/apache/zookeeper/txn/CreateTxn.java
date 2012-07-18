@@ -19,24 +19,26 @@
 
 package org.apache.zookeeper.txn;
 
-import java.util.*;
 import org.apache.jute.*;
 public class CreateTxn implements Record {
   private String path;
   private byte[] data;
   private java.util.List<org.apache.zookeeper.data.ACL> acl;
   private boolean ephemeral;
+  private int parentCVersion;
   public CreateTxn() {
   }
   public CreateTxn(
         String path,
         byte[] data,
         java.util.List<org.apache.zookeeper.data.ACL> acl,
-        boolean ephemeral) {
+        boolean ephemeral,
+        int parentCVersion) {
     this.path=path;
     this.data=data;
     this.acl=acl;
     this.ephemeral=ephemeral;
+    this.parentCVersion=parentCVersion;
   }
   public String getPath() {
     return path;
@@ -62,6 +64,12 @@ public class CreateTxn implements Record {
   public void setEphemeral(boolean m_) {
     ephemeral=m_;
   }
+  public int getParentCVersion() {
+    return parentCVersion;
+  }
+  public void setParentCVersion(int m_) {
+    parentCVersion=m_;
+  }
   public void serialize(OutputArchive a_, String tag) throws java.io.IOException {
     a_.startRecord(this,tag);
     a_.writeString(path,"path");
@@ -77,6 +85,7 @@ public class CreateTxn implements Record {
       a_.endVector(acl,"acl");
     }
     a_.writeBool(ephemeral,"ephemeral");
+    a_.writeInt(parentCVersion,"parentCVersion");
     a_.endRecord(this,tag);
   }
   public void deserialize(InputArchive a_, String tag) throws java.io.IOException {
@@ -96,6 +105,7 @@ public class CreateTxn implements Record {
     a_.endVector("acl");
     }
     ephemeral=a_.readBool("ephemeral");
+    parentCVersion=a_.readInt("parentCVersion");
     a_.endRecord(tag);
 }
   public String toString() {
@@ -118,6 +128,7 @@ public class CreateTxn implements Record {
       a_.endVector(acl,"acl");
     }
     a_.writeBool(ephemeral,"ephemeral");
+    a_.writeInt(parentCVersion,"parentCVersion");
       a_.endRecord(this,"");
       return new String(s.toByteArray(), "UTF-8");
     } catch (Throwable ex) {
@@ -153,6 +164,8 @@ public class CreateTxn implements Record {
     if (!ret) return ret;
     ret = (ephemeral==peer.ephemeral);
     if (!ret) return ret;
+    ret = (parentCVersion==peer.parentCVersion);
+    if (!ret) return ret;
      return ret;
   }
   public int hashCode() {
@@ -160,15 +173,17 @@ public class CreateTxn implements Record {
     int ret;
     ret = path.hashCode();
     result = 37*result + ret;
-    ret = Arrays.toString(data).hashCode();
+    ret = java.util.Arrays.toString(data).hashCode();
     result = 37*result + ret;
     ret = acl.hashCode();
     result = 37*result + ret;
      ret = (ephemeral)?0:1;
     result = 37*result + ret;
+    ret = (int)parentCVersion;
+    result = 37*result + ret;
     return result;
   }
   public static String signature() {
-    return "LCreateTxn(sB[LACL(iLId(ss))]z)";
+    return "LCreateTxn(sB[LACL(iLId(ss))]zi)";
   }
 }

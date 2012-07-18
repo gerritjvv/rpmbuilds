@@ -20,15 +20,16 @@ package org.apache.zookeeper.test;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.TestableZooKeeper;
 import static org.apache.zookeeper.client.FourLetterWordMain.send4LetterWord;
-import org.apache.zookeeper.test.ClientBase.HostPort;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FourLetterWordsQuorumTest extends QuorumBase {
     protected static final Logger LOG =
-        Logger.getLogger(FourLetterWordsQuorumTest.class);
+        LoggerFactory.getLogger(FourLetterWordsQuorumTest.class);
 
     /** Test the various four letter words */
     @Test
@@ -90,6 +91,8 @@ public class FourLetterWordsQuorumTest extends QuorumBase {
             verify(hp, "stat", "Outstanding");
             verify(hp, "srvr", "Outstanding");
             verify(hp, "cons", "queued");
+
+            verify(hp, "mntr", "zk_version\t");
         }
     }
 
@@ -100,10 +103,10 @@ public class FourLetterWordsQuorumTest extends QuorumBase {
             String resp = send4LetterWord(hpobj.host, hpobj.port, cmd);
             LOG.info("cmd " + cmd + " expected " + expected + " got " + resp);
             if (cmd.equals("dump")) {
-                assertTrue(resp.contains(expected)
+                Assert.assertTrue(resp.contains(expected)
                         || resp.contains("Sessions with Ephemerals"));
             } else {
-                assertTrue(resp.contains(expected));
+                Assert.assertTrue(resp.contains(expected));
             }
         }
     }

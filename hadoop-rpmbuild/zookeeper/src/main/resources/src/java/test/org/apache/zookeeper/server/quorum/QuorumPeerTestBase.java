@@ -25,11 +25,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZKTestCase;
+import org.apache.zookeeper.server.ZooKeeperServer;
+import org.apache.zookeeper.server.persistence.FileTxnSnapLog;
 import org.apache.zookeeper.test.ClientBase;
 import org.apache.zookeeper.test.QuorumBase;
 
@@ -37,10 +39,10 @@ import org.apache.zookeeper.test.QuorumBase;
  * Has some common functionality for tests that work with QuorumPeers.
  * Override process(WatchedEvent) to implement the Watcher interface
  */
-public class QuorumPeerTestBase extends TestCase implements Watcher {
+public class QuorumPeerTestBase extends ZKTestCase implements Watcher {
     protected static final Logger LOG =
-        Logger.getLogger(QuorumPeerTestBase.class);
-
+        LoggerFactory.getLogger(QuorumPeerTestBase.class);
+    
     public void process(WatchedEvent event) {
         // ignore for this test
     }
@@ -54,20 +56,18 @@ public class QuorumPeerTestBase extends TestCase implements Watcher {
         }
     }
 
-    public static class MainThread extends Thread {
+    public static class MainThread implements Runnable {
         final File confFile;
         volatile TestQPMain main;
 
         public MainThread(int myid, int clientPort, String quorumCfgSection)
             throws IOException
         {
-            super("QuorumPeer with myid:" + myid
-                    + " and clientPort:" + clientPort);
             File tmpDir = ClientBase.createTmpDir();
             confFile = new File(tmpDir, "zoo.cfg");
 
             FileWriter fwriter = new FileWriter(confFile);
-            fwriter.write("tickTime=2000\n");
+            fwriter.write("tickTime=4000\n");
             fwriter.write("initLimit=10\n");
             fwriter.write("syncLimit=5\n");
 
@@ -83,7 +83,7 @@ public class QuorumPeerTestBase extends TestCase implements Watcher {
                 dir = dir.replace('\\', '/');
             }
             fwriter.write("dataDir=" + dir + "\n");
-
+            
             fwriter.write("clientPort=" + clientPort + "\n");
             fwriter.write(quorumCfgSection + "\n");
             fwriter.flush();
@@ -94,15 +94,13 @@ public class QuorumPeerTestBase extends TestCase implements Watcher {
             fwriter.write(Integer.toString(myid));
             fwriter.flush();
             fwriter.close();
-
-            main = new TestQPMain();
         }
 
         Thread currentThread;
         synchronized public void start() {
-            main = new TestQPMain();
-            currentThread = new Thread(this);
-            currentThread.start();
+        	main = new TestQPMain();
+        	currentThread = new Thread(this);
+        	currentThread.start();
         }
         public void run() {
             String args[] = new String[1];
@@ -113,17 +111,26 @@ public class QuorumPeerTestBase extends TestCase implements Watcher {
                 // test will still fail even though we just log/ignore
                 LOG.error("unexpected exception in run", e);
             } finally {
-                currentThread = null;
+            	currentThread = null;
             }
         }
 
         public void shutdown() throws InterruptedException {
-            Thread t = currentThread;
-            if (t != null && t.isAlive()) {
-                main.shutdown();
-                t.join(500);
-            }
+        	Thread t = currentThread;
+        	if (t != null && t.isAlive()) {
+        		main.shutdown();
+        		t.join(500);
+        	}
         }
-
+		public void join(long timeout) throws InterruptedException {
+			Thread t = currentThread;
+			if (t != null) {
+				t.join(timeout);
+			}
+		}
+		public boolean isAlive() {
+			Thread t = currentThread;
+			return t != null && t.isAlive();
+		}
     }
 }

@@ -21,7 +21,7 @@ package org.apache.zookeeper.server;
 /**
  * RequestProcessors are chained together to process transactions. Requests are
  * always processed in order. The standalone server, follower, and leader all
- * have slightly different RequestProcessors changed together.
+ * have slightly different RequestProcessors chained together.
  * 
  * Requests always move forward through the chain of RequestProcessors. Requests
  * are passed to a RequestProcessor through processRequest(). Generally method
@@ -31,14 +31,7 @@ package org.apache.zookeeper.server;
  * any RequestProcessors that it is connected to.
  */
 public interface RequestProcessor {
-    @SuppressWarnings("serial")
-    public static class RequestProcessorException extends Exception {
-        public RequestProcessorException(String msg, Throwable t) {
-            super(msg, t);
-        }
-    }
-
-    void processRequest(Request request) throws RequestProcessorException;
+    void processRequest(Request request);
 
     void shutdown();
 }

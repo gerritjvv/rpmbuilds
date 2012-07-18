@@ -18,39 +18,17 @@
 
 package org.apache.zookeeper.test;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Functional testing of asynchronous operations, both positive and negative
- * testing.
- * 
- * This just scratches the surface, but exercises the basic async functionality.
- */
 public class ACLRootTest extends ClientBase {
-    private static final Logger LOG = Logger.getLogger(ACLRootTest.class);
-
-    @Before
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        
-        LOG.info("STARTING " + getName());
-    }
-
-    @After
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        
-        LOG.info("FINISHED " + getName());
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(ACLRootTest.class);
 
     @Test
     public void testRootAcl() throws Exception {
@@ -65,14 +43,14 @@ public class ACLRootTest extends ClientBase {
             zk = createClient();
             try {
                 zk.getData("/", false, null);
-                fail("validate auth");
+                Assert.fail("validate auth");
             } catch (KeeperException.NoAuthException e) {
                 // expected
             }
             try {
                 zk.create("/apps", null, Ids.CREATOR_ALL_ACL,
                         CreateMode.PERSISTENT);
-                fail("validate auth");
+                Assert.fail("validate auth");
             } catch (KeeperException.InvalidACLException e) {
                 // expected
             }
@@ -80,7 +58,7 @@ public class ACLRootTest extends ClientBase {
             try {
                 zk.create("/apps", null, Ids.CREATOR_ALL_ACL,
                         CreateMode.PERSISTENT);
-                fail("validate auth");
+                Assert.fail("validate auth");
             } catch (KeeperException.NoAuthException e) {
                 // expected
             }
@@ -102,7 +80,7 @@ public class ACLRootTest extends ClientBase {
             try {
                 zk.create("/apps", null, Ids.CREATOR_ALL_ACL,
                         CreateMode.PERSISTENT);
-                fail("validate auth");
+                Assert.fail("validate auth");
             } catch (KeeperException.InvalidACLException e) {
                 // expected
             }

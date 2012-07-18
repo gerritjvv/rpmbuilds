@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.txn;
 
-import java.util.*;
 import org.apache.jute.*;
 public class SetDataTxn implements Record {
   private String path;
@@ -132,7 +131,7 @@ public class SetDataTxn implements Record {
     int ret;
     ret = path.hashCode();
     result = 37*result + ret;
-    ret = Arrays.toString(data).hashCode();
+    ret = java.util.Arrays.toString(data).hashCode();
     result = 37*result + ret;
     ret = (int)version;
     result = 37*result + ret;

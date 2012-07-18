@@ -18,7 +18,7 @@ org.apache.zookeeper.ZooKeeper
     <TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
     <TABLE summary="Navigation bar" BORDER="0" CELLPADDING="0" CELLSPACING="3">
     <TR ALIGN="center" VALIGN="top">
-      <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="../../api/org/apache/zookeeper/ZooKeeper.html" target="_top"><FONT CLASS="NavBarFont1"><B><tt>zookeeper 3.3.5</tt></B></FONT></A>&nbsp;</TD>
+      <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="../../api/org/apache/zookeeper/ZooKeeper.html" target="_top"><FONT CLASS="NavBarFont1"><B><tt>zookeeper 3.4.3</tt></B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="changes-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="pkg_org.apache.zookeeper.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
@@ -32,14 +32,14 @@ org.apache.zookeeper.ZooKeeper
 <TR>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="org.apache.zookeeper.ZooDefs.OpCode.html"><B>PREV CLASS</B></A>
-&nbsp;<A HREF="org.apache.zookeeper.ZooKeeperMain.html"><B>NEXT CLASS</B></A>
+&nbsp;<A HREF="org.apache.zookeeper.ZooKeeper.States.html"><B>NEXT CLASS</B></A>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <A HREF="../changes.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
   &nbsp;<A HREF="org.apache.zookeeper.ZooKeeper.html" TARGET="_top"><B>NO FRAMES</B></A></FONT></TD>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell3"><FONT SIZE="-2"> DETAIL: &nbsp;
-CONSTRUCTORS&nbsp;|&nbsp;
+<a href="#constructors">CONSTRUCTORS</a>&nbsp;|&nbsp;
 <a href="#methods">METHODS</a>&nbsp;|&nbsp;
-FIELDS
+<a href="#fields">FIELDS</a>
   </FONT></TD>
 </TR>
 </TABLE>
@@ -49,6 +49,28 @@ FIELDS
 Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html" target="_top"><tt>ZooKeeper</tt></A>
 </H2>
 <a NAME="constructors"></a>
+<p>
+<a NAME="Added"></a>
+<TABLE summary="Added Constructors" BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+  <TD VALIGN="TOP" COLSPAN=2><FONT SIZE="+1"><B>Added Constructors</B></FONT></TD>
+</TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.ctor_added(java.lang.String, int, org.apache.zookeeper.Watcher, boolean)"></A>
+  <nobr><A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#ZooKeeper(java.lang.String, int, org.apache.zookeeper.Watcher, boolean)" target="_top"><tt>ZooKeeper</tt></A>(<code>String,</nobr> int<nobr>,</nobr> Watcher<nobr>,</nobr> boolean<nobr><nobr></code>)</nobr>
+  </TD>
+  <TD VALIGN="TOP">To create a ZooKeeper client object the application needs to pass a connection string containing a comma separated list of host:port pairs each corresponding to a ZooKeeper server.</TD>
+</TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.ctor_added(java.lang.String, int, org.apache.zookeeper.Watcher, long, byte[], boolean)"></A>
+  <nobr><A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#ZooKeeper(java.lang.String, int, org.apache.zookeeper.Watcher, long, byte[], boolean)" target="_top"><tt>ZooKeeper</tt></A>(<code>String,</nobr> int<nobr>,</nobr> Watcher<nobr>,</nobr> long<nobr>,</nobr> byte[]<nobr>,</nobr> boolean<nobr><nobr></code>)</nobr>
+  </TD>
+  <TD VALIGN="TOP">To create a ZooKeeper client object the application needs to pass a connection string containing a comma separated list of host:port pairs each corresponding to a ZooKeeper server.</TD>
+</TR>
+</TABLE>
+&nbsp;
 <a NAME="methods"></a>
 <p>
 <a NAME="Removed"></a>
@@ -90,14 +112,14 @@ Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.htm
   <A NAME="org.apache.zookeeper.ZooKeeper.getChildren_added(java.lang.String, boolean, org.apache.zookeeper.AsyncCallback.Children2Callback, java.lang.Object)"></A>
   <nobr><code>void</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#getChildren(java.lang.String, boolean, org.apache.zookeeper.AsyncCallback.Children2Callback, java.lang.Object)" target="_top"><tt>getChildren</tt></A>(<code>String,</nobr> boolean<nobr>,</nobr> Children2Callback<nobr>,</nobr> Object<nobr><nobr></code>)</nobr>
   </TD>
-  <TD VALIGN="TOP">The Asynchronous version of getChildren.</TD>
+  <TD VALIGN="TOP">The asynchronous version of getChildren.</TD>
 </TR>
 <TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
   <TD VALIGN="TOP" WIDTH="25%">
   <A NAME="org.apache.zookeeper.ZooKeeper.getChildren_added(java.lang.String, org.apache.zookeeper.Watcher, org.apache.zookeeper.AsyncCallback.Children2Callback, java.lang.Object)"></A>
   <nobr><code>void</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#getChildren(java.lang.String, org.apache.zookeeper.Watcher, org.apache.zookeeper.AsyncCallback.Children2Callback, java.lang.Object)" target="_top"><tt>getChildren</tt></A>(<code>String,</nobr> Watcher<nobr>,</nobr> Children2Callback<nobr>,</nobr> Object<nobr><nobr></code>)</nobr>
   </TD>
-  <TD VALIGN="TOP">The Asynchronous version of getChildren.</TD>
+  <TD VALIGN="TOP">The asynchronous version of getChildren.</TD>
 </TR>
 <TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
   <TD VALIGN="TOP" WIDTH="25%">
@@ -105,6 +127,20 @@ Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.htm
   <nobr><code>int</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#getSessionTimeout()" target="_top"><tt>getSessionTimeout</tt></A>()</nobr>
   </TD>
   <TD VALIGN="TOP">The negotiated session timeout for this ZooKeeper client instance.</TD>
+</TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.multi_added(java.lang.Iterable)"></A>
+  <nobr><code>List</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#multi(java.lang.Iterable)" target="_top"><tt>multi</tt></A>(<code>Iterable</code>)</nobr>
+  </TD>
+  <TD VALIGN="TOP">Executes multiple ZooKeeper operations or none of them.</TD>
+</TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.multiInternal_added(org.apache.zookeeper.MultiTransactionRecord)"></A>
+  <nobr><code>List</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#multiInternal(org.apache.zookeeper.MultiTransactionRecord)" target="_top"><tt>multiInternal</tt></A>(<code>MultiTransactionRecord</code>)</nobr>
+  </TD>
+  <TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
   <TD VALIGN="TOP" WIDTH="25%">
@@ -134,9 +170,31 @@ Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.htm
   </TD>
   <TD VALIGN="TOP">String representation of this ZooKeeper client.</TD>
 </TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.transaction_added()"></A>
+  <nobr><code>Transaction</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#transaction()" target="_top"><tt>transaction</tt></A>()</nobr>
+  </TD>
+  <TD VALIGN="TOP">A Transaction is a thin wrapper on the <A HREF="../../api/#multi.html" target="_top">#multi</A> method which provides a builder object that can be used to construct and commit an atomic set of operations.</TD>
+</TR>
 </TABLE>
 &nbsp;
 <a NAME="fields"></a>
+<p>
+<a NAME="Added"></a>
+<TABLE summary="Added Fields" BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+  <TD VALIGN="TOP" COLSPAN=2><FONT SIZE="+1"><B>Added Fields</B></FONT></TD>
+</TR>
+<TR BGCOLOR="#FFFFFF" CLASS="TableRowColor">
+  <TD VALIGN="TOP" WIDTH="25%">
+  <A NAME="org.apache.zookeeper.ZooKeeper.ZOOKEEPER_CLIENT_CNXN_SOCKET"></A>
+  <nobr><code>String</code>&nbsp;<A HREF="../../api/org/apache/zookeeper/ZooKeeper.html#ZOOKEEPER_CLIENT_CNXN_SOCKET" target="_top"><tt>ZOOKEEPER_CLIENT_CNXN_SOCKET</tt></A></nobr>
+  </TD>
+  <TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
 <HR>
 <!-- Start of nav bar -->
 <TABLE summary="Navigation bar" BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0">
@@ -144,7 +202,7 @@ Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.htm
     <TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
     <TABLE summary="Navigation bar" BORDER="0" CELLPADDING="0" CELLSPACING="3">
     <TR ALIGN="center" VALIGN="top">
-      <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="../../api/org/apache/zookeeper/ZooKeeper.html" target="_top"><FONT CLASS="NavBarFont1"><B><tt>zookeeper 3.3.5</tt></B></FONT></A>&nbsp;</TD>
+      <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="../../api/org/apache/zookeeper/ZooKeeper.html" target="_top"><FONT CLASS="NavBarFont1"><B><tt>zookeeper 3.4.3</tt></B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="changes-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1"> <A HREF="pkg_org.apache.zookeeper.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
       <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
@@ -158,7 +216,7 @@ Class org.apache.zookeeper.<A HREF="../../api/org/apache/zookeeper/ZooKeeper.htm
 <TR>
   <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="org.apache.zookeeper.ZooDefs.OpCode.html"><B>PREV CLASS</B></A>
-&nbsp;<A HREF="org.apache.zookeeper.ZooKeeperMain.html"><B>NEXT CLASS</B></A>
+&nbsp;<A HREF="org.apache.zookeeper.ZooKeeper.States.html"><B>NEXT CLASS</B></A>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <A HREF="../changes.html" TARGET="_top"><B>FRAMES</B></A>  &nbsp;
   &nbsp;<A HREF="org.apache.zookeeper.ZooKeeper.html" TARGET="_top"><B>NO FRAMES</B></A></FONT></TD>

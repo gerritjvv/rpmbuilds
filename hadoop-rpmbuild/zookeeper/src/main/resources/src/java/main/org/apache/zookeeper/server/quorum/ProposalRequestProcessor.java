@@ -18,16 +18,21 @@
 
 package org.apache.zookeeper.server.quorum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.server.Request;
 import org.apache.zookeeper.server.RequestProcessor;
 import org.apache.zookeeper.server.SyncRequestProcessor;
-import org.apache.zookeeper.server.quorum.Leader.XidRolloverException;
+import org.apache.zookeeper.server.ZooKeeperServer;
 
 /**
  * This RequestProcessor simply forwards requests to an AckRequestProcessor and
  * SyncRequestProcessor.
  */
 public class ProposalRequestProcessor implements RequestProcessor {
+    private static final Logger LOG =
+        LoggerFactory.getLogger(ProposalRequestProcessor.class);
+
     LeaderZooKeeperServer zks;
     
     RequestProcessor nextProcessor;
@@ -49,7 +54,7 @@ public class ProposalRequestProcessor implements RequestProcessor {
         syncProcessor.start();
     }
     
-    public void processRequest(Request request) throws RequestProcessorException {
+    public void processRequest(Request request) {
         // LOG.warn("Ack>>> cxid = " + request.cxid + " type = " +
         // request.type + " id = " + request.sessionId);
         // request.addRQRec(">prop");
@@ -69,17 +74,14 @@ public class ProposalRequestProcessor implements RequestProcessor {
                 nextProcessor.processRequest(request);
             if (request.hdr != null) {
                 // We need to sync and get consensus on any transactions
-                try {
-                    zks.getLeader().propose(request);
-                } catch (XidRolloverException e) {
-                    throw new RequestProcessorException(e.getMessage(), e);
-                }
+                zks.getLeader().propose(request);
                 syncProcessor.processRequest(request);
             }
         }
     }
 
     public void shutdown() {
+        LOG.info("Shutting down");
         nextProcessor.shutdown();
         syncProcessor.shutdown();
     }

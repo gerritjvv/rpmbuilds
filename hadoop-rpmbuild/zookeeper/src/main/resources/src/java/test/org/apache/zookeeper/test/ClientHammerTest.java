@@ -22,21 +22,18 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ClientHammerTest extends ClientBase {
-    protected static final Logger LOG = Logger.getLogger(ClientHammerTest.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(ClientHammerTest.class);
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        LOG.info("FINISHED " + getName());
-    }
     private static final long HAMMERTHREAD_LATENCY = 5;
 
     private static abstract class HammerThread extends Thread {
@@ -68,7 +65,7 @@ public class ClientHammerTest extends ClientBase {
                     zk.create(prefix + current, b, Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
                 }
             } catch (Throwable t) {
-                LOG.error("Client create operation failed", t);
+                LOG.error("Client create operation Assert.failed", t);
             } finally {
                 try {
                     zk.close();
@@ -107,7 +104,7 @@ public class ClientHammerTest extends ClientBase {
                     }
                 }
             } catch (Throwable t) {
-                LOG.error("Client create operation failed", t);
+                LOG.error("Client create operation Assert.failed", t);
             }
         }
     }
@@ -143,7 +140,7 @@ public class ClientHammerTest extends ClientBase {
 
             verifyHammer(start, threads, childCount);
         } catch (Throwable t) {
-            LOG.error("test failed", t);
+            LOG.error("test Assert.failed", t);
             throw t;
         }
     }
@@ -182,7 +179,7 @@ public class ClientHammerTest extends ClientBase {
 
             verifyHammer(start, threads, childCount);
         } catch (Throwable t) {
-            LOG.error("test failed", t);
+            LOG.error("test Assert.failed", t);
             throw t;
         }
     }
@@ -230,16 +227,16 @@ public class ClientHammerTest extends ClientBase {
                 LOG.info("Doing thread: " + i + " " + new Date());
                 List<String> children =
                     zk.getChildren("/test-" + i, false);
-                assertEquals(childCount, children.size());
+                Assert.assertEquals(childCount, children.size());
                 children = zk.getChildren("/test-" + i, false, null);
-                assertEquals(childCount, children.size());
+                Assert.assertEquals(childCount, children.size());
             }
             for (int i = 0; i < threads.length; i++) {
                 List<String> children =
                     zk.getChildren("/test-" + i, false);
-                assertEquals(childCount, children.size());
+                Assert.assertEquals(childCount, children.size());
                 children = zk.getChildren("/test-" + i, false, null);
-                assertEquals(childCount, children.size());
+                Assert.assertEquals(childCount, children.size());
             }
         } finally {
             zk.close();

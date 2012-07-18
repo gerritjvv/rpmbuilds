@@ -23,6 +23,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import junit.framework.Assert;
+
 import org.apache.jute.BinaryOutputArchive;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooDefs.Ids;
@@ -31,6 +33,7 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.proto.ConnectRequest;
 import org.apache.zookeeper.proto.CreateRequest;
 import org.apache.zookeeper.proto.RequestHeader;
+import org.junit.Test;
 
 public class SessionInvalidationTest extends ClientBase {
     /**
@@ -43,6 +46,7 @@ public class SessionInvalidationTest extends ClientBase {
      * the server will process the create before FinalRequestProcessor
      * removes the session from the tracker.
      */
+    @Test
     public void testCreateAfterCloseShouldFail() throws Exception {
         for (int i = 0; i < 10; i++) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -94,7 +98,7 @@ public class SessionInvalidationTest extends ClientBase {
         }
         
         ZooKeeper zk = createClient();
-        assertEquals(1, zk.getChildren("/", false).size());
+        Assert.assertEquals(1, zk.getChildren("/", false).size());
 
         zk.close();
     }

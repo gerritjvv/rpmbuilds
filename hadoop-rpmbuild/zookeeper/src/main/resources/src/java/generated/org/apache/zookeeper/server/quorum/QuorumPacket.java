@@ -19,7 +19,6 @@
 
 package org.apache.zookeeper.server.quorum;
 
-import java.util.*;
 import org.apache.jute.*;
 public class QuorumPacket implements Record {
   private int type;
@@ -162,7 +161,7 @@ public class QuorumPacket implements Record {
     result = 37*result + ret;
     ret = (int) (zxid^(zxid>>>32));
     result = 37*result + ret;
-    ret = Arrays.toString(data).hashCode();
+    ret = java.util.Arrays.toString(data).hashCode();
     result = 37*result + ret;
     ret = authinfo.hashCode();
     result = 37*result + ret;

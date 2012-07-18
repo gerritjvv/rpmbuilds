@@ -4,7 +4,7 @@
 
 	<groupId>org.reducedata</groupId>
 	<artifactId>zookeeper</artifactId>
-	<version>3.3.5</version>
+	<version>3.4.3</version>
 	<packaging>jar</packaging>
 
 	<name>zookeeper</name>
@@ -81,7 +81,7 @@
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/zookeeper-3.3.5.jar</location>
+									<location>src/main/resources/zookeeper-3.4.3.jar</location>
 								</source>
 							</sources>
 						</mapping>
