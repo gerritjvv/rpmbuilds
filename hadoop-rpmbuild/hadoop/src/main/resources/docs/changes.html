@@ -36,7 +36,7 @@
     function collapse() {
       for (var i = 0; i < document.getElementsByTagName("ul").length; i++) {
         var list = document.getElementsByTagName("ul")[i];
-        if (list.id != 'release_1.0.3_-_2012.05.07_' && list.id != 'release_1.0.2_-_2012.03.24_') {
+        if (list.id != 'release_1.0.4_-_2012.10.02_' && list.id != 'release_1.0.3_-_2012.05.07_') {
           list.style.display = "none";
         }
       }
@@ -52,6 +52,30 @@
 <a href="http://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Scalable Computing Platform"></a>
 <h1>Hadoop Change Log</h1>
 
+<h2><a href="javascript:toggleList('release_1.0.4_-_2012.10.02_')">Release 1.0.4 - 2012.10.02
+</a></h2>
+<ul id="release_1.0.4_-_2012.10.02_">
+  <li><a href="javascript:toggleList('release_1.0.4_-_2012.10.02_._new_features_')">  NEW FEATURES
+</a>&nbsp;&nbsp;&nbsp;(none)
+    <ol id="release_1.0.4_-_2012.10.02_._new_features_">
+    </ol>
+  </li>
+  <li><a href="javascript:toggleList('release_1.0.4_-_2012.10.02_._improvements_')">  IMPROVEMENTS
+</a>&nbsp;&nbsp;&nbsp;(2)
+    <ol id="release_1.0.4_-_2012.10.02_._improvements_">
+      <li><a href="http://issues.apache.org/jira/browse/HADOOP-7154">HADOOP-7154</a>. Should set MALLOC_ARENA_MAX in hadoop-env.sh<br />(todd via mattf)</li>
+      <li>MAPREDUCE-4399. Change the Jetty response buffer size to improve
+shuffle performance.<br />(Luke Lu via suresh)</li>
+    </ol>
+  </li>
+  <li><a href="javascript:toggleList('release_1.0.4_-_2012.10.02_._bug_fixes_')">  BUG FIXES
+</a>&nbsp;&nbsp;&nbsp;(1)
+    <ol id="release_1.0.4_-_2012.10.02_._bug_fixes_">
+      <li>HDFS-3652. FSEditLog failure removes the wrong edit stream when storage
+dirs have same name.<br />(todd)</li>
+    </ol>
+  </li>
+</ul>
 <h2><a href="javascript:toggleList('release_1.0.3_-_2012.05.07_')">Release 1.0.3 - 2012.05.07
 </a></h2>
 <ul id="release_1.0.3_-_2012.05.07_">
@@ -122,8 +146,10 @@ error in logs<br />(Aaron Myers and Hitesh Shah)</li>
     </ol>
   </li>
 </ul>
-<h2><a href="javascript:toggleList('release_1.0.2_-_2012.03.24_')">Release 1.0.2 - 2012.03.24
-</a></h2>
+<h2><a href="javascript:toggleList('older')">Older Releases</a></h2>
+<ul id="older">
+<h3><a href="javascript:toggleList('release_1.0.2_-_2012.03.24_')">Release 1.0.2 - 2012.03.24
+</a></h3>
 <ul id="release_1.0.2_-_2012.03.24_">
   <li><a href="javascript:toggleList('release_1.0.2_-_2012.03.24_._new_features_')">  NEW FEATURES
 </a>&nbsp;&nbsp;&nbsp;(3)
@@ -175,8 +201,6 @@ the build<br />(Giri Kesavan via mattf)</li>
     </ol>
   </li>
 </ul>
-<h2><a href="javascript:toggleList('older')">Older Releases</a></h2>
-<ul id="older">
 <h3><a href="javascript:toggleList('release_1.0.1_-_2012.02.14_')">Release 1.0.1 - 2012.02.14
 </a></h3>
 <ul id="release_1.0.1_-_2012.02.14_">

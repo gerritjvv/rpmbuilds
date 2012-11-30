@@ -2,7 +2,7 @@
 <comments
   xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
   xsi:noNamespaceSchemaLocation='comments.xsd'
-  name="hadoop_1.0.2_to_hadoop_1.0.3"
+  name="hadoop_1.0.2_to_hadoop_1.0.4"
   jdversion="1.0.9">
 
 <!-- This file contains comments for a JDiff report. -->

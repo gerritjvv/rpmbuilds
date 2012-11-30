@@ -1,4 +1,4 @@
-ERROR   (2012-05-08) 20:33.48:979   [cocoon.manager] (Unknown-URI) Unknown-Thread/SelectNode: Ignoring locationmap config exception: Unable to build LocationMap.
+ERROR   (2012-10-03) 05:16.19:164   [cocoon.manager] (Unknown-URI) Unknown-Thread/SelectNode: Ignoring locationmap config exception: Unable to build LocationMap.
 org.apache.avalon.framework.configuration.ConfigurationException: Unable to build LocationMap.
 	at org.apache.forrest.locationmap.lm.MountNode.loadConfiguration(MountNode.java:129)
 	at org.apache.forrest.locationmap.lm.MountNode.getLocationMap(MountNode.java:87)
@@ -47,334 +47,334 @@ Caused by: java.io.FileNotFoundException: /grid/0/dev/mfoley/hadoop-1.0/src/docs
 	at java.io.FileInputStream.<init>(FileInputStream.java:106)
 	at org.apache.excalibur.source.impl.FileSource.getInputStream(FileSource.java:146)
 	... 29 more
-ERROR   (2012-05-08) 20:33.58:357   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:33.58:358   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:33.58:516   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:33.58:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:33.58:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:33.58:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:33.58:540   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:33.58:541   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:33.59:078   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:33.59:079   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.01:561   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.01:562   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.02:488   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:489   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:489   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:490   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:490   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:491   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:491   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:492   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:503   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:504   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:504   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:505   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:505   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:505   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:533   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:533   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:533   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:534   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:534   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:536   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:536   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:537   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:540   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:540   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:541   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:542   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:542   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:542   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:543   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.02:873   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.02:873   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.04:827   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:827   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:829   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:829   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:829   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:829   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:830   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:830   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:830   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:831   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:832   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:832   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:832   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:832   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:833   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:833   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:836   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:843   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:844   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:844   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:844   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:845   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:845   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:845   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:846   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:846   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:846   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:847   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:847   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:848   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:848   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:848   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:849   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:849   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:849   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:850   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:850   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:851   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:851   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:851   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.04:851   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:060   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:061   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:061   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:061   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:062   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:062   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:247   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.05:249   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:249   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:249   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:249   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:250   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:277   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.05:313   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.05:391   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:391   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:391   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:392   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:401   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:401   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:441   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.05:442   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:607   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:607   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:607   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:607   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:608   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:608   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:609   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:609   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:609   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:610   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:610   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:610   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:611   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:611   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:612   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:612   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:612   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:612   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:613   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:613   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:614   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:614   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:614   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:615   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:615   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:615   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:616   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:616   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:617   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:617   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:617   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.06:618   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.07:524   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.07:525   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.07:728   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.08:153   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.08:153   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.09:263   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:279   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:282   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:282   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:283   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:283   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:283   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:289   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:294   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:294   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:295   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:295   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:295   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:295   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:296   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:296   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:298   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:300   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:305   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:307   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:309   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:311   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:314   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:319   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:322   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:324   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:324   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:324   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:324   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:327   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:329   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:330   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:660   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.09:661   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.09:874   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.09:882   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.09:902   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.09:902   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:002   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:003   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:003   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:003   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:009   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:009   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:010   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:012   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:013   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:013   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:339   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.10:340   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.10:702   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.10:703   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
-ERROR   (2012-05-08) 20:34.10:705   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:709   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:709   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:711   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:712   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:712   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:712   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:730   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:730   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:730   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:732   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:732   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:734   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:734   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:735   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:735   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:735   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.10:736   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:013   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.11:013   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.11:075   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:076   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:077   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:313   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.11:313   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.11:411   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:602   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:628   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:628   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:629   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:641   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:641   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:641   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:642   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:645   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:645   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:645   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:646   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:646   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:649   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:649   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:649   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.11:650   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.12:229   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.12:230   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.13:242   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.13:243   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.13:719   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.13:720   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.14:179   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.14:179   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.14:561   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.14:561   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.15:301   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:302   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:302   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:307   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:312   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:359   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:385   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:386   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:452   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:452   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:453   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:453   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:453   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:454   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:454   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:454   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:454   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:455   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:455   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:455   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:456   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:456   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:457   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:457   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:467   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:467   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:468   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:468   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:468   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:469   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:469   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:469   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:470   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:470   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:470   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:470   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:471   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:523   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:525   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:531   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:531   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:538   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:539   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:545   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:545   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:546   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:546   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:546   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:547   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:560   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:560   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:578   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:578   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.15:578   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
-ERROR   (2012-05-08) 20:34.16:202   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.16:202   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.16:793   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.16:794   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.17:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.17:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.18:027   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.18:027   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
-ERROR   (2012-05-08) 20:34.18:532   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
-ERROR   (2012-05-08) 20:34.18:532   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.25:506   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.25:506   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.25:658   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.25:686   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.25:687   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.25:687   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.25:688   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.25:689   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.26:045   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.26:046   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.28:838   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.28:838   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.29:460   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:461   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:462   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:462   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:463   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:463   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:477   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:477   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:477   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:478   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:478   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:478   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:507   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:507   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:508   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:508   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:508   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:510   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:511   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:511   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:512   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:512   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:513   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:513   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:513   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:514   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:515   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:515   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:516   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:516   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:517   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:517   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.29:880   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.29:880   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.31:441   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:442   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:443   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:443   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:444   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:444   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:444   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:445   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:445   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:445   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:446   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:446   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:447   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:447   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:447   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:448   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:451   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:458   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:458   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:459   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:459   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:459   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:460   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:460   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:460   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:461   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:461   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:462   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:462   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:462   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:463   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:463   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:463   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:464   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:465   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:465   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:465   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:466   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:682   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:682   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:683   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:683   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:683   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:684   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:863   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.31:864   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:865   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:865   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:865   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:866   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.31:893   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.31:927   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.32:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:005   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:014   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:014   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:053   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.32:053   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:182   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:182   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:182   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:183   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:183   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:183   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:183   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:184   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:184   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:189   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:189   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:190   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:190   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:190   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:191   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:191   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:191   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:192   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:192   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:193   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:193   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:193   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.33:193   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.34:072   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.34:072   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.34:412   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.34:810   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.34:810   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.35:537   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:560   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:563   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:563   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:563   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:563   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:564   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:570   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:575   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:576   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:576   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:576   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:576   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:576   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:577   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:577   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:579   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:581   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:586   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:589   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:590   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:592   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:595   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:601   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:604   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:606   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:609   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:611   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:612   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.35:930   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.35:930   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.36:135   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.36:144   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.36:164   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:164   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:263   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:263   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:264   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:264   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:264   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:269   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:270   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:270   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:273   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:273   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:274   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:596   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.36:596   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.36:975   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.36:976   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: Error in space-after property value '6pt"': org.apache.fop.fo.expr.PropertyException: missing quote
+ERROR   (2012-10-03) 05:16.36:979   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:982   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:983   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:985   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:985   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:985   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.36:986   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:003   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:004   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:005   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:006   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:008   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:008   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:009   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:009   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:009   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:010   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:272   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.37:272   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.37:326   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:327   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:327   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:652   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.37:652   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.37:756   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:946   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:973   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:974   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:974   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:986   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:986   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:986   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:987   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:990   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:990   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:990   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:990   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:991   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:994   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:994   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:994   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.37:994   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.38:581   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.38:581   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.39:219   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.39:219   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.39:736   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.39:736   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.40:066   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.40:066   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.40:450   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.40:450   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.41:019   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:019   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:019   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:024   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:030   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:077   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:103   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:103   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:169   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:170   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:170   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:170   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:171   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:171   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:171   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:172   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:172   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:172   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:173   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:173   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:173   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:173   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:174   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:174   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:181   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:182   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:183   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:184   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:184   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:184   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:185   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:186   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:187   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:188   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:229   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:229   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:235   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:236   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:242   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:242   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:242   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:243   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:243   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:243   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:243   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:250   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:250   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:250   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:251   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:251   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:251   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:264   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:264   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:282   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:282   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:282   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: property 'fonts-family' ignored
+ERROR   (2012-10-03) 05:16.41:905   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.41:906   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.42:450   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.42:451   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.42:855   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.42:855   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.43:448   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.43:448   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table
+ERROR   (2012-10-03) 05:16.43:838   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find cvt table
+ERROR   (2012-10-03) 05:16.43:839   [cocoon.manager.fop] (Unknown-URI) Unknown-Thread/MessageHandler: TrueType warning: Can't find prep table

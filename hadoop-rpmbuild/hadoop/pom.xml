@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.reducedata</groupId>
+	<groupId>org.apache</groupId>
 	<artifactId>hadoop</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>hadoop</name>
@@ -28,7 +28,7 @@
 				<configuration>
 					<release>5</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
-					<distribution>pig</distribution>
+					<distribution>hadoop</distribution>
 					<group>utilities</group>
 					<packager>newtecnia</packager>
 					<provides>
@@ -47,7 +47,7 @@
 					<mappings>
 						<mapping>
 							<directory>/opt/hadoop/conf</directory>
-							<filemode>444</filemode>
+							<filemode>775</filemode>
 							<configuration>true</configuration>
 							<sources>
 								<source>
@@ -133,25 +133,25 @@
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/hadoop-ant-1.0.3.jar</location>
+									<location>src/main/resources/hadoop-ant-1.0.4.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-core-1.0.3.jar</location>
+									<location>src/main/resources/hadoop-core-1.0.4.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-examples-1.0.3.jar</location>
+									<location>src/main/resources/hadoop-examples-1.0.4.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-test-1.0.3.jar</location>
+									<location>src/main/resources/hadoop-test-1.0.4.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-tools-1.0.3.jar</location>
+									<location>src/main/resources/hadoop-tools-1.0.4.jar</location>
 								</source>
 								 <source>
-                                                                        <location>src/main/resources/hadoop-client-1.0.3.jar</location>
+                                                                        <location>src/main/resources/hadoop-client-1.0.4.jar</location>
                                                                 </source>
 								<source>
-                                                                        <location>src/main/resources/hadoop-minicluster-1.0.3.jar</location>
+                                                                        <location>src/main/resources/hadoop-minicluster-1.0.4.jar</location>
                                                                 </source>
 							</sources>
 						</mapping>
@@ -198,14 +198,6 @@
 								<source>
 									<location>src/main/resources/lib</location>
 								</source>
-								<softlinkSource>
-                                    <destination>hadoop-1.0.3-fairscheduler.jar</destination>
-                                    <location>/opt/hadoop/contrib/fairscheduler/hadoop-1.0.3-fairscheduler.jar</location>
-                                </softlinkSource>
-								<softlinkSource>
-                                    <destination>hadoop-1.0.3-capacity-scheduler.jar</destination>
-                                    <location>/opt/hadoop/contrib/capacity-scheduler/hadoop-1.0.3-capacity-scheduler.jar</location>
-                                </softlinkSource>
 								<softlinkSource>
 									<destination>/</destination>
 									<location>/opt/hadoopgpl/lib/*.jar</location>
