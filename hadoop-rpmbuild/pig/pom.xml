@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.apache</groupId>
+	<artifactId>pig</artifactId>
+	<version>0.10.0</version>
+	<packaging>jar</packaging>
+
+	<name>pig</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.0.1</version>
+				<extensions>true</extensions>
+
+				<configuration>
+					<release>5</release>
+					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
+					<distribution>hadoop</distribution>
+					<group>utilities</group>
+					<packager>newtecnia</packager>
+					<provides>
+						<provide>pig</provide>
+					</provides>
+
+					<defineStatements>
+						<defineStatement>_unpackaged_files_terminate_build 0
+						</defineStatement>
+					</defineStatements>
+					<defaultGroupname>hadoop</defaultGroupname>
+					<defaultUsername>hadoop</defaultUsername>
+					<mappings>
+						<mapping>
+							<directory>/opt/pig/conf</directory>
+							<filemode>775</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/conf</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/pig/lib</directory>
+							<filemode>755</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/lib</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/pig/bin</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<filemode>777</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/bin</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/pig</directory>
+							<filemode>755</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/pig-0.10.0.jar</location>
+								</source>
+								<source>
+									<location>src/main/resources/pig-0.10.0-withouthadoop.jar</location>
+								</source>
+								<source>
+									<location>src/main/resources/LICENSE.txt</location>
+								</source>
+								<source>
+									<location>src/main/resources/NOTICE.txt</location>
+								</source>
+								<source>
+									<location>src/main/resources/RELEASE_NOTES.txt</location>
+								</source>
+							</sources>
+						</mapping>
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
