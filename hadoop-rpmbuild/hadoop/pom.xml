@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>5</release>
+					<release>6</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>hadoop</distribution>
 					<group>utilities</group>
@@ -116,7 +116,18 @@
                                 </source>
                             </sources>
                         </mapping>
-
+						<mapping>
+                            <directory>/usr/bin/</directory>
+                            <directoryIncluded>false</directoryIncluded>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                            <filemode>777</filemode>
+                            <sources>
+                                <source>
+                                    <location>src/main/resources/usr/bin/hadoop</location>
+                                </source>
+                            </sources>
+                        </mapping>
 						<mapping>
 							<directory>/opt/hadoop/bin</directory>
 							<directoryIncluded>false</directoryIncluded>

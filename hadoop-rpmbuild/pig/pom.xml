@@ -73,7 +73,18 @@
 								</source>
 							</sources>
 						</mapping>
-
+						<mapping>
+							<directory>/usr/bin/</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<username>root</username>
+							<groupname>root</groupname>
+							<filemode>777</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/usr/bin/pig</location>
+								</source>
+							</sources>
+						</mapping>
 						<mapping>
 							<directory>/opt/pig</directory>
 							<filemode>755</filemode>
