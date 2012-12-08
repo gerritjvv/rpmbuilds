@@ -15,22 +15,25 @@
 package org.apache.hadoop.hbase.security.access;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.CoprocessorEnvironment;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HRegionInfo;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.ServerName;
+import org.apache.hadoop.hbase.client.Append;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Increment;
@@ -52,9 +55,12 @@ import org.apache.hadoop.hbase.ipc.RequestContext;
 import org.apache.hadoop.hbase.regionserver.HRegion;
 import org.apache.hadoop.hbase.regionserver.InternalScanner;
 import org.apache.hadoop.hbase.regionserver.RegionScanner;
+import org.apache.hadoop.hbase.regionserver.Store;
+import org.apache.hadoop.hbase.regionserver.StoreFile;
 import org.apache.hadoop.hbase.regionserver.wal.WALEdit;
 import org.apache.hadoop.hbase.security.AccessDeniedException;
 import org.apache.hadoop.hbase.security.User;
+import org.apache.hadoop.hbase.security.access.Permission.Action;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import com.google.common.collect.ListMultimap;
@@ -139,8 +145,12 @@ public class AccessController extends BaseRegionObserver
           .append(toContextString()).toString();
     }
 
-    public static AuthResult allow(String reason, User user,
-        Permission.Action action, byte[] table) {
+    public static AuthResult allow(String reason, User user, Permission.Action action,
+        byte[] table, byte[] family, byte[] qualifier) {
+      return new AuthResult(true, reason, user, action, table, family, qualifier);
+    }
+
+    public static AuthResult allow(String reason, User user, Permission.Action action, byte[] table) {
       return new AuthResult(true, reason, user, action, table, null, null);
     }
 
@@ -188,12 +198,10 @@ public class AccessController extends BaseRegionObserver
     for (Map.Entry<byte[],ListMultimap<String,TablePermission>> t:
       tables.entrySet()) {
       byte[] table = t.getKey();
-      String tableName = Bytes.toString(table);
       ListMultimap<String,TablePermission> perms = t.getValue();
       byte[] serialized = AccessControlLists.writePermissionsAsBytes(perms,
-          e.getRegion().getConf());
-      this.authManager.getZKPermissionWatcher().writeToZookeeper(tableName,
-        serialized);
+          regionEnv.getConfiguration());
+      this.authManager.getZKPermissionWatcher().writeToZookeeper(table, serialized);
     }
   }
 
@@ -204,31 +212,28 @@ public class AccessController extends BaseRegionObserver
    */
   void updateACL(RegionCoprocessorEnvironment e,
       final Map<byte[], List<KeyValue>> familyMap) {
-    Set<String> tableSet = new HashSet<String>();
+    Set<byte[]> tableSet = new TreeSet<byte[]>(Bytes.BYTES_COMPARATOR);
     for (Map.Entry<byte[], List<KeyValue>> f : familyMap.entrySet()) {
       List<KeyValue> kvs = f.getValue();
       for (KeyValue kv: kvs) {
-        if (Bytes.compareTo(kv.getBuffer(), kv.getFamilyOffset(),
+        if (Bytes.equals(kv.getBuffer(), kv.getFamilyOffset(),
             kv.getFamilyLength(), AccessControlLists.ACL_LIST_FAMILY, 0,
-            AccessControlLists.ACL_LIST_FAMILY.length) == 0) {
-          String tableName = Bytes.toString(kv.getRow());
-          tableSet.add(tableName);
+            AccessControlLists.ACL_LIST_FAMILY.length)) {
+          tableSet.add(kv.getRow());
         }
       }
     }
 
-    for (String tableName: tableSet) {
+    ZKPermissionWatcher zkw = this.authManager.getZKPermissionWatcher();
+    Configuration conf = regionEnv.getConfiguration();
+    for (byte[] tableName: tableSet) {
       try {
         ListMultimap<String,TablePermission> perms =
-          AccessControlLists.getTablePermissions(regionEnv.getConfiguration(),
-              Bytes.toBytes(tableName));
-        byte[] serialized = AccessControlLists.writePermissionsAsBytes(
-            perms, e.getRegion().getConf());
-        this.authManager.getZKPermissionWatcher().writeToZookeeper(tableName,
-          serialized);
+          AccessControlLists.getTablePermissions(conf, tableName);
+        byte[] serialized = AccessControlLists.writePermissionsAsBytes(perms, conf);
+        zkw.writeToZookeeper(tableName, serialized);
       } catch (IOException ex) {
-        LOG.error("Failed updating permissions mirror for '" + tableName +
-          "'", ex);
+        LOG.error("Failed updating permissions mirror for '" + tableName + "'", ex);
       }
     }
   }
@@ -251,37 +256,40 @@ public class AccessController extends BaseRegionObserver
       RegionCoprocessorEnvironment e,
       Map<byte [], ? extends Collection<?>> families) {
     HRegionInfo hri = e.getRegion().getRegionInfo();
-    HTableDescriptor htd = e.getRegion().getTableDesc();
     byte[] tableName = hri.getTableName();
 
     // 1. All users need read access to .META. and -ROOT- tables.
     // this is a very common operation, so deal with it quickly.
-    if ((hri.isRootRegion() || hri.isMetaRegion()) &&
-        (permRequest == TablePermission.Action.READ)) {
-      return AuthResult.allow("All users allowed", user, permRequest,
-          hri.getTableName());
+    if (hri.isRootRegion() || hri.isMetaRegion()) {
+      if (permRequest == TablePermission.Action.READ) {
+        return AuthResult.allow("All users allowed", user, permRequest, tableName);
+      }
     }
 
     if (user == null) {
-      return AuthResult.deny("No user associated with request!", null,
-          permRequest, hri.getTableName());
+      return AuthResult.deny("No user associated with request!", null, permRequest, tableName);
     }
 
-    // 2. The table owner has full privileges
-    String owner = htd.getOwnerString();
-    if (user.getShortName().equals(owner)) {
-      // owner of the table has full access
-      return AuthResult.allow("User is table owner", user, permRequest,
-          hri.getTableName());
+    // Users with CREATE/ADMIN rights need to modify .META. and _acl_ table
+    // e.g. When a new table is created a new entry in .META. is added,
+    // so the user need to be allowed to write on it.
+    // e.g. When a table is removed an entry is removed from .META. and _acl_
+    // and the user need to be allowed to write on both tables.
+    if (permRequest == TablePermission.Action.WRITE &&
+       (hri.isRootRegion() || hri.isMetaRegion() ||
+        Bytes.equals(tableName, AccessControlLists.ACL_GLOBAL_NAME)) &&
+       (authManager.authorize(user, Permission.Action.CREATE) ||
+        authManager.authorize(user, Permission.Action.ADMIN)))
+    {
+       return AuthResult.allow("Table permission granted", user, permRequest, tableName);
     }
 
-    // 3. check for the table-level, if successful we can short-circuit
+    // 2. check for the table-level, if successful we can short-circuit
     if (authManager.authorize(user, tableName, (byte[])null, permRequest)) {
-      return AuthResult.allow("Table permission granted", user,
-          permRequest, tableName);
+      return AuthResult.allow("Table permission granted", user, permRequest, tableName);
     }
 
-    // 4. check permissions against the requested families
+    // 3. check permissions against the requested families
     if (families != null && families.size() > 0) {
       // all families must pass
       for (Map.Entry<byte [], ? extends Collection<?>> family : families.entrySet()) {
@@ -325,16 +333,22 @@ public class AccessController extends BaseRegionObserver
           tableName);
     }
 
-    // 5. no families to check and table level access failed
+    // 4. no families to check and table level access failed
     return AuthResult.deny("No families to check and table permission failed",
         user, permRequest, tableName);
   }
 
   private void logResult(AuthResult result) {
     if (AUDITLOG.isTraceEnabled()) {
+      InetAddress remoteAddr = null;
+      RequestContext ctx = RequestContext.get();
+      if (ctx != null) {
+        remoteAddr = ctx.getRemoteAddress();
+      }
       AUDITLOG.trace("Access " + (result.isAllowed() ? "allowed" : "denied") +
           " for user " + (result.getUser() != null ? result.getUser().getShortName() : "UNKNOWN") +
           "; reason: " + result.getReason() +
+          "; remote address: " + (remoteAddr != null ? remoteAddr : "") +
           "; context: " + result.toContextString());
     }
   }
@@ -350,7 +364,37 @@ public class AccessController extends BaseRegionObserver
       // for non-rpc handling, fallback to system user
       user = User.getCurrent();
     }
+
     return user;
+  }
+
+  /**
+   * Authorizes that the current user has any of the given permissions for the
+   * given table, column family and column qualifier.
+   * @param tableName Table requested
+   * @param family Column family requested
+   * @param qualifier Column qualifier requested
+   * @throws IOException if obtaining the current user fails
+   * @throws AccessDeniedException if user has no authorization
+   */
+  private void requirePermission(byte[] tableName, byte[] family, byte[] qualifier,
+      Action... permissions) throws IOException {
+    User user = getActiveUser();
+    AuthResult result = null;
+
+    for (Action permission : permissions) {
+      if (authManager.authorize(user, tableName, family, qualifier, permission)) {
+        result = AuthResult.allow("Table permission granted", user, permission, tableName, family, qualifier);
+        break;
+      } else {
+        // rest of the world
+        result = AuthResult.deny("Insufficient permissions", user, permission, tableName, family, qualifier);
+      }
+    }
+    logResult(result);
+    if (!result.isAllowed()) {
+      throw new AccessDeniedException("Insufficient permissions " + result.toContextString());
+    }
   }
 
   /**
@@ -489,124 +533,134 @@ public class AccessController extends BaseRegionObserver
   public void preCreateTable(ObserverContext<MasterCoprocessorEnvironment> c,
       HTableDescriptor desc, HRegionInfo[] regions) throws IOException {
     requirePermission(Permission.Action.CREATE);
-
-    // default the table owner if not specified
-    User owner = getActiveUser();
-    if (desc.getOwnerString() == null ||
-        desc.getOwnerString().equals("")) {
-      desc.setOwner(owner);
-    }
   }
 
   @Override
   public void postCreateTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      HTableDescriptor desc, HRegionInfo[] regions) throws IOException {}
-
-  @Override
-  public void preDeleteTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName) throws IOException {
-    if (isActiveUserTableOwner(c.getEnvironment(), tableName)) {
-      requirePermission(Permission.Action.CREATE);
-    } else {
-      requirePermission(Permission.Action.ADMIN);
+      HTableDescriptor desc, HRegionInfo[] regions) throws IOException {
+    if (!AccessControlLists.isAclTable(desc)) {
+      String owner = desc.getOwnerString();
+      // default the table owner to current user, if not specified.
+      if (owner == null) owner = getActiveUser().getShortName();
+      UserPermission userperm = new UserPermission(Bytes.toBytes(owner), desc.getName(), null,
+          Action.values());
+      AccessControlLists.addUserPermission(c.getEnvironment().getConfiguration(), userperm);
     }
   }
+
+  @Override
+  public void preDeleteTable(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName)
+      throws IOException {
+   requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
+  }
+
   @Override
   public void postDeleteTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName) throws IOException {}
-
+      byte[] tableName) throws IOException {
+    AccessControlLists.removeTablePermissions(c.getEnvironment().getConfiguration(), tableName);
+  }
 
   @Override
-  public void preModifyTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, HTableDescriptor htd) throws IOException {
-    requirePermission(Permission.Action.CREATE);
+  public void preModifyTable(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName,
+      HTableDescriptor htd) throws IOException {
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postModifyTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, HTableDescriptor htd) throws IOException {}
-
+      byte[] tableName, HTableDescriptor htd) throws IOException {
+    String owner = htd.getOwnerString();
+    // default the table owner to current user, if not specified.
+    if (owner == null) owner = getActiveUser().getShortName();
+    UserPermission userperm = new UserPermission(Bytes.toBytes(owner), htd.getName(), null,
+        Action.values());
+    AccessControlLists.addUserPermission(c.getEnvironment().getConfiguration(), userperm);
+  }
 
   @Override
-  public void preAddColumn(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, HColumnDescriptor column) throws IOException {
-    requirePermission(Permission.Action.CREATE);
+  public void preAddColumn(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName,
+      HColumnDescriptor column) throws IOException {
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postAddColumn(ObserverContext<MasterCoprocessorEnvironment> c,
       byte[] tableName, HColumnDescriptor column) throws IOException {}
 
-
   @Override
-  public void preModifyColumn(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, HColumnDescriptor descriptor) throws IOException {
-    requirePermission(Permission.Action.CREATE);
+  public void preModifyColumn(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName,
+      HColumnDescriptor descriptor) throws IOException {
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postModifyColumn(ObserverContext<MasterCoprocessorEnvironment> c,
       byte[] tableName, HColumnDescriptor descriptor) throws IOException {}
 
-
   @Override
-  public void preDeleteColumn(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, byte[] col) throws IOException {
-    requirePermission(Permission.Action.CREATE);
+  public void preDeleteColumn(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName,
+      byte[] col) throws IOException {
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postDeleteColumn(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName, byte[] col) throws IOException {}
-
+      byte[] tableName, byte[] col) throws IOException {
+    AccessControlLists.removeTablePermissions(c.getEnvironment().getConfiguration(),
+                                              tableName, col);
+  }
 
   @Override
-  public void preEnableTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName) throws IOException {
-    if (isActiveUserTableOwner(c.getEnvironment(), tableName)) {
-      requirePermission(Permission.Action.CREATE);
-    } else {
-      requirePermission(Permission.Action.ADMIN);
-    }
+  public void preEnableTable(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName)
+      throws IOException {
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postEnableTable(ObserverContext<MasterCoprocessorEnvironment> c,
       byte[] tableName) throws IOException {}
 
   @Override
-  public void preDisableTable(ObserverContext<MasterCoprocessorEnvironment> c,
-      byte[] tableName) throws IOException {
-    if (isActiveUserTableOwner(c.getEnvironment(), tableName)) {
-      requirePermission(Permission.Action.CREATE);
-    } else {
-      requirePermission(Permission.Action.ADMIN);
+  public void preDisableTable(ObserverContext<MasterCoprocessorEnvironment> c, byte[] tableName)
+      throws IOException {
+    if (Bytes.equals(tableName, AccessControlLists.ACL_GLOBAL_NAME)) {
+      throw new AccessDeniedException("Not allowed to disable "
+          + AccessControlLists.ACL_TABLE_NAME_STR + " table.");
     }
+    requirePermission(tableName, null, null, Action.ADMIN, Action.CREATE);
   }
+
   @Override
   public void postDisableTable(ObserverContext<MasterCoprocessorEnvironment> c,
       byte[] tableName) throws IOException {}
 
   @Override
-  public void preMove(ObserverContext<MasterCoprocessorEnvironment> c,
-      HRegionInfo region, ServerName srcServer, ServerName destServer)
-    throws IOException {
-    requirePermission(Permission.Action.ADMIN);
+  public void preMove(ObserverContext<MasterCoprocessorEnvironment> c, HRegionInfo region,
+      ServerName srcServer, ServerName destServer) throws IOException {
+    requirePermission(region.getTableName(), null, null, Action.ADMIN);
   }
+
   @Override
   public void postMove(ObserverContext<MasterCoprocessorEnvironment> c,
       HRegionInfo region, ServerName srcServer, ServerName destServer)
     throws IOException {}
 
   @Override
-  public void preAssign(ObserverContext<MasterCoprocessorEnvironment> c,
-      HRegionInfo regionInfo) throws IOException {
-    requirePermission(Permission.Action.ADMIN);
+  public void preAssign(ObserverContext<MasterCoprocessorEnvironment> c, HRegionInfo regionInfo)
+      throws IOException {
+    requirePermission(regionInfo.getTableName(), null, null, Action.ADMIN);
   }
+
   @Override
   public void postAssign(ObserverContext<MasterCoprocessorEnvironment> c,
       HRegionInfo regionInfo) throws IOException {}
 
   @Override
-  public void preUnassign(ObserverContext<MasterCoprocessorEnvironment> c,
-       HRegionInfo regionInfo, boolean force) throws IOException {
-    requirePermission(Permission.Action.ADMIN);
+  public void preUnassign(ObserverContext<MasterCoprocessorEnvironment> c, HRegionInfo regionInfo,
+      boolean force) throws IOException {
+    requirePermission(regionInfo.getTableName(), null, null, Action.ADMIN);
   }
+
   @Override
   public void postUnassign(ObserverContext<MasterCoprocessorEnvironment> c,
       HRegionInfo regionInfo, boolean force) throws IOException {}
@@ -664,7 +718,7 @@ public class AccessController extends BaseRegionObserver
     try {
       this.authManager = TableAuthManager.get(
           e.getRegionServerServices().getZooKeeper(),
-          e.getRegion().getConf());
+          regionEnv.getConfiguration());
     } catch (IOException ioe) {
       // pass along as a RuntimeException, so that the coprocessor is unloaded
       throw new RuntimeException("Error obtaining TableAuthManager", ioe);
@@ -680,6 +734,29 @@ public class AccessController extends BaseRegionObserver
         throw new RuntimeException("Failed to initialize permissions cache", ex);
       }
     }
+  }
+
+  @Override
+  public void preFlush(ObserverContext<RegionCoprocessorEnvironment> e) throws IOException {
+    requirePermission(getTableName(e.getEnvironment()), null, null, Action.ADMIN);
+  }
+
+  @Override
+  public void preSplit(ObserverContext<RegionCoprocessorEnvironment> e) throws IOException {
+    requirePermission(getTableName(e.getEnvironment()), null, null, Action.ADMIN);
+  }
+
+  @Override
+  public InternalScanner preCompact(ObserverContext<RegionCoprocessorEnvironment> e,
+      final Store store, final InternalScanner scanner) throws IOException {
+    requirePermission(getTableName(e.getEnvironment()), null, null, Action.ADMIN);
+    return scanner;
+  }
+
+  @Override
+  public void preCompactSelection(final ObserverContext<RegionCoprocessorEnvironment> e,
+      final Store store, final List<StoreFile> candidates) throws IOException {
+    requirePermission(getTableName(e.getEnvironment()), null, null, Action.ADMIN);
   }
 
   @Override
@@ -776,8 +853,9 @@ public class AccessController extends BaseRegionObserver
       final CompareFilter.CompareOp compareOp,
       final WritableByteArrayComparable comparator, final Put put,
       final boolean result) throws IOException {
-    requirePermission(TablePermission.Action.READ, c.getEnvironment(),
-        Arrays.asList(new byte[][]{family}));
+    Collection<byte[]> familyMap = Arrays.asList(new byte[][]{family});
+    requirePermission(TablePermission.Action.READ, c.getEnvironment(), familyMap);
+    requirePermission(TablePermission.Action.WRITE, c.getEnvironment(), familyMap);
     return result;
   }
 
@@ -787,8 +865,9 @@ public class AccessController extends BaseRegionObserver
       final CompareFilter.CompareOp compareOp,
       final WritableByteArrayComparable comparator, final Delete delete,
       final boolean result) throws IOException {
-    requirePermission(TablePermission.Action.READ, c.getEnvironment(),
-        Arrays.asList( new byte[][] {family}));
+    Collection<byte[]> familyMap = Arrays.asList(new byte[][]{family});
+    requirePermission(TablePermission.Action.READ, c.getEnvironment(), familyMap);
+    requirePermission(TablePermission.Action.WRITE, c.getEnvironment(), familyMap);
     return result;
   }
 
@@ -800,6 +879,13 @@ public class AccessController extends BaseRegionObserver
     requirePermission(TablePermission.Action.WRITE, c.getEnvironment(),
         Arrays.asList(new byte[][]{family}));
     return -1;
+  }
+
+  @Override
+  public Result preAppend(ObserverContext<RegionCoprocessorEnvironment> c, Append append)
+      throws IOException {
+    requirePermission(TablePermission.Action.WRITE, c.getEnvironment(), append.getFamilyMap());
+    return null;
   }
 
   @Override
@@ -892,10 +978,10 @@ public class AccessController extends BaseRegionObserver
   private void requireScannerOwner(InternalScanner s)
       throws AccessDeniedException {
     if (RequestContext.isInRequestContext()) {
+      String requestUserName = RequestContext.getRequestUserName();
       String owner = scannerOwners.get(s);
-      if (owner != null && !owner.equals(RequestContext.getRequestUserName())) {
-        throw new AccessDeniedException("User '"+
-            RequestContext.getRequestUserName()+"' is not the scanner owner!");
+      if (owner != null && !owner.equals(requestUserName)) {
+        throw new AccessDeniedException("User '"+ requestUserName +"' is not the scanner owner!");
       }
     }
   }
@@ -906,73 +992,77 @@ public class AccessController extends BaseRegionObserver
    * This will be restricted by both client side and endpoint implementations.
    */
   @Override
-  public void grant(byte[] user, TablePermission permission)
-      throws IOException {
+  public void grant(UserPermission perm) throws IOException {
     // verify it's only running at .acl.
     if (aclRegion) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Received request to grant access permission to '"
-            + Bytes.toString(user) + "'. "
-            + permission.toString());
+        LOG.debug("Received request to grant access permission " + perm.toString());
       }
 
-      requirePermission(Permission.Action.ADMIN);
+      requirePermission(perm.getTable(), perm.getFamily(), perm.getQualifier(), Action.ADMIN);
 
-      AccessControlLists.addTablePermission(regionEnv.getConfiguration(),
-          permission.getTable(), Bytes.toString(user), permission);
+      AccessControlLists.addUserPermission(regionEnv.getConfiguration(), perm);
       if (AUDITLOG.isTraceEnabled()) {
         // audit log should store permission changes in addition to auth results
-        AUDITLOG.trace("Granted user '" + Bytes.toString(user) + "' permission "
-            + permission.toString());
+        AUDITLOG.trace("Granted permission " + perm.toString());
       }
     } else {
-      throw new CoprocessorException(AccessController.class, "This method " +
-          "can only execute at " +
-          Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
+      throw new CoprocessorException(AccessController.class, "This method "
+          + "can only execute at " + Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
     }
   }
 
   @Override
-  public void revoke(byte[] user, TablePermission permission)
-      throws IOException{
+  @Deprecated
+  public void grant(byte[] user, TablePermission permission)
+      throws IOException {
+    grant(new UserPermission(user, permission.getTable(),
+            permission.getFamily(), permission.getQualifier(),
+            permission.getActions()));
+  }
+
+  @Override
+  public void revoke(UserPermission perm) throws IOException {
     // only allowed to be called on _acl_ region
     if (aclRegion) {
       if (LOG.isDebugEnabled()) {
-        LOG.debug("Received request to revoke access permission for '"
-            + Bytes.toString(user) + "'. "
-            + permission.toString());
+        LOG.debug("Received request to revoke access permission " + perm.toString());
       }
 
-      requirePermission(Permission.Action.ADMIN);
+      requirePermission(perm.getTable(), perm.getFamily(), perm.getQualifier(), Action.ADMIN);
 
-      AccessControlLists.removeTablePermission(regionEnv.getConfiguration(),
-          permission.getTable(), Bytes.toString(user), permission);
+      AccessControlLists.removeUserPermission(regionEnv.getConfiguration(), perm);
       if (AUDITLOG.isTraceEnabled()) {
         // audit log should record all permission changes
-        AUDITLOG.trace("Revoked user '" + Bytes.toString(user) + "' permission "
-            + permission.toString());
+        AUDITLOG.trace("Revoked permission " + perm.toString());
       }
     } else {
-      throw new CoprocessorException(AccessController.class, "This method " +
-          "can only execute at " +
-          Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
+      throw new CoprocessorException(AccessController.class, "This method "
+          + "can only execute at " + Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
     }
   }
 
   @Override
-  public List<UserPermission> getUserPermissions(final byte[] tableName)
+  @Deprecated
+  public void revoke(byte[] user, TablePermission permission)
       throws IOException {
+    revoke(new UserPermission(user, permission.getTable(),
+            permission.getFamily(), permission.getQualifier(),
+            permission.getActions()));
+  }
+
+  @Override
+  public List<UserPermission> getUserPermissions(final byte[] tableName) throws IOException {
     // only allowed to be called on _acl_ region
     if (aclRegion) {
-      requirePermission(Permission.Action.ADMIN);
+      requirePermission(tableName, null, null, Action.ADMIN);
 
-      List<UserPermission> perms = AccessControlLists.getUserPermissions
-          (regionEnv.getConfiguration(), tableName);
+      List<UserPermission> perms = AccessControlLists.getUserPermissions(
+        regionEnv.getConfiguration(), tableName);
       return perms;
     } else {
-      throw new CoprocessorException(AccessController.class, "This method " +
-          "can only execute at " +
-          Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
+      throw new CoprocessorException(AccessController.class, "This method "
+          + "can only execute at " + Bytes.toString(AccessControlLists.ACL_TABLE_NAME) + " table.");
     }
   }
 
@@ -1036,17 +1126,5 @@ public class AccessController extends BaseRegionObserver
       }
     }
     return tableName;
-  }
-
-  private String getTableOwner(MasterCoprocessorEnvironment e, 
-      byte[] tableName) throws IOException {
-    HTableDescriptor htd = e.getTable(tableName).getTableDescriptor();
-    return htd.getOwnerString();
-  }
-
-  private boolean isActiveUserTableOwner(MasterCoprocessorEnvironment e,
-      byte[] tableName) throws IOException {
-    String activeUser = getActiveUser().getShortName();
-    return activeUser.equals(getTableOwner(e, tableName));
   }
 }

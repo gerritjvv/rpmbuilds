@@ -36,7 +36,7 @@
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase</artifactId>
   <packaging>jar</packaging>
-  <version>0.94.0</version>
+  <version>0.94.3</version>
   <name>HBase</name>
   <description>
     HBase is the &amp;lt;a href="http://hadoop.apache.org"&amp;rt;Hadoop&lt;/a&amp;rt; database. Use it when you need
@@ -113,8 +113,8 @@
       <name>Andrew Purtell</name>
       <email>apurtell@apache.org</email>
       <timezone>-8</timezone>
-      <organization>Trend Micro</organization>
-      <organizationUrl>http://www.trendmicro.com</organizationUrl>
+      <organization>Intel</organization>
+      <organizationUrl>http://www.intel.com</organizationUrl>
     </developer>
   <developer>
       <id>dmeil</id>
@@ -129,8 +129,8 @@
       <name>Gary Helmling</name>
       <email>garyh@apache.org</email>
       <timezone>-8</timezone>
-      <organization>Trend Micro</organization>
-      <organizationUrl>http://www.trendmicro.com</organizationUrl>
+      <organization>Twitter</organization>
+      <organizationUrl>http://www.twitter.com</organizationUrl>
     </developer>
     <developer>
       <id>jdcryans</id>
@@ -331,7 +331,7 @@
               profile on the command line as follows:
 
               $ ~/bin/mvn/bin/mvn  -Papache-release release:perform
-              
+
               I've also been kiling the release:prepare step mid-way to check the
               release.properties it generates at the top-level.  Sometimes it refers
               to HEAD rather than to the svn branch.
@@ -343,18 +343,20 @@
              -->
             <releaseProfiles>apache-release</releaseProfiles>
             <!--This stops our running tests for each stage of maven release.
-                But it builds the test jar.  From SUREFIRE-172.      
+                But it builds the test jar.  From SUREFIRE-172.
               -->
             <arguments>-Dmaven.test.skip.exec</arguments>
           </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.5.1</version>
           <configuration>
             <source>${compileSource}</source>
             <target>${compileSource}</target>
             <showWarnings>true</showWarnings>
             <showDeprecation>false</showDeprecation>
+            <compilerArgument>-Xlint:-options</compilerArgument>
           </configuration>
         </plugin>
         <plugin>
@@ -451,9 +453,9 @@
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>1.5</version>
         </plugin>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It 
-          has no influence on the Maven build itself. m2e does not provide any safeguards against 
-          rogue maven plugins that leak classloaders, modify random files inside workspace 
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It
+          has no influence on the Maven build itself. m2e does not provide any safeguards against
+          rogue maven plugins that leak classloaders, modify random files inside workspace
           or throw nasty exceptions to fail the build -->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -475,7 +477,7 @@
                   <action>
                     <execute></execute>
                   </action>
-                </pluginExecution> 
+                </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -508,10 +510,11 @@
         </plugin>
 	<plugin> <!-- in plugin management section so excludes can be inherited -->
 	  <groupId>org.apache.rat</groupId>
-          <artifactId>apache-rat-plugin</artifactId>	  
+          <artifactId>apache-rat-plugin</artifactId>
           <version>0.8</version>
           <configuration>
             <excludes>
+              <exclude>**/*.log</exclude>
               <exclude>**/.*</exclude>
               <exclude>**/*.tgz</exclude>
               <exclude>**/*.orig</exclude>
@@ -523,13 +526,16 @@
               <exclude>**/generated/**</exclude>
               <exclude>**/conf/*</exclude>
               <exclude>**/*.avpr</exclude>
-              <exclude>**/*.svg</exclude> <!-- vector graphics --> 
+              <exclude>**/*.svg</exclude> <!-- vector graphics -->
               <exclude>**/*.vm</exclude> <!-- apache doxia generated -->
               <exclude>**/control</exclude>
               <exclude>**/conffile</exclude>
 	      <exclude>docs/*</exclude> <!-- auto-gen docs -->
               <!--It don't like freebsd license-->
               <exclude>**/src/site/resources/css/freebsd_docbook.css</exclude>
+              <!--  exclude source control files -->
+              <exclude>.git/**</exclude>
+              <exclude>.svn/**</exclude>
             </excludes>
           </configuration>
 	</plugin>
@@ -868,8 +874,14 @@
 
                 <!-- Using Unix cp to preserve symlinks, using script to handle wildcards -->
                 <echo file="${project.build.directory}/copynativelibs.sh">
-                    if [ `ls ${project.build.directory}/nativelib | wc -l` -ne 0 ]; then
-                      cp -PR ${project.build.directory}/nativelib/lib* ${project.build.directory}/${project.build.finalName}/${project.build.finalName}/lib/native/${build.platform}
+					which cygpath 2&gt; /dev/null
+					if [ $? = 1 ]; then
+						BUILD_DIR="${project.build.directory}"
+					else
+						BUILD_DIR=`cygpath --unix '${project.build.directory}'`
+					fi
+                    if [ `ls $BUILD_DIR/nativelib | wc -l` -ne 0 ]; then
+                      cp -PR $BUILD_DIR/nativelib/lib* $BUILD_DIR/${project.build.finalName}/${project.build.finalName}/lib/native/${build.platform}
                     fi
                 </echo>
                 <exec executable="sh" dir="${project.build.directory}" failonerror="true">
@@ -877,11 +889,19 @@
                 </exec>
 
                 <!-- Using Unix tar to preserve symlinks -->
-                <exec executable="tar" failonerror="yes"
-                  dir="${project.build.directory}/${project.build.finalName}">
-                    <arg value="czf"/>
-                    <arg value="${project.build.directory}/${project.build.finalName}.tar.gz"/>
-                    <arg value="${project.build.finalName}/" />
+				<echo file="${project.build.directory}/maketar.sh">
+					which cygpath 2&gt; /dev/null
+					if [ $? = 1 ]; then
+						BUILD_DIR="${project.build.directory}"
+					else
+						BUILD_DIR=`cygpath --unix '${project.build.directory}'`
+					fi
+
+					cd $BUILD_DIR/${project.build.finalName}
+					tar czf $BUILD_DIR/${project.build.finalName}.tar.gz ${project.build.finalName}
+				</echo>
+                <exec executable="sh" dir="${project.build.directory}" failonerror="yes">
+                    <arg line="./maketar.sh"/>
                 </exec>
 
               </target>
@@ -976,19 +996,20 @@
     <commons-logging.version>1.1.1</commons-logging.version>
     <commons-math.version>2.1</commons-math.version>
     <commons-configuration.version>1.6</commons-configuration.version>
-    <guava.version>r09</guava.version>
-    <jackson.version>1.5.5</jackson.version>
+    <metrics-core.version>2.1.2</metrics-core.version>
+    <guava.version>11.0.2</guava.version>
+    <jackson.version>1.8.8</jackson.version>
     <jasper.version>5.5.23</jasper.version>
     <jaxb-api.version>2.1</jaxb-api.version>
     <jetty.version>6.1.26</jetty.version>
     <jetty.jspapi.version>6.1.14</jetty.jspapi.version>
-    <jersey.version>1.4</jersey.version>
+    <jersey.version>1.8</jersey.version>
     <jruby.version>1.6.5</jruby.version>
     <junit.version>4.10-HBASE-1</junit.version>
+    <slf4j.version>1.4.3</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <mockito-all.version>1.8.5</mockito-all.version>
     <protobuf.version>2.4.0a</protobuf.version>
-    <slf4j.version>1.5.8</slf4j.version><!-- newer version available -->
     <stax-api.version>1.0.1</stax-api.version>
     <thrift.version>0.8.0</thrift.version>
     <zookeeper.version>3.4.3</zookeeper.version>
@@ -1037,6 +1058,11 @@
 
 
     <!-- General dependencies -->
+    <dependency>
+      <groupId>com.yammer.metrics</groupId>
+      <artifactId>metrics-core</artifactId>
+      <version>${metrics-core.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
@@ -1292,7 +1318,9 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
-      <scope>test</scope>
+      <scope>test,runtime</scope>
+      <!-- FIXME: the following needs to go away once HBASE-4955 is fixed -->
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
@@ -1437,6 +1465,17 @@
             <build.platform>Mac_OS_X-${sun.arch.data.model}</build.platform>
         </properties>
     </profile>
+	<profile>
+		<id>os.windows</id>
+		<activation>
+			<os>
+				<family>Windows</family>
+			</os>
+		</activation>
+		<properties>
+			<build.platform>cygwin</build.platform>
+		</properties>
+	</profile>
 
     <!-- this profile should be activated for release builds -->
     <profile>
@@ -1451,6 +1490,21 @@
                 <phase>package</phase>
                 <goals>
                   <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.6.1</version>
+            <configuration>
+              <docfilessubdirs>true</docfilessubdirs>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>javadoc</goal>
                 </goals>
               </execution>
             </executions>
@@ -1516,7 +1570,8 @@
         </property>
       </activation>
       <properties>
-        <hadoop.version>1.0.2</hadoop.version>
+        <hadoop.version>1.0.4</hadoop.version>
+        <slf4j.version>1.4.3</slf4j.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1587,7 +1642,7 @@
     <profile>
       <id>security</id>
       <properties>
-        <hadoop.version>1.0.2</hadoop.version>
+        <hadoop.version>1.0.4</hadoop.version>
       </properties>
       <build>
         <finalName>${project.artifactId}-${project.version}-security</finalName>
@@ -1642,6 +1697,87 @@
 
 
     <!--
+      profile for building against Hadoop 1.1. Activate using:
+       mvn -Dhadoop.profile=1.1
+    -->
+    <profile>
+      <id>hadoop-1.1</id>
+      <activation>
+        <property>
+          <name>hadoop.profile</name>
+          <value>1.1</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>1.1.0</hadoop.version>
+        <slf4j.version>1.4.3</slf4j.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-core</artifactId>
+          <version>${hadoop.version}</version>
+          <optional>true</optional>
+          <exclusions>
+            <exclusion>
+              <groupId>hsqldb</groupId>
+              <artifactId>hsqldb</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>net.sf.kosmosfs</groupId>
+              <artifactId>kfs</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>org.eclipse.jdt</groupId>
+              <artifactId>core</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>net.java.dev.jets3t</groupId>
+              <artifactId>jets3t</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>oro</groupId>
+              <artifactId>oro</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-test</artifactId>
+          <version>${hadoop.version}</version>
+          <optional>true</optional>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-test-resource</id>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/test/resources</directory>
+                      <includes>
+                        <include>hbase-site.xml</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--
       profile for building against Hadoop 0.22.0. Activate using:
        mvn -Dhadoop.profile=22
     -->
@@ -1655,6 +1791,7 @@
       </activation>
       <properties>
         <hadoop.version>0.22.0</hadoop.version>
+        <slf4j.version>1.6.1</slf4j.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1832,7 +1969,8 @@
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.23.2-SNAPSHOT</hadoop.version>
+        <hadoop.version>0.23.3</hadoop.version>
+        <slf4j.version>1.6.1</slf4j.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1914,6 +2052,7 @@
       </activation>
       <properties>
         <hadoop.version>0.24.0-SNAPSHOT</hadoop.version>
+        <slf4j.version>1.6.1</slf4j.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1927,6 +2066,88 @@
           <version>${hadoop.version}</version>
         </dependency>
         <!-- test deps for hadoop-0.24 profile -->
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-minicluster</artifactId>
+          <version>${hadoop.version}</version>
+          <scope>compile</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-test-resource</id>
+                <goals>
+                  <goal>add-test-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/test/resources</directory>
+                      <includes>
+                        <include>hbase-site.xml</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create-mrapp-generated-classpath</id>
+                <phase>generate-test-resources</phase>
+                <goals>
+                  <goal>build-classpath</goal>
+                </goals>
+                <configuration>
+                  <!-- needed to run the unit test for DS to generate
+                  the required classpath that is required in the env
+                  of the launch container in the mini mr/yarn cluster
+                  -->
+                  <outputFile>${project.build.directory}/test-classes/mrapp-generated-classpath</outputFile>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--
+      profile for building against Hadoop 2.0.0-alpha. Activate using:
+       mvn -Dhadoop.profile=2.0
+    -->
+    <profile>
+      <id>hadoop-2.0</id>
+      <activation>
+        <property>
+          <name>hadoop.profile</name>
+          <value>2.0</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>2.0.0-alpha</hadoop.version>
+        <slf4j.version>1.6.1</slf4j.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-annotations</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <!-- test deps for hadoop-2.0 profile -->
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-minicluster</artifactId>

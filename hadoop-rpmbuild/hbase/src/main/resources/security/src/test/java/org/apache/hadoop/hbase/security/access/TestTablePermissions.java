@@ -42,6 +42,7 @@ import org.apache.hadoop.hbase.LargeTests;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.security.User;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.zookeeper.ZooKeeperWatcher;
 import org.junit.AfterClass;
@@ -87,6 +88,10 @@ public class TestTablePermissions {
     SecureTestUtil.enableSecurity(conf);
 
     UTIL.startMiniCluster();
+
+    // Wait for the ACL table to become available
+    UTIL.waitTableAvailable(AccessControlLists.ACL_TABLE_NAME, 5000);
+
     ZKW = new ZooKeeperWatcher(UTIL.getConfiguration(),
       "TestTablePermissions", ABORTABLE);
 
@@ -103,15 +108,16 @@ public class TestTablePermissions {
   public void testBasicWrite() throws Exception {
     Configuration conf = UTIL.getConfiguration();
     // add some permissions
-    AccessControlLists.addTablePermission(conf, TEST_TABLE,
-        "george", new TablePermission(TEST_TABLE, null,
-            TablePermission.Action.READ, TablePermission.Action.WRITE));
-    AccessControlLists.addTablePermission(conf, TEST_TABLE,
-        "hubert", new TablePermission(TEST_TABLE, null,
-            TablePermission.Action.READ));
-    AccessControlLists.addTablePermission(conf, TEST_TABLE,
-        "humphrey", new TablePermission(TEST_TABLE, TEST_FAMILY, TEST_QUALIFIER,
-            TablePermission.Action.READ));
+    AccessControlLists.addUserPermission(conf,
+            new UserPermission(Bytes.toBytes("george"), TEST_TABLE, null, (byte[])null,
+            UserPermission.Action.READ, UserPermission.Action.WRITE));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("hubert"), TEST_TABLE, null, (byte[])null,
+            UserPermission.Action.READ));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("humphrey"),
+            TEST_TABLE, TEST_FAMILY, TEST_QUALIFIER,
+            UserPermission.Action.READ));
 
     // retrieve the same
     ListMultimap<String,TablePermission> perms =
@@ -165,8 +171,8 @@ public class TestTablePermissions {
     assertFalse(actions.contains(TablePermission.Action.WRITE));
 
     // table 2 permissions
-    AccessControlLists.addTablePermission(conf, TEST_TABLE2, "hubert",
-        new TablePermission(TEST_TABLE2, null,
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("hubert"), TEST_TABLE2, null, (byte[])null,
             TablePermission.Action.READ, TablePermission.Action.WRITE));
 
     // check full load
@@ -197,16 +203,21 @@ public class TestTablePermissions {
   @Test
   public void testPersistence() throws Exception {
     Configuration conf = UTIL.getConfiguration();
-    AccessControlLists.addTablePermission(conf, TEST_TABLE, "albert",
-        new TablePermission(TEST_TABLE, null, TablePermission.Action.READ));
-    AccessControlLists.addTablePermission(conf, TEST_TABLE, "betty",
-        new TablePermission(TEST_TABLE, null, TablePermission.Action.READ,
-            TablePermission.Action.WRITE));
-    AccessControlLists.addTablePermission(conf, TEST_TABLE, "clark",
-        new TablePermission(TEST_TABLE, TEST_FAMILY, TablePermission.Action.READ));
-    AccessControlLists.addTablePermission(conf, TEST_TABLE, "dwight",
-        new TablePermission(TEST_TABLE, TEST_FAMILY, TEST_QUALIFIER,
-            TablePermission.Action.WRITE));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("albert"), TEST_TABLE, null,
+                           (byte[])null, TablePermission.Action.READ));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("betty"), TEST_TABLE, null,
+                           (byte[])null, TablePermission.Action.READ,
+                           TablePermission.Action.WRITE));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("clark"),
+                           TEST_TABLE, TEST_FAMILY,
+                           TablePermission.Action.READ));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("dwight"),
+                           TEST_TABLE, TEST_FAMILY, TEST_QUALIFIER,
+                           TablePermission.Action.WRITE));
 
     // verify permissions survive changes in table metadata
     ListMultimap<String,TablePermission> preperms =
@@ -312,5 +323,61 @@ public class TestTablePermissions {
     p2 = new TablePermission(TEST_TABLE, null);
     assertFalse(p1.equals(p2));
     assertFalse(p2.equals(p1));
+  }
+
+  @Test
+  public void testGlobalPermission() throws Exception {
+    Configuration conf = UTIL.getConfiguration();
+
+    // add some permissions
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("user1"),
+            Permission.Action.READ, Permission.Action.WRITE));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("user2"),
+            Permission.Action.CREATE));
+    AccessControlLists.addUserPermission(conf,
+        new UserPermission(Bytes.toBytes("user3"),
+            Permission.Action.ADMIN, Permission.Action.READ, Permission.Action.CREATE));
+
+    ListMultimap<String,TablePermission> perms = AccessControlLists.getTablePermissions(conf, null);
+    List<TablePermission> user1Perms = perms.get("user1");
+    assertEquals("Should have 1 permission for user1", 1, user1Perms.size());
+    assertEquals("user1 should have WRITE permission",
+                 new Permission.Action[] { Permission.Action.READ, Permission.Action.WRITE },
+                 user1Perms.get(0).getActions());
+
+    List<TablePermission> user2Perms = perms.get("user2");
+    assertEquals("Should have 1 permission for user2", 1, user2Perms.size());
+    assertEquals("user2 should have CREATE permission",
+                 new Permission.Action[] { Permission.Action.CREATE },
+                 user2Perms.get(0).getActions());
+
+    List<TablePermission> user3Perms = perms.get("user3");
+    assertEquals("Should have 1 permission for user3", 1, user3Perms.size());
+    assertEquals("user3 should have ADMIN, READ, CREATE permission",
+                 new Permission.Action[] {
+                    Permission.Action.ADMIN, Permission.Action.READ, Permission.Action.CREATE
+                 },
+                 user3Perms.get(0).getActions());
+  }
+
+  @Test
+  public void testAuthManager() throws Exception {
+    Configuration conf = UTIL.getConfiguration();
+    /* test a race condition causing TableAuthManager to sometimes fail global permissions checks
+     * when the global cache is being updated
+     */
+    TableAuthManager authManager = TableAuthManager.get(ZKW, conf);
+    // currently running user is the system user and should have global admin perms
+    User currentUser = User.getCurrent();
+    assertTrue(authManager.authorize(currentUser, Permission.Action.ADMIN));
+    for (int i=1; i<=50; i++) {
+      AccessControlLists.addUserPermission(conf, new UserPermission(Bytes.toBytes("testauth"+i),
+          Permission.Action.ADMIN, Permission.Action.READ, Permission.Action.WRITE));
+      // make sure the system user still shows as authorized
+      assertTrue("Failed current user auth check on iter "+i,
+          authManager.authorize(currentUser, Permission.Action.ADMIN));
+    }
   }
 }

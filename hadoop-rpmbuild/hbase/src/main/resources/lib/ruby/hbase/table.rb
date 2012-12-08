@@ -118,6 +118,7 @@ module Hbase
 
       # Get maxlength parameter if passed
       maxlength = args.delete(MAXLENGTH) if args[MAXLENGTH]
+      filter = args.delete(FILTER) if args[FILTER]
 
       unless args.empty?
         columns = args[COLUMN] || args[COLUMNS]
@@ -160,6 +161,12 @@ module Hbase
           get.setTimeStamp(ts.to_i) if args[TIMESTAMP]
           get.setTimeRange(args[TIMERANGE][0], args[TIMERANGE][1]) if args[TIMERANGE]
         end
+      end
+
+      unless filter.class == String
+        get.setFilter(filter)
+      else
+        get.setFilter(org.apache.hadoop.hbase.filter.ParseFilter.new.parseFilterString(filter))
       end
 
       # Call hbase for the results
@@ -220,7 +227,8 @@ module Hbase
         stoprow = args["STOPROW"]
         timestamp = args["TIMESTAMP"]
         columns = args["COLUMNS"] || args["COLUMN"] || []
-        cache = args["CACHE_BLOCKS"] || true
+        cache_blocks = args["CACHE_BLOCKS"] || true
+        cache = args["CACHE"] || 0
         versions = args["VERSIONS"] || 1
         timerange = args[TIMERANGE]
         raw = args["RAW"] || false
@@ -253,7 +261,8 @@ module Hbase
         end
 
         scan.setTimeStamp(timestamp) if timestamp
-        scan.setCacheBlocks(cache)
+        scan.setCacheBlocks(cache_blocks)
+        scan.setCaching(cache) if cache > 0
         scan.setMaxVersions(versions) if versions > 1
         scan.setTimeRange(timerange[0], timerange[1]) if timerange
         scan.setRaw(raw)

@@ -50,15 +50,25 @@ module Hbase
     end
 
     #----------------------------------------------------------------------------------------------
-    # Requests a table or region compaction
-    def compact(table_or_region_name)
-      @admin.compact(table_or_region_name)
+    # Requests a table or region or column family compaction
+    def compact(table_or_region_name, family = nil)
+      if family == nil
+        @admin.compact(table_or_region_name)
+      else
+        # We are compacting a column family within a region.
+        @admin.compact(table_or_region_name, family)
+      end
     end
 
     #----------------------------------------------------------------------------------------------
-    # Requests a table or region major compaction
-    def major_compact(table_or_region_name)
-      @admin.majorCompact(table_or_region_name)
+    # Requests a table or region or column family major compaction
+    def major_compact(table_or_region_name, family = nil)
+      if family == nil
+        @admin.majorCompact(table_or_region_name)
+      else
+        # We are major compacting a column family within a region or table.
+        @admin.majorCompact(table_or_region_name, family)
+      end
     end
 
     #----------------------------------------------------------------------------------------------
@@ -88,7 +98,8 @@ module Hbase
     # Enable/disable balancer
     # Returns previous balancer switch setting.
     def balance_switch(enableDisable)
-      @admin.balanceSwitch(java.lang.Boolean::valueOf(enableDisable))
+      @admin.setBalancerRunning(
+        java.lang.Boolean::valueOf(enableDisable), java.lang.Boolean::valueOf(false))
     end
 
     #----------------------------------------------------------------------------------------------
@@ -140,8 +151,6 @@ module Hbase
       raise ArgumentError, "Table #{table_name} is enabled. Disable it first.'" if enabled?(table_name)
 
       @admin.deleteTable(table_name)
-      flush(org.apache.hadoop.hbase.HConstants::META_TABLE_NAME)
-      major_compact(org.apache.hadoop.hbase.HConstants::META_TABLE_NAME)
     end
 
     #----------------------------------------------------------------------------------------------
@@ -149,8 +158,6 @@ module Hbase
     def drop_all(regex)
       regex = regex.to_s
       failed  = @admin.deleteTables(regex).map { |t| t.getNameAsString }
-      flush(org.apache.hadoop.hbase.HConstants::META_TABLE_NAME)
-      major_compact(org.apache.hadoop.hbase.HConstants::META_TABLE_NAME)
       return failed
     end
 

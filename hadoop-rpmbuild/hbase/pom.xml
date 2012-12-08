@@ -4,7 +4,7 @@
 
 	<groupId>org.reducedata</groupId>
 	<artifactId>hbase</artifactId>
-	<version>0.94.0</version>
+	<version>0.94.3</version>
 	<packaging>jar</packaging>
 
 	<name>hadoop</name>
@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>7</release>
+					<release>1</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>pig</distribution>
 					<group>utilities</group>
@@ -132,10 +132,10 @@
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/hbase-0.94.0.jar</location>
+									<location>src/main/resources/hbase-0.94.3.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hbase-0.94.0-tests.jar</location>
+									<location>src/main/resources/hbase-0.94.3-tests.jar</location>
 								</source>
 							</sources>
 						</mapping>
@@ -145,15 +145,6 @@
 							<sources>
 								<source>
 									<location>src/main/resources/sbin</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/hbase/docs</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/docs</location>
 								</source>
 							</sources>
 						</mapping>
