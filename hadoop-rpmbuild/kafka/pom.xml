@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.apache.kafka</groupId>
+	<artifactId>kafka</artifactId>
+	<version>0.7.2</version>
+	<packaging>jar</packaging>
+
+	<name>kafka</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.0.1</version>
+				<extensions>true</extensions>
+
+				<configuration>
+					<release>2</release>
+					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
+					<distribution>kafka</distribution>
+					<group>utilities</group>
+					<packager>newtecnia</packager>
+					<provides>
+						<provide>kafka</provide>
+					</provides>
+					<defineStatements>
+						<defineStatement>_unpackaged_files_terminate_build 0
+                                                </defineStatement>
+					</defineStatements>
+					<defaultGroupname>kafka</defaultGroupname>
+					<defaultUsername>kafka</defaultUsername>
+					<mappings>
+						<mapping>
+							<directory>/opt/kafka/config</directory>
+							<filemode>775</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/config</location>
+								</source>
+							</sources>
+						</mapping>
+                   
+                        <mapping>
+                            <directory>/etc/init.d/</directory>
+                            <directoryIncluded>false</directoryIncluded>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                            <filemode>775</filemode>
+                            <sources>
+                                <source>
+                                    <location>src/main/resources/init.d/kafka-server</location>
+                                </source>
+                            </sources>
+                        </mapping>
+
+						<mapping>
+							<directory>/opt/kafka/bin</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/bin</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/kafka/contrib</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/contrib</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/kafka/core</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/core</location>
+								</source>
+							</sources>
+						</mapping>
+                                                <mapping>
+                                                        <directory>/opt/kafka/project</directory>
+                                                        <filemode>775</filemode>
+                                                        <sources>
+                                                                <source>
+                                                                        <location>src/main/resources/project</location>
+                                                                </source>
+                                                        </sources>
+                                                </mapping>
+
+						<mapping>
+							<directory>/opt/kafka/lib</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/lib</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/kafka/lib_managed</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/lib_managed</location>
+								</source>
+							</sources>
+						</mapping>
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
