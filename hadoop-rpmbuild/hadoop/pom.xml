@@ -144,25 +144,25 @@
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/hadoop-ant-1.0.4.jar</location>
+									<location>src/main/resources/hadoop-ant-1.1.1.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-core-1.0.4.jar</location>
+									<location>src/main/resources/hadoop-core-1.1.1.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-examples-1.0.4.jar</location>
+									<location>src/main/resources/hadoop-examples-1.1.1.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-test-1.0.4.jar</location>
+									<location>src/main/resources/hadoop-test-1.1.1.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/hadoop-tools-1.0.4.jar</location>
+									<location>src/main/resources/hadoop-tools-1.1.1.jar</location>
 								</source>
 								 <source>
-                                                                        <location>src/main/resources/hadoop-client-1.0.4.jar</location>
+                                                                        <location>src/main/resources/hadoop-client-1.1.1.jar</location>
                                                                 </source>
 								<source>
-                                                                        <location>src/main/resources/hadoop-minicluster-1.0.4.jar</location>
+                                                                        <location>src/main/resources/hadoop-minicluster-1.1.1.jar</location>
                                                                 </source>
 							</sources>
 						</mapping>
@@ -181,15 +181,6 @@
 							<sources>
 								<source>
 									<location>src/main/resources/contrib</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/hadoop/docs</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/docs</location>
 								</source>
 							</sources>
 						</mapping>
