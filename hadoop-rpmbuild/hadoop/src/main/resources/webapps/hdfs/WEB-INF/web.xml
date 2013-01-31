@@ -7,6 +7,11 @@
 
 
     <servlet>
+        <servlet-name>org.apache.hadoop.hdfs.server.namenode.corrupt_005ffiles_jsp</servlet-name>
+        <servlet-class>org.apache.hadoop.hdfs.server.namenode.corrupt_005ffiles_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>org.apache.hadoop.hdfs.server.namenode.nn_005fbrowsedfscontent_jsp</servlet-name>
         <servlet-class>org.apache.hadoop.hdfs.server.namenode.nn_005fbrowsedfscontent_jsp</servlet-class>
     </servlet>
@@ -20,6 +25,11 @@
         <servlet-name>org.apache.hadoop.hdfs.server.namenode.dfsnodelist_jsp</servlet-name>
         <servlet-class>org.apache.hadoop.hdfs.server.namenode.dfsnodelist_jsp</servlet-class>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.hadoop.hdfs.server.namenode.corrupt_005ffiles_jsp</servlet-name>
+        <url-pattern>/corrupt_files.jsp</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>org.apache.hadoop.hdfs.server.namenode.nn_005fbrowsedfscontent_jsp</servlet-name>

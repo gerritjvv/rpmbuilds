@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-/opt/hadoop/bin/hadoop "$@"
-

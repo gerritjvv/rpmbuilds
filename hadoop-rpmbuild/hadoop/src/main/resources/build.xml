@@ -28,7 +28,7 @@
  
   <property name="Name" value="Hadoop"/>
   <property name="name" value="hadoop"/>
-  <property name="version" value="1.0.4-SNAPSHOT"/>
+  <property name="version" value="1.1.2-SNAPSHOT"/>
   <property name="final.name" value="${name}-${version}"/>
   <property name="test.final.name" value="${name}-test-${version}"/>
   <property name="year" value="2009"/>
@@ -160,7 +160,7 @@
 
   <property name="jdiff.build.dir" value="${build.docs}/jdiff"/>
   <property name="jdiff.xml.dir" value="${lib.dir}/jdiff"/>
-  <property name="jdiff.stable" value="1.0.2"/>
+  <property name="jdiff.stable" value="1.0.4"/>
   <property name="jdiff.stable.javadoc" 
             value="http://hadoop.apache.org/core/docs/r${jdiff.stable}/api/"/>
 
@@ -758,6 +758,7 @@
         <provider classname="org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier$Renewer"/>
         <provider classname="org.apache.hadoop.mapreduce.security.token.JobTokenIdentifier$Renewer"/>
         <provider classname="org.apache.hadoop.hdfs.HftpFileSystem$TokenManager"/>
+        <provider classname="org.apache.hadoop.hdfs.HsftpFileSystem$TokenManager"/>
         <provider classname="org.apache.hadoop.hdfs.web.WebHdfsFileSystem$DtRenewer"/>
       </service>
       <fileset dir="${conf.dir}" includes="${jar.properties.list}" />
@@ -921,6 +922,7 @@
     <copy file="${test.src.dir}/org/apache/hadoop/mapred/test.tgz" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/mapred/test.tar.gz" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/hdfs/hadoop-14-dfs-dir.tgz" todir="${test.cache.data}"/>
+    <copy file="${test.src.dir}/org/apache/hadoop/hdfs/hadoop-1.0-multiblock-file.tgz" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/hdfs/hadoop-dfs-dir.txt" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/cli/testConf.xml" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/cli/clitest_data/data15bytes" todir="${test.cache.data}"/>
@@ -1301,7 +1303,6 @@
     </echo>
     <exec dir="${docs.src}" executable="${forrest.home}/bin/forrest"
 	  failonerror="true">
-      <env key="JAVA_HOME" value="${java5.home}"/>
     </exec>
     <copy todir="${build.docs}">
       <fileset dir="${docs.src}/build/site/" />
@@ -1321,7 +1322,6 @@
         if="forrest.home">
     <exec dir="${src.docs.cn}" executable="${forrest.home}/bin/forrest" failonerror="true">
       <env key="LANG" value="en_US.utf8"/>
-      <env key="JAVA_HOME" value="${java5.home}"/>
     </exec>
     <copy todir="${build.docs.cn}">
       <fileset dir="${src.docs.cn}/build/site/" />
@@ -1335,14 +1335,10 @@
     <antcall target="changes-to-html"/>
   </target>
 
-  <target name="forrest.check" unless="forrest.home" depends="java5.check">
+  <target name="forrest.check" unless="forrest.home">
     <fail message="'forrest.home' is not defined. Please pass -Dforrest.home=&lt;base of Apache Forrest installation&gt; to Ant on the command-line." />
   </target>
 
-  <target name="java5.check" unless="java5.home">
-    <fail message="'java5.home' is not defined.  Forrest requires Java 5.  Please pass -Djava5.home=&lt;base of Java 5 distribution&gt; to Ant on the command-line." />
-  </target>
-	
   <target name="javadoc-dev" description="Generate javadoc for hadoop developers">
     <mkdir dir="${build.javadoc.dev}"/>
     <javadoc
@@ -1361,6 +1357,7 @@
         <packageset dir="${mapred.src.dir}"/>
         <packageset dir="${hdfs.src.dir}"/>        	
     	<packageset dir="${examples.dir}"/>
+    	<packageset dir="${tools.src}"/>
 
     	<packageset dir="src/contrib/streaming/src/java"/>
     	<packageset dir="src/contrib/data_join/src/java"/>
@@ -1441,6 +1438,8 @@
        <packageset dir="src/core"/>
        <packageset dir="src/mapred"/>
        <packageset dir="src/tools"/>
+       <packageset dir="${tools.src}"/>
+       <packageset dir="${tools.src}"/>
        <classpath >
          <path refid="classpath" />
          <path refid="jdiff-classpath" />
@@ -1494,7 +1493,7 @@
   <!-- ================================================================== -->
   <!--                                                                    -->
   <!-- ================================================================== -->
-  <target name="package" depends="compile, jar, javadoc, docs, cn-docs, api-report, examples, tools-jar, jar-test, ant-tasks, package-librecordio"
+  <target name="package" depends="compile, jar, javadoc, docs, api-report, examples, tools-jar, jar-test, ant-tasks, package-librecordio"
 	  description="assembles multi-platform artifacts for distribution">
     <delete dir="${dist.dir}"/>
     <mkdir dir="${dist.dir}"/>
@@ -1595,6 +1594,10 @@
 
     <copy todir="${dist.dir}/" file="build.xml"/>
 
+    <copy todir="${dist.dir}/.eclipse.templates">
+      <fileset dir="${basedir}/.eclipse.templates"/>
+    </copy>
+
     <subant target="task-controller">
       <fileset dir="." includes="build.xml"/>
     </subant>
@@ -1632,6 +1635,7 @@
           <exclude name="${final.name}/src/contrib/ec2/bin/*" />
           <exclude name="${final.name}/src/contrib/ec2/bin/image/*" />
           <include name="${final.name}/**" />
+          <include name="${final.name}/eclipse.templates/**" />
         </tarfileset>
         <tarfileset dir="${build.dir}" mode="755">
           <include name="${final.name}/bin/*" />
@@ -1680,6 +1684,7 @@
     <mkdir dir="${dist.dir}/share/${name}/contrib"/>
     <mkdir dir="${dist.dir}/share/${name}/webapps"/>
     <mkdir dir="${dist.dir}/share/${name}/templates/conf"/>
+    <mkdir dir="${dist.dir}/native"/>
 
     <copy todir="${dist.dir}/share/${name}/templates/conf" includeEmptyDirs="false">
       <fileset dir="${basedir}/src/packages/templates/conf">
@@ -2279,7 +2284,6 @@
     <arg value="${findbugs.home}"/>
     <arg value="${forrest.home}"/>
     <arg value="${basedir}"/>
-    <arg value="${java5.home}"/>
   </exec>
 </target>
 
@@ -2302,7 +2306,6 @@
     <arg value="${basedir}"/>
     <arg value="${trigger.url}"/>
     <arg value="${jira.passwd}"/>
-    <arg value="${java5.home}"/>
   </exec>
 </target>
 	
