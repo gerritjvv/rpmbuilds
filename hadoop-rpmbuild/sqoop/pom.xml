@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.apache</groupId>
+	<artifactId>sqoop</artifactId>
+	<version>1.4.2</version>
+	<packaging>jar</packaging>
+
+	<name>sqoop</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.0.1</version>
+				<extensions>true</extensions>
+
+				<configuration>
+					<release>1</release>
+					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
+					<distribution>sqoop</distribution>
+					<group>utilities</group>
+					<packager>newtecnia</packager>
+					<provides>
+						<provide>sqoop</provide>
+					</provides>
+					<!-- <needarch>x86_64</needarch> -->
+					<defineStatements>
+						<defineStatement>_unpackaged_files_terminate_build 0
+                                                </defineStatement>
+					</defineStatements>
+					<defaultGroupname>sqoop</defaultGroupname>
+					<defaultUsername>sqoop</defaultUsername>
+					<mappings>
+						<mapping>
+							<directory>/opt/sqoop/conf</directory>
+							<filemode>775</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/conf</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/sqoop/bin</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<filemode>777</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/bin</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/sqoop</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/sqoop-1.4.2.jar</location>
+								</source>
+								<source>
+									<location>src/main/resources/sqoop-test-1.4.2.jar</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/sqoop/ivy</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/ivy</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/sqoop/lib</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/lib</location>
+								</source>
+							</sources>
+						</mapping>
+						<mapping>
+							<directory>/opt/sqoop/docs</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/docs</location>
+								</source>
+							</sources>
+						</mapping>
+ 						<mapping>
+                                                        <directory>/opt/sqoop/src</directory>
+                                                        <filemode>775</filemode>
+                                                        <sources>
+                                                                <source>
+                                                                        <location>src/main/resources/src</location>
+                                                                </source>
+                                                        </sources>
+                                                </mapping>
+
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
