@@ -72,4 +72,4 @@ esac
 export HADOOP_HEAPSIZE
 
 
-
+export HADOOP_HOME_WARN_SUPPRESS="TRUE"
