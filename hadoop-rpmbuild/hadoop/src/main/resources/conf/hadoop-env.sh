@@ -52,3 +52,24 @@ export HADOOP_JOBTRACKER_OPTS="-Dcom.sun.management.jmxremote $HADOOP_JOBTRACKER
 
 # The scheduling priority for daemon processes.  See 'man nice'.
 # export HADOOP_NICENESS=10
+
+case $COMMAND in
+        namenode | secondarynamenode )
+                HADOOP_HEAPSIZE="1024"
+                ;;
+        jobtracker )
+                HADOOP_HEAPSIZE="1024"
+                ;;
+        datanode | tasktracker )
+                HADOOP_HEAPSIZE="1024"
+                ;;
+
+        * )
+                HADOOP_HEAPSIZE="1024"
+                ;;
+esac
+
+export HADOOP_HEAPSIZE
+
+
+

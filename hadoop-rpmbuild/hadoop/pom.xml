@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>1</release>
+					<release>2</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>hadoop</distribution>
 					<group>utilities</group>
