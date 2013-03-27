@@ -1,0 +1,140 @@
+#!/bin/bash
+# chkconfig: 2345 20 80
+# description: solr
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+if [ -f /etc/init.d/functions ] ; then
+        . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+        . /etc/rc.d/init.d/functions
+else
+        exit 0
+fi
+
+SOLR_HOME="/opt/solr"
+CONF="/opt/solr/env.sh"
+
+
+
+
+config () {
+
+   if [ -f /etc/profile.d/java.sh ] ; then
+       . /etc/profile.d/java.sh
+   fi
+
+   . $CONF
+
+   if [ -z "$JAVA_HOME" ]; then
+      export JAVA_HOME="/usr/java/latest"
+   fi
+
+   if [ -z "$SOLR_USER" ] ; then
+      export SOLR_USER="root"
+   fi
+
+   if [ -z "$STOP_PORT" ]; then
+      export STOP_PORT=8982
+   fi
+   
+   if [ -z "$STOP_KEY" ]; then
+      export STOP_KEY=stop
+   fi
+
+}
+
+prog="solr"
+
+start () {
+        config 
+    
+        if status 
+        then
+           echo "Sorl is already running"
+        else
+          echo -n $"Starting $prog: "
+          # start daemon
+	  su - $SOLR_USER -c "cd $SOLR_HOME;$JAVA_HOME/bin/java -DSTOP.PORT=$STOP_PORT -DSTOP.KEY=$STOP_KEY -jar $SOLR_HOME/start.jar --daemon&"
+          echo
+        fi
+}
+
+stop () {
+        # stop daemon
+        echo -n $"Stopping $prog: "
+        config
+        if status
+        then
+    	     su - $SOLR_USER -c "$JAVA_HOME/bin/java -DSTOP.PORT=$STOP_PORT -DSTOP.KEY=$STOP_KEY -jar $SOLR_HOME/start.jar --stop"
+        else
+             echo
+             echo "Solr is not running"
+        fi
+        echo
+}
+
+restart() {
+        stop
+        sleep 5
+        start
+}
+
+status() {
+        
+        if  pgrep -f "/opt/solr/start.jar" &>/dev/null 
+        then
+           return 0
+        else
+           return 1
+        fi
+}
+
+
+case $1 in
+        start)
+                start
+        ;;
+        stop)
+                stop
+        ;;
+        restart)
+                restart
+        ;;
+        condrestart)
+		restart
+        ;;
+        reload)
+        echo "No supported"
+        ;;
+        status)
+        if status 
+        then
+            echo "Solr running"
+            exit 0
+        else
+            echo "Solr stopped"
+            exit 1
+        fi
+        ;;
+        *)
+
+        echo $"Usage: $prog {start|stop|restart|condrestart|reload|status}"
+        exit 1
+esac
+
+exit $RETVAL
+
