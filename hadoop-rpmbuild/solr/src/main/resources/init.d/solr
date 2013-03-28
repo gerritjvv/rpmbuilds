@@ -55,6 +55,8 @@ config () {
       export STOP_KEY=stop
    fi
 
+           
+
 }
 
 prog="solr"
@@ -68,7 +70,7 @@ start () {
         else
           echo -n $"Starting $prog: "
           # start daemon
-	  su - $SOLR_USER -c "cd $SOLR_HOME;$JAVA_HOME/bin/java -DSTOP.PORT=$STOP_PORT -DSTOP.KEY=$STOP_KEY -jar $SOLR_HOME/start.jar --daemon&"
+	  su - $SOLR_USER -c "cd $SOLR_HOME;$JAVA_HOME/bin/java $SOLR_OPTS -DSTOP.PORT=$STOP_PORT -DSTOP.KEY=$STOP_KEY -jar $SOLR_HOME/start.jar --daemon&"
           echo
         fi
 }
