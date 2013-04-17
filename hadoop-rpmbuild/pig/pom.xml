@@ -4,7 +4,7 @@
 
 	<groupId>org.apache</groupId>
 	<artifactId>pig</artifactId>
-	<version>0.10.0</version>
+	<version>0.11.1</version>
 	<packaging>jar</packaging>
 
 	<name>pig</name>
@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>5</release>
+					<release>1</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>hadoop</distribution>
 					<group>utilities</group>
@@ -90,10 +90,10 @@
 							<filemode>755</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/pig-0.10.0.jar</location>
+									<location>src/main/resources/pig-0.11.1.jar</location>
 								</source>
 								<source>
-									<location>src/main/resources/pig-0.10.0-withouthadoop.jar</location>
+									<location>src/main/resources/pig-0.11.1-withouthadoop.jar</location>
 								</source>
 								<source>
 									<location>src/main/resources/LICENSE.txt</location>
