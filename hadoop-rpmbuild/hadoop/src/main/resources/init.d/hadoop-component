@@ -1,6 +1,7 @@
 #!/bin/bash
 # chkconfig: 2345 20 80
-# description: hadoop task tracker
+# description: hadoop component init script
+#
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -26,7 +27,7 @@ else
 fi
 
 prog=${0/*\/hadoop-/}
-case $prog in
+case ${prog} in
     datanode )      DAEMON="DataNode"       ;;
     jobtracker )        DAEMON="JobTracker"     ;;
     namenode )      DAEMON="NameNode"       ;;
@@ -44,24 +45,24 @@ config () {
 }
 
 start () {
-        echo -n $"Starting $prog: "
+        echo -n $"Starting ${prog}: "
         config
         # start daemon
-        su - hadoop -c "$HADOOP_HOME/bin/hadoop-daemon.sh start $prog"
+        su - hadoop -c "PATH=${PATH}:${JAVA_HOME}/bin JAVA_HOME=${JAVA_HOME} ${HADOOP_HOME}/bin/hadoop-daemon.sh start ${prog}"
         RETVAL=$?
         echo
-        [ $RETVAL = 0 ] && touch /var/lock/subsys/$prog
-        return $RETVAL
+        [ ${RETVAL} = 0 ] && touch /var/lock/subsys/${prog}
+        return ${RETVAL}
 }
 
 stop () {
         # stop daemon
         echo -n $"Stopping $prog: "
         config
-        su - hadoop -c "$HADOOP_HOME/bin/hadoop-daemon.sh stop $prog"
+    su - hadoop -c "PATH=${PATH}:${JAVA_HOME}/bin ${HADOOP_HOME}/bin/hadoop-daemon.sh stop ${prog}"
         RETVAL=$?
         echo
-        [ $RETVAL = 0 ] && rm -f /var/lock/subsys/$prog
+        [ ${RETVAL} = 0 ] && rm -f /var/lock/subsys/${prog}
 }
 
 restart() {
@@ -75,33 +76,30 @@ case $1 in
                 start
         ;;
         stop)
-
-               stop
+                stop
         ;;
         restart)
                 restart
         ;;
         condrestart)
-                [ -f /var/lock/subsys/$prog ] && restart || :
+                [ -f /var/lock/subsys/${prog} ] && restart || :
         ;;
         reload)
         echo "No supported"
         ;;
         status)
-        if pgrep -f "$DAEMON" &>/dev/null; then
-            echo "$DAEMON running"
+        if pgrep -f "${DAEMON}" &>/dev/null; then
+            echo "${DAEMON} running"
             exit 0
         else
-            echo "$DAEMON stopped"
+            echo "${DAEMON} stopped"
             exit 1
         fi
         ;;
         *)
 
-        echo $"Usage: $prog {start|stop|restart|condrestart|reload|status}"
+        echo $"Usage: ${prog} {start|stop|restart|condrestart|reload|status}"
         exit 1
 esac
 
-exit $RETVAL
-
-
+exit ${RETVAL}
