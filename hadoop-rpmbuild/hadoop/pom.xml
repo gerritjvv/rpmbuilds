@@ -56,6 +56,17 @@
 		</source>
 	      </sources>
 	    </mapping>
+            
+            <mapping>
+              <directory>/opt/hadoop/logs</directory>
+              <filemode>776</filemode>
+              <configuration>true</configuration>
+              <sources>
+                <source>
+                  <location>src/main/resources/logs</location>
+                </source>
+              </sources>
+            </mapping>
 
 	    <mapping>
               <directory>/etc/init.d/</directory>
@@ -78,7 +89,7 @@
               <filemode>775</filemode>
               <sources>
                 <softlinkSource>
-		  <location>hadoop-component</location>
+		  <location>/etc/init.d/hadoop-component</location>
                   <destination>hadoop-secondarynamenode</destination>
                 </softlinkSource>
               </sources>
@@ -92,7 +103,7 @@
               <filemode>775</filemode>
               <sources>
                 <softlinkSource>
-		  <location>hadoop-component</location>
+		  <location>/etc/init.d/hadoop-component</location>
                   <destination>hadoop-namenode</destination>
                 </softlinkSource>
               </sources>
@@ -106,7 +117,7 @@
               <filemode>775</filemode>
               <sources>
                 <softlinkSource>
-		  <location>hadoop-component</location>
+		  <location>/etc/init.d/hadoop-component</location>
                   <destination>hadoop-jobtracker</destination>
                 </softlinkSource>
               </sources>
@@ -120,7 +131,7 @@
               <filemode>775</filemode>
               <sources>
                 <softlinkSource>
-		  <location>hadoop-component</location>
+		  <location>/etc/init.d/hadoop-component</location>
                   <destination>hadoop-datanode</destination>
                 </softlinkSource>
               </sources>
@@ -134,7 +145,7 @@
               <filemode>775</filemode>
               <sources>
                 <softlinkSource>
-		  <location>hadoop-component</location>
+		  <location>/etc/init.d/hadoop-component</location>
                   <destination>hadoop-tasktracker</destination>
                 </softlinkSource>
               </sources>
