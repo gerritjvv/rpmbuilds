@@ -14,7 +14,7 @@ library_names='libhdfs.so.0.0.0 libhdfs.so.0 libhdfs.so'
 old_library='libhdfs.a'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/homes/hortonfo/tools/jdk1.6.0_u31_32bit/jre/lib/i386/server -ljvm -ldl -lpthread'
+dependency_libs=' -L/grid/0/dev/acm/tools/jdk1.6.0_26/jre/lib/i386/server -ljvm -ldl -lpthread'
 
 # Version information for libhdfs.
 current=0
@@ -32,4 +32,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/grid/0/dev/mfoley/hadoop-1.1/build/c++/Linux-i386-32/lib'
+libdir='/grid/0/dev/mfoley/hadoop-1.0/build/c++/Linux-i386-32/lib'

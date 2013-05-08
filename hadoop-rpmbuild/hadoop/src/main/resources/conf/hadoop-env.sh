@@ -1,5 +1,5 @@
 # Set Hadoop-specific environment variables here.
-COMMAND=$1
+
 # The only required environment variable is JAVA_HOME.  All others are
 # optional.  When running a distributed configuration it is best to
 # set JAVA_HOME in this file, so that it is correctly defined on
@@ -16,7 +16,7 @@ COMMAND=$1
 
 # Extra Java runtime options.  Empty by default.
 # export HADOOP_OPTS=-server
-export HADOOP_HOME_WARN_SUPPRESS="TRUE"
+
 # Command specific options appended to HADOOP_OPTS when specified
 export HADOOP_NAMENODE_OPTS="-Dcom.sun.management.jmxremote $HADOOP_NAMENODE_OPTS"
 export HADOOP_SECONDARYNAMENODE_OPTS="-Dcom.sun.management.jmxremote $HADOOP_SECONDARYNAMENODE_OPTS"
@@ -52,24 +52,3 @@ export HADOOP_JOBTRACKER_OPTS="-Dcom.sun.management.jmxremote $HADOOP_JOBTRACKER
 
 # The scheduling priority for daemon processes.  See 'man nice'.
 # export HADOOP_NICENESS=10
-
-case $COMMAND in
-        namenode | secondarynamenode )
-                HADOOP_HEAPSIZE="1024"
-                ;;
-        jobtracker )
-                HADOOP_HEAPSIZE="1024"
-                ;;
-        datanode | tasktracker )
-                HADOOP_HEAPSIZE="1024"
-                ;;
-
-        * )
-                HADOOP_HEAPSIZE="1024"
-                ;;
-esac
-
-export HADOOP_HEAPSIZE
-
-
-export HADOOP_HOME_WARN_SUPPRESS="TRUE"
