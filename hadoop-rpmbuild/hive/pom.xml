@@ -1,0 +1,146 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.apache</groupId>
+	<artifactId>hive</artifactId>
+	<version>0.10.0</version>
+	<packaging>jar</packaging>
+
+	<name>hive</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>rpm-maven-plugin</artifactId>
+				<version>2.0.1</version>
+				<extensions>true</extensions>
+
+				<configuration>
+					<release>1</release>
+					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
+					<distribution>hive</distribution>
+					<group>utilities</group>
+					<packager>newtecnia</packager>
+					<provides>
+						<provide>hive</provide>
+					</provides>
+					<defineStatements>
+						<defineStatement>_unpackaged_files_terminate_build 0
+						</defineStatement>
+					</defineStatements>
+					<defaultGroupname>hadoop</defaultGroupname>
+					<defaultUsername>hadoop</defaultUsername>
+					<mappings>
+
+						<mapping>
+							<directory>/opt/hive/conf</directory>
+							<filemode>775</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/conf</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/logs</directory>
+							<filemode>776</filemode>
+							<configuration>true</configuration>
+							<sources>
+								<source>
+									<location>src/main/resources/logs</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/usr/bin/</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<username>root</username>
+							<groupname>root</groupname>
+							<filemode>777</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/usr/bin/hive</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/bin</directory>
+							<directoryIncluded>false</directoryIncluded>
+							<filemode>777</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/bin</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/scripts</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/scripts</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/lib</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/lib</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/examples</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/examples</location>
+								</source>
+							</sources>
+						</mapping>
+
+						<mapping>
+							<directory>/opt/hive/</directory>
+							<filemode>775</filemode>
+							<sources>
+								<source>
+									<location>src/main/resources/LICENSE</location>
+								</source>
+								<source>
+									<location>src/main/resources/NOTICE</location>
+								</source>
+								<source>
+									<location>src/main/resources/README.txt</location>
+								</source>
+								<source>
+									<location>src/main/resources/RELEASE_NOTES.txt</location>
+								</source>
+							</sources>
+						</mapping>
+
+					</mappings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
