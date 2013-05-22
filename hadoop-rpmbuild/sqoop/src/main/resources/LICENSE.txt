@@ -207,191 +207,198 @@ This Apache Sqoop distribution includes the following sources/binaries.
 The use of these sources/binaries is subject to the terms and conditions
 of their respective licenses.
 
-For src/docs/web/docbook.css:
+For catalina-tribes.jar:
 
-  The BSD License
+  The Apache License, Version 2.0
 
-  Copyright (c) 2001, 2003 The FreeBSD Documentation Project
-  All rights reserved.
+For catalina-ant.jar:
 
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-  1. Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-  2. Redistributions in binary form must reproduce the above copyright
-     notice, this list of conditions and the following disclaimer in the
-     documentation and/or other materials provided with the distribution.
+  The Apache License, Version 2.0
 
-  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-  SUCH DAMAGE.
+For catalina.jar:
 
-For lib/jopt-simple-<version>.jar:
+  The Apache License, Version 2.0
 
-  The MIT License
+For jsp-api.jar:
 
-  Copyright (c) 2011
+  The Apache License, Version 2.0
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+For tomcat-i18n-fr.jar:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+  The Apache License, Version 2.0
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
+For servlet-api.jar:
 
-For lib/paranamer-<version>.jar:
+  The Apache License, Version 2.0
 
-  The BSD License
+For ecj-<version>.jar:
 
-  Copyright (c) 2006 Paul Hammant & ThoughtWorks Inc
-  All rights reserved.
+  The Apache License, Version 2.0
 
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-  1. Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-  2. Redistributions in binary form must reproduce the above copyright
-     notice, this list of conditions and the following disclaimer in the
-     documentation and/or other materials provided with the distribution.
-  3. Neither the name of the copyright holders nor the names of its
-     contributors may be used to endorse or promote products derived from
-     this software without specific prior written permission.
+For jasper-el.jar:
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-  THE POSSIBILITY OF SUCH DAMAGE.
+  The Apache License, Version 2.0
 
-For lib/hsqldb-<version>.jar:
-  
-  The BSD License
+For jasper.jar:
 
-  For work developed by the HSQL Development Group:
+  The Apache License, Version 2.0
 
-  Copyright (c) 2001-2010, The HSQL Development Group
+For tomcat-i18n-es.jar:
+
+  The Apache License, Version 2.0
+
+For el-api.jar:
+
+  The Apache License, Version 2.0
+
+For annotations-api.jar:
+
+  The Apache License, Version 2.0
+
+For catalina-ha.jar:
+
+  The Apache License, Version 2.0
+
+For tomcat-i18n-ja.jar:
+
+  The Apache License, Version 2.0
+
+For tomcat-coyote.jar:
+
+  The Apache License, Version 2.0
+
+For tomcat-dbcp.jar:
+
+  The Apache License, Version 2.0
+
+For tomcat-juli.jar:
+
+  The Apache License, Version 2.0
+
+For commons-daemon.jar:
+
+  The Apache License, Version 2.0
+
+For bootstrap.jar:
+
+  The Apache License, Version 2.0
+
+For groovy-all-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For commons-cli-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For jansi-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For commons-dbcp-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For commons-pool-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For derby-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For commons-lang-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For json-simple-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For log4j-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For guava-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For jsr305-<version>.jar:
+
+  The Apache License, Version 2.0
+
+For jersey-core-<version>.jar
+
+  COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL)Version 1.1
+
+For jersey-client-<version>.jar:
+
+  COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL)Version 1.1
+
+For hamcrest-core-<version>.jar:
+
+  BSD License
+
+  Copyright (c) 2000-2006, www.hamcrest.org
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
   modification, are permitted provided that the following conditions are met:
 
-  Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+  Redistributions of source code must retain the above copyright notice, this list of
+  conditions and the following disclaimer. Redistributions in binary form must reproduce
+  the above copyright notice, this list of conditions and the following disclaimer in
+  the documentation and/or other materials provided with the distribution.
 
-  Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+  Neither the name of Hamcrest nor the names of its contributors may be used to endorse
+  or promote products derived from this software without specific prior written
+  permission.
 
-  Neither the name of the HSQL Development Group nor the names of its
-  contributors may be used to endorse or promote products derived from this
-  software without specific prior written permission.
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+  SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+  TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
+  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+  DAMAGE.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL HSQL DEVELOPMENT GROUP, HSQLDB.ORG,
-  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+For jline-<version>.jar:
 
+  BSD License
 
-  For work originally developed by the Hypersonic SQL Group:
-
-  Copyright (c) 1995-2000 by the Hypersonic SQL Group.
+  Copyright (c) 2002-2006, Marc Prud'hommeaux <mwp1@cornell.edu>
   All rights reserved.
 
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
+  Redistribution and use in source and binary forms, with or
+  without modification, are permitted provided that the following
+  conditions are met:
 
-  Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+  Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
 
-  Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+  Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer
+  in the documentation and/or other materials provided with
+  the distribution.
 
-  Neither the name of the Hypersonic SQL Group nor the names of its
-  contributors may be used to endorse or promote products derived from this
+  Neither the name of JLine nor the names of its contributors
+  may be used to endorse or promote products derived from this
   software without specific prior written permission.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL THE HYPERSONIC SQL GROUP,
-  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+  BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+  EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+  OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+  AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+  OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  This software consists of voluntary contributions made by many individuals on behalf of the
-  Hypersonic SQL Group.
-
-For lib/ant-contrib-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/ant-eclipse-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/avro-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/avro-ipc-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/avro-mapred-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/commons-io-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/jackson-core-asl-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/jackson-mapper-asl-<version>.jar:
-
-  The Apache License, Version 2.0
-
-For lib/snappy-java-<version>.jar:
-
-  The Apache License, Version 2.0

@@ -1,0 +1,78 @@
+----------------------------------------------------------------
+Mon Apr 15 20:55:06 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:08 PDT 2013:
+Shutting down instance a816c00e-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+----------------------------------------------------------------
+Mon Apr 15 20:55:09 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance ad8a418f-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:10 PDT 2013:
+Shutting down instance ad8a418f-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+----------------------------------------------------------------
+Mon Apr 15 20:55:10 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 111f4317-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:11 PDT 2013:
+Shutting down instance 111f4317-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+----------------------------------------------------------------
+Mon Apr 15 20:55:11 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 7b0784ad-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:12 PDT 2013:
+Shutting down instance 7b0784ad-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+----------------------------------------------------------------
+Mon Apr 15 20:55:12 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6cfec633-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:13 PDT 2013:
+Shutting down instance 6cfec633-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+----------------------------------------------------------------
+Mon Apr 15 20:55:13 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance f90807c0-013e-10fb-5447-00000e884d40 
+on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/repository/repository-derby
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Apr 15 20:55:14 PDT 2013:
+Shutting down instance f90807c0-013e-10fb-5447-00000e884d40 on database directory memory:/home/homeuser/sqoop2/repository/repository-derby/myDB with class loader sun.misc.Launcher$AppClassLoader@53372a1a 

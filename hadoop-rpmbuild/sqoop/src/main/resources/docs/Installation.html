@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Apache Sqoop  documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="Apache Sqoop  documentation" href="index.html" /> 
+  </head>
+  <body>
+      <div class="header"><img class="rightlogo" src="_static/sqoop-logo.png" alt="Logo"/><h1 class="heading"><a href="index.html">
+          <span>Apache Sqoop  documentation</span></a></h1>
+        <h2 class="heading"><span>Installation</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Sqoop ships as one binary package however it&#8217;s compound from two separate parts - client and server. You need to install server on single node in your cluster. This node will then serve as an entry point for all connecting Sqoop clients. Server acts as a mapreduce client and therefore Hadoop must be installed and configured on machine hosting Sqoop server. Clients can be installed on any arbitrary number of machines. Client is not acting as a mapreduce client and thus you do not need to install Hadoop on nodes that will act only as a Sqoop client.</p>
+<div class="section" id="server-installation">
+<h2>Server installation<a class="headerlink" href="#server-installation" title="Permalink to this headline">¶</a></h2>
+<p>Copy Sqoop artifact on machine where you want to run Sqoop server. This machine must have installed and configured Hadoop. You don&#8217;t need to run any Hadoop related services there, however the machine must be able to act as an Hadoop client. You should be able to list a HDFS for example:</p>
+<div class="highlight-none"><div class="highlight"><pre>hadoop dfs -ls
+</pre></div>
+</div>
+<p>Sqoop server supports multiple Hadoop versions. However as Hadoop major versions are not compatible with each other, Sqoop have multiple binary artefacts - one for each supported major version of Hadoop. You need to make sure that you&#8217;re using appropriated binary artifact for your specific Hadoop version. To install Sqoop server decompress appropriate distribution artifact in location at your convenience and change your working directory to this folder.</p>
+<div class="highlight-none"><div class="highlight"><pre># Decompress Sqoop distribution tarball
+tar -xvf sqoop-&lt;version&gt;-bin-hadoop&lt;hadoop-version&gt;.tar.gz
+
+# Move decompressed content to any location
+mv sqoop-&lt;version&gt;-bin-hadoop&lt;hadoop version&gt;.tar.gz /usr/lib/sqoop
+
+# Change working directory
+cd /usr/lib/sqoop
+</pre></div>
+</div>
+<div class="section" id="installing-dependencies">
+<h3>Installing Dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>You need to install Hadoop libraries into Sqoop server war file. Sqoop provides convenience script <tt class="docutils literal"><span class="pre">addtowar.sh</span></tt> to do so. If you have installed Hadoop in usual location in <tt class="docutils literal"><span class="pre">/usr/lib</span></tt> and executable <tt class="docutils literal"><span class="pre">hadoop</span></tt> is in your path, you can use automatic Hadoop installation procedure:</p>
+<div class="highlight-none"><div class="highlight"><pre>./bin/addtowar.sh -hadoop-auto
+</pre></div>
+</div>
+<p>In case that you have Hadoop installed in different location, you will need to manually specify Hadoop version and path to Hadoop libraries. You can use parameter <tt class="docutils literal"><span class="pre">-hadoop-version</span></tt> for specifying Hadoop major version, we&#8217;re currently support versions 1.x and 2.x. Path to Hadoop libraries can be specified using <tt class="docutils literal"><span class="pre">-hadoop-path</span></tt> parameter. In case that your Hadoop libraries are in multiple different folders, you can specify all of them separated by <tt class="docutils literal"><span class="pre">:</span></tt>.  Example of manual installation:</p>
+<div class="highlight-none"><div class="highlight"><pre>./bin/addtowar.sh -hadoop-version 2.0 -hadoop-path /usr/lib/hadoop-common:/usr/lib/hadoop-hdfs:/usr/lib/hadoop-yarn
+</pre></div>
+</div>
+<p>Lastly you might need to install JDBC drivers that are not bundled with Sqoop because of incompatible licenses. You can add any arbitrary java jar file to Sqoop server using script <tt class="docutils literal"><span class="pre">addtowar.sh</span></tt> with <tt class="docutils literal"><span class="pre">-jars</span></tt> parameter. Similarly as in case of hadoop path you can enter multiple jars separated with <tt class="docutils literal"><span class="pre">:</span></tt>. Example of installing MySQL JDBC driver to Sqoop server:</p>
+<div class="highlight-none"><div class="highlight"><pre>./bin/addtowar.sh -jars /path/to/jar/mysql-connector-java-*-bin.jar
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-server">
+<h3>Configuring Server<a class="headerlink" href="#configuring-server" title="Permalink to this headline">¶</a></h3>
+<p>Before starting server you should revise configuration to match your specific environment. Server configuration files are stored in <tt class="docutils literal"><span class="pre">server/config</span></tt> directory of distributed artifact along side with other configuration files of Tomcat.</p>
+<p>File <tt class="docutils literal"><span class="pre">sqoop_bootstrap.properties</span></tt> specifies which configuration provider should be used for loading configuration for rest of Sqoop server. Default value <tt class="docutils literal"><span class="pre">PropertiesConfigurationProvider</span></tt> should be sufficient.</p>
+<p>Second configuration file <tt class="docutils literal"><span class="pre">sqoop.properties</span></tt> contains remaining configuration properties that can affect Sqoop server. File is very well documented, so check if all configuration properties fits your environment. Default or very little tweaking should be sufficient most common cases.</p>
+</div>
+<div class="section" id="server-life-cycle">
+<h3>Server Life Cycle<a class="headerlink" href="#server-life-cycle" title="Permalink to this headline">¶</a></h3>
+<p>After installation and configuration you can start Sqoop server with following command:</p>
+<div class="highlight-none"><div class="highlight"><pre>./bin/sqoop.sh server start
+</pre></div>
+</div>
+<p>Similarly you can stop server using following command:</p>
+<div class="highlight-none"><div class="highlight"><pre>./bin/sqoop.sh server stop
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="client-installation">
+<h2>Client installation<a class="headerlink" href="#client-installation" title="Permalink to this headline">¶</a></h2>
+<p>Client do not need extra installation and configuration steps. Just copy Sqoop distribution artifact on target machine and unzip it in desired location. You can start client with following command:</p>
+<div class="highlight-none"><div class="highlight"><pre>bin/sqoop.sh client
+</pre></div>
+</div>
+<p>You can find more documentation to Sqoop client in <a class="reference external" href="CommandLineClient.html">Command Line Client</a> section.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2009-2013 The Apache Software Foundation.
+    </div>
+  </body>
+</html>

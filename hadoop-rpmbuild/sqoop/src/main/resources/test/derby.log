@@ -1,0 +1,12 @@
+Mon Apr 15 20:53:35 PDT 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Mon Apr 15 20:53:35 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-10f9-ee8c-00000df859c0 
+on database directory memory:/home/homeuser/sqoop2/test/sqoop  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/test
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+Mon Apr 15 20:54:10 PDT 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) shutdown

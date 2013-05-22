@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Mon Apr 15 21:00:48 PDT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-1100-89a3-00000e884f78 
+on database directory memory:/home/homeuser/sqoop2/connector/connector-generic-jdbc/TESTDB  with class loader sun.misc.Launcher$AppClassLoader@53372a1a 
+Loaded from file:/home/homeuser/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=/home/homeuser/sqoop2/connector/connector-generic-jdbc
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
