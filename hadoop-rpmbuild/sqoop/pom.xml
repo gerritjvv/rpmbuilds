@@ -4,7 +4,7 @@
 
 	<groupId>org.apache</groupId>
 	<artifactId>sqoop</artifactId>
-	<version>1.99</version>
+	<version>1.4.3</version>
 	<packaging>jar</packaging>
 
 	<name>sqoop</name>
@@ -42,6 +42,18 @@
 					<defaultGroupname>sqoop</defaultGroupname>
 					<defaultUsername>sqoop</defaultUsername>
 					<mappings>
+   <mapping>
+              <directory>/opt/sqoop</directory>
+              <filemode>775</filemode>
+              <sources>
+                <source>
+                  <location>src/main/resources/sqoop-1.4.3.jar</location>
+                </source>
+                <source>
+                  <location>src/main/resources/sqoop-test-1.4.3.jar</location>
+                </source>
+              </sources>
+  </mapping>
 						<mapping>
 							<directory>/opt/sqoop/bin</directory>
 							<directoryIncluded>false</directoryIncluded>
@@ -66,47 +78,11 @@
 						</mapping>
 
 						<mapping>
-							<directory>/opt/sqoop/client</directory>
+							<directory>/opt/sqoop/lib</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/client</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/common</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/common</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/connector</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/connector</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/core</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/core</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/dist</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/dist</location>
+									<location>src/main/resources/lib</location>
 								</source>
 							</sources>
 						</mapping>
@@ -120,56 +96,11 @@
 							</sources>
 						</mapping>
 						<mapping>
-							<directory>/opt/sqoop/execution</directory>
+							<directory>/opt/sqoop/testdata</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/execution</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/repository</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/repository</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/server</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/server</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/spi</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/spi</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/submission</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/submission</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/sqoop/test</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/test</location>
+									<location>src/main/resources/testdata</location>
 								</source>
 							</sources>
 						</mapping>

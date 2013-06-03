@@ -36,7 +36,7 @@ start () {
         echo -n $"Starting ${prog}: "
         config
         # start daemon
-        su - sqoop -c "PATH=${PATH}:${JAVA_HOME}/bin JAVA_HOME=${JAVA_HOME} /opt/sqoop/bin/sqoop.sh server start"
+        su - sqoop -c "PATH=${PATH}:${JAVA_HOME}/bin JAVA_HOME=${JAVA_HOME} /opt/sqoop/bin/sqoop server start"
         RETVAL=$?
         echo
         [ ${RETVAL} = 0 ] && touch /var/lock/subsys/${prog}
@@ -47,7 +47,7 @@ stop () {
         # stop daemon
         echo -n $"Stopping $prog: "
         config
-        su - sqoop -c "PATH=${PATH}:${JAVA_HOME}/bin /opt/sqoop/bin/sqoop.sh server stop"
+        su - sqoop -c "PATH=${PATH}:${JAVA_HOME}/bin /opt/sqoop/bin/sqoop server stop"
         RETVAL=$?
         echo
         [ ${RETVAL} = 0 ] && rm -f /var/lock/subsys/${prog}

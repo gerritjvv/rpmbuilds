@@ -27,22 +27,20 @@ fi
 
 config () {
 
-    export prog="kafka-server"
-    mkdir -p /var/lock/subsys/
-
-    if [ -z $KAFKA_HOME ]; then
+    if [[ -z $KAFKA_HOME ]]; then
       export KAFKA_HOME="/opt/kafka"
     fi
 
-    echo "Using KAFKA_HOME=$KAFKA_HOME"
-
+    if [[ -f /etc/profile.d/java.sh ]]; then
+       . /etc/profile.d/java.sh
+    fi
 }
 
 start () {
         echo -n $"Starting $prog: "
         config
         # start daemoni
-        nohup su - kafka -c "$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties" &> /opt/kafka/log/kafka.log&
+        nohup su - kafka -c "$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties" &> /opt/kafka/logs/kafka.log&
         RETVAL=$?
         echo
         [ $RETVAL = 0 ] && touch /var/lock/subsys/$prog
@@ -58,7 +56,6 @@ stop () {
         echo
         [ $RETVAL = 0 ] && rm -f /var/lock/subsys/$prog
 }
-
 
 restart() {
         stop
@@ -98,4 +95,3 @@ case $1 in
 esac
 
 exit $RETVAL
-
