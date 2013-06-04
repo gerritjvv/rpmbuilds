@@ -1,0 +1,11 @@
+#External Dependencies
+#Tue Jun 04 12:15:07 CEST 2013
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/contrib/hadoop-producer/lib_managed/scala_2.8.0/compile/pig-0.8.0.jar=src/main/java/kafka/bridge/pig/AvroKafkaStorage.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/contrib/hadoop-producer/lib/piggybank.jar=src/main/java/kafka/bridge/pig/AvroKafkaStorage.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/message/Message.class=src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/producer/ProducerData.class=src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/contrib/hadoop-producer/lib_managed/scala_2.8.0/compile/avro-1.4.0.jar=src/main/java/kafka/bridge/pig/AvroKafkaStorage.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/producer/ProducerConfig.class=src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/contrib/hadoop-producer/lib_managed/scala_2.8.0/compile/log4j-1.2.15.jar=src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/contrib/hadoop-producer/lib_managed/scala_2.8.0/compile/hadoop-core-0.20.2.jar=src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java\:src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java\:src/main/java/kafka/bridge/examples/TextPublisher.java\:src/main/java/kafka/bridge/pig/AvroKafkaStorage.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/producer/Producer.class=src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java\:src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java

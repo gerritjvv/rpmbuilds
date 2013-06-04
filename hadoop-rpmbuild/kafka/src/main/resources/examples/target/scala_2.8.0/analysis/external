@@ -1,0 +1,17 @@
+#External Dependencies
+#Tue Jun 04 12:15:08 CEST 2013
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/api/FetchRequest.class=src/main/java/kafka/examples/SimpleConsumerDemo.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/message/ByteBufferMessageSet.class=src/main/java/kafka/examples/SimpleConsumerDemo.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/message/Message.class=src/main/java/kafka/examples/Consumer.java\:src/main/java/kafka/examples/ExampleUtils.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/consumer/ConsumerIterator.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/message/MessageAndMetadata.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/producer/ProducerData.class=src/main/java/kafka/examples/Producer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/producer/ProducerConfig.class=src/main/java/kafka/examples/Producer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/consumer/SimpleConsumer.class=src/main/java/kafka/examples/SimpleConsumerDemo.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/consumer/ConsumerConfig.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/consumer/KafkaStream.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/consumer/ConsumerConnector.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/message/MessageAndOffset.class=src/main/java/kafka/examples/SimpleConsumerDemo.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/consumer/Consumer.class=src/main/java/kafka/examples/Consumer.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/MultiFetchResponse.class=src/main/java/kafka/examples/SimpleConsumerDemo.java
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/core/target/scala_2.8.0/classes/kafka/javaapi/producer/Producer.class=src/main/java/kafka/examples/Producer.java

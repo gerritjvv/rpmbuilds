@@ -1,0 +1,6 @@
+#Source Dependencies
+#Tue Jun 04 12:15:07 CEST 2013
+src/main/scala/kafka/perf/ProducerPerformance.scala=
+src/main/scala/kafka/perf/PerfConfig.scala=src/main/scala/kafka/perf/SimpleConsumerPerformance.scala\:src/main/scala/kafka/perf/ProducerPerformance.scala\:src/main/scala/kafka/perf/ConsumerPerformance.scala
+src/main/scala/kafka/perf/SimpleConsumerPerformance.scala=
+src/main/scala/kafka/perf/ConsumerPerformance.scala=

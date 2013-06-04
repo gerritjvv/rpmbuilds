@@ -1,0 +1,14 @@
+#Source Hashes
+#Tue Jun 04 12:15:08 CEST 2013
+src/main/java/kafka/etl/UndefinedPropertyException.java=f2b60212dadab5d1817346aff6d1e2da8ea3e30a
+src/main/java/kafka/etl/KafkaETLInputFormat.java=bcb0adecb8a58009d58f2d3e0b2fe4f7f039fe9b
+src/main/java/kafka/etl/KafkaETLUtils.java=50fb832593c83da1a3c77f7c374e093c6f34ff25
+src/main/java/kafka/etl/KafkaETLRequest.java=9df26906781f1a781c782bc916da603932753def
+src/main/java/kafka/etl/Props.java=69c01161c39ff2385f6b9341ee09da171359c2a2
+src/main/java/kafka/etl/impl/DataGenerator.java=7250dba6193c74f47febc81d1e4228fa27cf2757
+src/main/java/kafka/etl/KafkaETLContext.java=f222a608cadd612972cda05058999fe882d95923
+src/main/java/kafka/etl/KafkaETLJob.java=4616d205da9b18ee846b21c8ac100a61599a2bd7
+src/main/java/kafka/etl/impl/SimpleKafkaETLMapper.java=0b164d400614a880eb296ebf6d2b51f3b37cd49d
+src/main/java/kafka/etl/impl/SimpleKafkaETLJob.java=2d403b76f34de9507e288c3ecf255e0a0362b0dd
+src/main/java/kafka/etl/KafkaETLRecordReader.java=984d8bc8b1012ffc926871f6222d451915860d0b
+src/main/java/kafka/etl/KafkaETLKey.java=fe5196dd6e8768860bc25ebd77540b404d3c7dfa

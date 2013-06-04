@@ -1,0 +1,8 @@
+#Source Hashes
+#Tue Jun 04 12:15:08 CEST 2013
+src/main/java/kafka/examples/Producer.java=d9ceabcbd8a29886c205d71cd3b177b382503979
+src/main/java/kafka/examples/KafkaConsumerProducerDemo.java=5fc7d7dec23255dce244f37e50afd0ff83d4ab72
+src/main/java/kafka/examples/KafkaProperties.java=fbd2d8a7ba45d7d2e33cff65c78d47137a20ad35
+src/main/java/kafka/examples/Consumer.java=8c5c31ab5ef2e299de91c16d6deeffb501f55cbb
+src/main/java/kafka/examples/SimpleConsumerDemo.java=03b1335b9de5ffa73144daca100433cdeb104200
+src/main/java/kafka/examples/ExampleUtils.java=77c0c9d8293ff263db5ce3281007f62ba5379415

@@ -1,0 +1,6 @@
+#External Dependencies
+#Tue Jun 04 11:56:33 CEST 2013
+/opt/jdk1.7.0_21/jre/lib/rt.jar=src_managed/sbt-idea-plugin-0.1-SNAPSHOT/IdeaProject.scala
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/project/boot/scala-2.7.7/lib/scala-library.jar=src_managed/sbt-idea-plugin-0.1-SNAPSHOT/IdeaProject.scala
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/project/boot/scala-2.7.7/org.scala-tools.sbt/sbt/0.7.5/sbt_2.7.7-0.7.5.jar=src_managed/sbt-idea-plugin-0.1-SNAPSHOT/IdeaProject.scala
+/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/project/plugins/lib_managed/scala_2.7.7/sbt-idea-core_2.7.7-0.1-SNAPSHOT.jar=src_managed/sbt-idea-plugin-0.1-SNAPSHOT/IdeaProject.scala

@@ -1,0 +1,8 @@
+#Generated Classes
+#Tue Jun 04 12:15:08 CEST 2013
+src/main/java/kafka/examples/Producer.java=target/scala_2.8.0/classes/kafka/examples/Producer.class
+src/main/java/kafka/examples/KafkaConsumerProducerDemo.java=target/scala_2.8.0/classes/kafka/examples/KafkaConsumerProducerDemo.class
+src/main/java/kafka/examples/KafkaProperties.java=target/scala_2.8.0/classes/kafka/examples/KafkaProperties.class
+src/main/java/kafka/examples/Consumer.java=target/scala_2.8.0/classes/kafka/examples/Consumer.class
+src/main/java/kafka/examples/SimpleConsumerDemo.java=target/scala_2.8.0/classes/kafka/examples/SimpleConsumerDemo.class
+src/main/java/kafka/examples/ExampleUtils.java=target/scala_2.8.0/classes/kafka/examples/ExampleUtils.class

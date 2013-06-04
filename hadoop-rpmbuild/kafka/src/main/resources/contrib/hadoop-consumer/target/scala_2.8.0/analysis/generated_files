@@ -1,0 +1,14 @@
+#Generated Classes
+#Tue Jun 04 12:15:08 CEST 2013
+src/main/java/kafka/etl/UndefinedPropertyException.java=target/scala_2.8.0/classes/kafka/etl/UndefinedPropertyException.class
+src/main/java/kafka/etl/KafkaETLInputFormat.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLInputFormat.class
+src/main/java/kafka/etl/KafkaETLUtils.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLUtils$1.class\:target/scala_2.8.0/classes/kafka/etl/KafkaETLUtils.class
+src/main/java/kafka/etl/KafkaETLRequest.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLRequest.class
+src/main/java/kafka/etl/Props.java=target/scala_2.8.0/classes/kafka/etl/Props.class
+src/main/java/kafka/etl/impl/DataGenerator.java=target/scala_2.8.0/classes/kafka/etl/impl/DataGenerator.class
+src/main/java/kafka/etl/KafkaETLContext.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLContext.class
+src/main/java/kafka/etl/KafkaETLJob.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLJob.class
+src/main/java/kafka/etl/impl/SimpleKafkaETLMapper.java=target/scala_2.8.0/classes/kafka/etl/impl/SimpleKafkaETLMapper.class
+src/main/java/kafka/etl/impl/SimpleKafkaETLJob.java=target/scala_2.8.0/classes/kafka/etl/impl/SimpleKafkaETLJob.class
+src/main/java/kafka/etl/KafkaETLRecordReader.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLRecordReader.class
+src/main/java/kafka/etl/KafkaETLKey.java=target/scala_2.8.0/classes/kafka/etl/KafkaETLKey.class
