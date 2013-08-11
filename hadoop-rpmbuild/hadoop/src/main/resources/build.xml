@@ -28,7 +28,7 @@
  
   <property name="Name" value="Hadoop"/>
   <property name="name" value="hadoop"/>
-  <property name="version" value="1.1.2-SNAPSHOT"/>
+  <property name="version" value="1.2.2-SNAPSHOT"/>
   <property name="final.name" value="${name}-${version}"/>
   <property name="test.final.name" value="${name}-test-${version}"/>
   <property name="year" value="2009"/>
@@ -160,7 +160,7 @@
 
   <property name="jdiff.build.dir" value="${build.docs}/jdiff"/>
   <property name="jdiff.xml.dir" value="${lib.dir}/jdiff"/>
-  <property name="jdiff.stable" value="1.0.4"/>
+  <property name="jdiff.stable" value="1.2.0"/>
   <property name="jdiff.stable.javadoc" 
             value="http://hadoop.apache.org/core/docs/r${jdiff.stable}/api/"/>
 
@@ -172,6 +172,13 @@
 
   <property name="jsvc.build.dir" value="${build.dir}/jsvc.${os.arch}" />
   <property name="jsvc.install.dir" value="${dist.dir}/libexec" /> 
+  <exec executable="sh" outputproperty="os-name">
+    <arg value="-c" />
+    <arg value="uname -s | tr '[:upper:]' '[:lower:]'" />
+  </exec>
+  <condition property="os-arch" value="universal">
+    <equals arg1="darwin" arg2="${os-name}" />
+  </condition>
   <condition property="os-arch" value="x86_64">
     <and>
       <os arch="amd64" />
@@ -186,7 +193,7 @@
       <os arch="x86" />
     </or>
   </condition>
-  <property name="jsvc.location" value="http://archive.apache.org/dist/commons/daemon/binaries/1.0.2/linux/commons-daemon-1.0.2-bin-linux-${os-arch}.tar.gz" />
+  <property name="jsvc.location" value="http://archive.apache.org/dist/commons/daemon/binaries/1.0.2/${os-name}/commons-daemon-1.0.2-bin-${os-name}-${os-arch}.tar.gz" />
   <property name="jsvc.dest.name" value="jsvc.${os.arch}.tar.gz" />
 
   <!-- task-controller properties set here -->
@@ -221,6 +228,8 @@
 
   <!-- IVY properteis set here -->
   <property name="ivy.dir" location="ivy" />
+  <!-- loglevel take values like default|download-only|quiet -->
+  <property name="loglevel" value="quiet"/>
   <loadproperties srcfile="${ivy.dir}/libraries.properties"/>
   <property name="mvnrepo" value="http://repo2.maven.org/maven2"/>
   <property name="asfrepo" value="https://repository.apache.org"/> 
@@ -563,6 +572,13 @@
      webxml="${build.webapps}/datanode/WEB-INF/web.xml">
     </jsp-compile>
 
+    <jsp-compile
+     uriroot="${src.webapps}/secondary"
+     outputdir="${build.src}"
+     package="org.apache.hadoop.hdfs.server.namenode"
+     webxml="${build.webapps}/secondary/WEB-INF/web.xml">
+    </jsp-compile>
+
     <!-- Compile Java files (excluding JSPs) checking warnings -->
     <javac 
      encoding="${build.encoding}" 
@@ -690,8 +706,8 @@
   	  <env key="HADOOP_NATIVE_SRCDIR" value="${native.src.dir}"/>
     </exec>
 
-	<exec dir="${build.native}" executable="sh" failonerror="true">
-	  <arg line="${build.native}/libtool --mode=install cp ${build.native}/libhadoop.la ${build.native}/lib"/>
+	<exec dir="${build.native}" executable="${build.native}/libtool" failonerror="true">
+	  <arg line="--mode=install cp ${build.native}/libhadoop.la ${build.native}/lib"/>
     </exec>
 
   </target>
@@ -742,7 +758,7 @@
       <tarfileset dir="bin" mode="755"/>
     </tar>
     <property name="jar.properties.list"
-      value="commons-logging.properties, log4j.properties, hadoop-metrics.properties"/>
+      value="commons-logging.properties, log4j.properties, hadoop-metrics.properties, task-log4j.properties"/>
     <jar jarfile="${build.dir}/${core.final.name}.jar"
          basedir="${build.classes}">
       <manifest>
@@ -929,6 +945,8 @@
     <copy file="${test.src.dir}/org/apache/hadoop/cli/clitest_data/data30bytes" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/cli/clitest_data/data60bytes" todir="${test.cache.data}"/>
     <copy file="${test.src.dir}/org/apache/hadoop/cli/clitest_data/data120bytes" todir="${test.cache.data}"/>
+    <copy file="${test.src.dir}/org/apache/hadoop/hdfs/tools/offlineImageViewer/fsimageV18" todir="${test.cache.data}"/>
+    <copy file="${test.src.dir}/org/apache/hadoop/hdfs/tools/offlineImageViewer/fsimageV19" todir="${test.cache.data}"/>
   </target>
 
   <!-- ================================================================== -->
@@ -1047,7 +1065,7 @@
       <delete file="${test.build.dir}/testsfailed"/>
       <delete dir="@{test.dir}/data" />
       <mkdir dir="@{test.dir}/data" />
-      <delete dir="@{test.dir}/logs" />
+      <delete dir="@{test.dir}/logs" followSymlinks="false"/>
       <mkdir dir="@{test.dir}/logs" />
       <copy file="${test.src.dir}/hadoop-policy.xml"
             todir="@{test.dir}/extraconf" />
@@ -1964,7 +1982,7 @@
   <!-- Clean.  Delete the build files, and their directories              -->
   <!-- ================================================================== -->
   <target name="clean" depends="clean-contrib, clean-sign, clean-fi" description="Clean.  Delete the build files, and their directories">
-    <delete dir="${build.dir}"/>
+    <delete dir="${build.dir}" followSymlinks="false"/>
     <delete dir="${docs.src}/build"/>
     <delete dir="${src.docs.cn}/build"/>
     <delete dir="${package.buildroot}"/>
@@ -2454,78 +2472,78 @@
   </target>
 
   <target name="ivy-resolve" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings"/>
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" log="${loglevel}" />
   </target>
 
   <target name="ivy-resolve-javadoc" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="javadoc"/>
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="javadoc" log="${loglevel}"/>
   </target>
 
   <target name="ivy-resolve-releaseaudit" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="releaseaudit"/>
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="releaseaudit" log="${loglevel}"/>
   </target>
 
   <target name="ivy-resolve-test" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="test" />
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="test"  log="${loglevel}"/>
   </target>
 
   <target name="ivy-resolve-common" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="common" />
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="common"  log="${loglevel}"/>
   </target>
 
   <target name="ivy-resolve-jdiff" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="jdiff" />
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="jdiff"  log="${loglevel}"/>
   </target>
 
   <target name="ivy-resolve-checkstyle" depends="ivy-init">
-    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="checkstyle"/>
+    <ivy:resolve settingsRef="${ant.project.name}.ivy.settings" conf="checkstyle" log="${loglevel}"/>
   </target>
 
   <target name="ivy-retrieve" depends="ivy-resolve"
     description="Retrieve Ivy-managed artifacts">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
   </target>
 
   <target name="ivy-retrieve-checkstyle" depends="ivy-resolve-checkstyle"
     description="Retrieve Ivy-managed artifacts for the checkstyle configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
     <ivy:cachepath pathid="checkstyle-classpath" conf="checkstyle"/>
   </target>
 
   <target name="ivy-retrieve-jdiff" depends="ivy-resolve-jdiff"
     description="Retrieve Ivy-managed artifacts for the javadoc configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
     <ivy:cachepath pathid="jdiff-classpath" conf="jdiff"/>
   </target>
 
   <target name="ivy-retrieve-javadoc" depends="ivy-resolve-javadoc"
     description="Retrieve Ivy-managed artifacts for the javadoc configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
     <ivy:cachepath pathid="javadoc-classpath" conf="javadoc"/>
   </target>
 
   <target name="ivy-retrieve-test" depends="ivy-resolve-test"
     description="Retrieve Ivy-managed artifacts for the test configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
     <ivy:cachepath pathid="ivy-test.classpath" conf="test"/>
   </target>
 
   <target name="ivy-retrieve-common" depends="ivy-resolve-common"
     description="Retrieve Ivy-managed artifacts for the compile configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"/>
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" log="${loglevel}"/>
     <ivy:cachepath pathid="ivy-common.classpath" conf="common"/>
   </target>
 
   <target name="ivy-retrieve-releaseaudit" depends="ivy-resolve-releaseaudit"
     description="Retrieve Ivy-managed artifacts for the compile configurations">
     <ivy:retrieve settingsRef="${ant.project.name}.ivy.settings"
-      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}" />
+      pattern="${build.ivy.lib.dir}/${ivy.artifact.retrieve.pattern}"  log="${loglevel}"/>
     <ivy:cachepath pathid="releaseaudit-classpath" conf="releaseaudit"/>
     <available classname="${rat.reporting.classname}" 
       classpathref="releaseaudit-classpath" property="rat.present" value="true"/>
@@ -2798,8 +2816,7 @@
 
   <target name="jsvc" >
     <mkdir dir="${jsvc.build.dir}" />
-    <get src="${jsvc.location}" dest="${jsvc.build.dir}/${jsvc.dest.name}" />
-
+    <get src="${jsvc.location}" dest="${jsvc.build.dir}/${jsvc.dest.name}"/>
     <untar compression="gzip" src="${jsvc.build.dir}/${jsvc.dest.name}" dest="${jsvc.build.dir}" />
 
     <copy file="${jsvc.build.dir}/jsvc" toFile="${jsvc.install.dir}/jsvc.${os.arch}" verbose="true" />

@@ -1,3 +1,18 @@
+<%!
+/**
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+%>
 <%@ page
   contentType="text/html; charset=UTF-8"
   import="java.io.*"
@@ -33,6 +48,7 @@
 <%!private static SimpleDateFormat dateFormat = new SimpleDateFormat(
       "d/MM HH:mm:ss");%>
 <%!private static final long serialVersionUID = 1L;%>
+<!DOCTYPE html>
 <html>
 <head>
 <script type="text/JavaScript">
@@ -136,11 +152,24 @@ window.location.href = url;
                  || fileName.split("_")[FILENAME_JOBNAME_PART].toLowerCase()
                        .contains(jobnameKeywordInFname);
       }
+      
+      private boolean isHistoryFile(String fileName) {      	
+        String[] tokens = null;
+        try {
+          String dp = JobHistory.JobInfo.decodeJobHistoryFileName(fileName);
+          tokens = dp.split("_");
+        } catch (IOException ioe) {
+        }
+	    
+        return tokens != null && !fileName.endsWith(".xml") && tokens.length > 3
+            && tokens[1].matches("\\d+")  && tokens[2].matches("\\d+")
+            && tokens[3].matches("\\d+");
+      }
 
       public boolean accept(Path path) {
         String name = path.getName();
 
-        return !(name.endsWith(".xml")) && matchUser(name) && matchJobName(name);
+        return isHistoryFile(name) && matchUser(name) && matchJobName(name);
       }
     };
     
