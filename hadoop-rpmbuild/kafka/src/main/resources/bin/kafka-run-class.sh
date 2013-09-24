@@ -22,45 +22,62 @@ fi
 
 base_dir=$(dirname $0)/..
 
-for file in $base_dir/project/boot/scala-2.8.0/lib/*.jar;
+SCALA_VERSION=2.8.0
+
+# assume all dependencies have been packaged into one jar with sbt-assembly's task "assembly-package-dependency"
+for file in $base_dir/core/target/scala-2.8.0/*.jar;
 do
   CLASSPATH=$CLASSPATH:$file
 done
 
-for file in $base_dir/core/target/scala_2.8.0/*.jar;
+for file in $base_dir/perf/target/scala-${SCALA_VERSION}/kafka*.jar;
 do
   CLASSPATH=$CLASSPATH:$file
 done
 
-for file in $base_dir/core/lib/*.jar;
+# classpath addition for release
+for file in $base_dir/libs/*.jar;
 do
   CLASSPATH=$CLASSPATH:$file
 done
 
-for file in $base_dir/perf/target/scala_2.8.0/kafka*.jar;
+for file in $base_dir/kafka*.jar;
 do
   CLASSPATH=$CLASSPATH:$file
 done
 
-for file in $base_dir/core/lib_managed/scala_2.8.0/compile/*.jar;
-do
-  if [ ${file##*/} != "sbt-launch.jar" ]; then
-    CLASSPATH=$CLASSPATH:$file
-  fi
-done
 if [ -z "$KAFKA_JMX_OPTS" ]; then
   KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false  -Dcom.sun.management.jmxremote.ssl=false "
 fi
+
 if [ -z "$KAFKA_OPTS" ]; then
   KAFKA_OPTS="-Xmx512M -server  -Dlog4j.configuration=file:$base_dir/config/log4j.properties"
 fi
+
 if [  $JMX_PORT ]; then
   KAFKA_JMX_OPTS="$KAFKA_JMX_OPTS -Dcom.sun.management.jmxremote.port=$JMX_PORT "
 fi
+
 if [ -z "$JAVA_HOME" ]; then
   JAVA="java"
 else
   JAVA="$JAVA_HOME/bin/java"
 fi
 
-$JAVA $KAFKA_OPTS $KAFKA_JMX_OPTS -cp $CLASSPATH $@
+$JAVA $KAFKA_OPTS $KAFKA_JMX_OPTS -cp $CLASSPATH "$@"
+
+exitval=$?
+
+if [ $exitval -eq "1" ] ; then 
+	$JAVA $KAFKA_OPTS $KAFKA_JMX_OPTS -cp $CLASSPATH "$@" >& exception.txt
+	exception=`cat exception.txt`
+	noBuildMessage='Please build the project using sbt. Documentation is available at http://kafka.apache.org/'
+	pattern="(Could not find or load main class)|(java\.lang\.NoClassDefFoundError)"
+	match=`echo $exception | grep -E "$pattern"`
+	if [[ -n "$match" ]]; then 
+		echo $noBuildMessage
+	fi
+	rm exception.txt
+fi
+
+

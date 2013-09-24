@@ -1,6 +1,0 @@
-#Source Hashes
-#Tue Jun 04 12:15:07 CEST 2013
-src/main/scala/kafka/perf/ProducerPerformance.scala=458ee210cc17dcbddd54ce2439e5e23231e9e9de
-src/main/scala/kafka/perf/PerfConfig.scala=1a80378f2b2ecddbf2b9e8136016dd4def593dc1
-src/main/scala/kafka/perf/SimpleConsumerPerformance.scala=701f482456c4330aa563d9bcc8cae1c2a3e51524
-src/main/scala/kafka/perf/ConsumerPerformance.scala=ea1a671f46eeaee02f43c8042fc0272a0bdfe608

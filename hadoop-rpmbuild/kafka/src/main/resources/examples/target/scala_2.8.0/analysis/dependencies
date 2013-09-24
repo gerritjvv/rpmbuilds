@@ -1,8 +1,0 @@
-#Source Dependencies
-#Tue Jun 04 12:15:08 CEST 2013
-src/main/java/kafka/examples/Producer.java=src/main/java/kafka/examples/KafkaConsumerProducerDemo.java\:src/main/java/kafka/examples/SimpleConsumerDemo.java
-src/main/java/kafka/examples/KafkaConsumerProducerDemo.java=
-src/main/java/kafka/examples/KafkaProperties.java=src/main/java/kafka/examples/KafkaConsumerProducerDemo.java
-src/main/java/kafka/examples/Consumer.java=src/main/java/kafka/examples/KafkaConsumerProducerDemo.java
-src/main/java/kafka/examples/SimpleConsumerDemo.java=
-src/main/java/kafka/examples/ExampleUtils.java=src/main/java/kafka/examples/Consumer.java\:src/main/java/kafka/examples/SimpleConsumerDemo.java
