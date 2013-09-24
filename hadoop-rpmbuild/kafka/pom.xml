@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>1</release>
+					<release>4</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>kafka</distribution>
 					<group>utilities</group>
@@ -76,16 +76,25 @@
 							</sources>
 						</mapping>
        						<mapping>
-                                                        <directory>/opt/kafka/lib</directory>
+                                                        <directory>/opt/kafka/libs</directory>
                                                         <filemode>775</filemode>
                                                         <sources>
                                                                 <source>
                                                                         <location>src/main/resources/kafka_2.8.0-0.8.0-beta1.jar</location>
                                                                 </source>
                                                         </sources>
-                                                </mapping>                      
+                                                </mapping> 
 						<mapping>
-							<directory>/opt/kafka/lib</directory>
+                                                        <directory>/opt/kafka/logs</directory>
+                                                        <filemode>775</filemode>
+                                                        <sources>
+                                                                <source>
+                                                                        <location>src/main/resources/logs</location>
+                                                                </source>
+                                                        </sources>
+                                                </mapping>                     
+						<mapping>
+							<directory>/opt/kafka/libs</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
