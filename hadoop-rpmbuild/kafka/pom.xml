@@ -75,50 +75,21 @@
 								</source>
 							</sources>
 						</mapping>
-
-						<mapping>
-							<directory>/opt/kafka/contrib</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/contrib</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/kafka/core</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/core</location>
-								</source>
-							</sources>
-						</mapping>
-                                                <mapping>
-                                                        <directory>/opt/kafka/project</directory>
+       						<mapping>
+                                                        <directory>/opt/kafka/lib</directory>
                                                         <filemode>775</filemode>
                                                         <sources>
                                                                 <source>
-                                                                        <location>src/main/resources/project</location>
+                                                                        <location>src/main/resources/kafka_2.8.0-0.8.0-beta1.jar</location>
                                                                 </source>
                                                         </sources>
-                                                </mapping>
-
+                                                </mapping>                      
 						<mapping>
 							<directory>/opt/kafka/lib</directory>
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/lib</location>
-								</source>
-							</sources>
-						</mapping>
-						<mapping>
-							<directory>/opt/kafka/lib_managed</directory>
-							<filemode>775</filemode>
-							<sources>
-								<source>
-									<location>src/main/resources/lib_managed</location>
+									<location>src/main/resources/libs</location>
 								</source>
 							</sources>
 						</mapping>
