@@ -36,6 +36,7 @@ NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Constructor (java.lang.String[]
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Constructor (org.apache.zookeeper.ZooKeeper)
 MISSING @SINCE TAG: org.apache.zookeeper.ZooKeeperMain Method addToHistory(int, java.lang.String)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method connectToZK(java.lang.String)
+NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method enableWrite()
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method executeLine(java.lang.String)
 OK: org.apache.zookeeper.ZooKeeper Method getChildren(java.lang.String, boolean, org.apache.zookeeper.data.Stat)
 OK: org.apache.zookeeper.ZooKeeper Method getChildren(java.lang.String, org.apache.zookeeper.Watcher, org.apache.zookeeper.data.Stat)
@@ -43,18 +44,21 @@ OK: org.apache.zookeeper.ZooKeeper Method getChildren(java.lang.String, boolean,
 OK: org.apache.zookeeper.ZooKeeper Method getChildren(java.lang.String, org.apache.zookeeper.Watcher, org.apache.zookeeper.AsyncCallback.Children2Callback, java.lang.Object)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method getCommands()
 MISSING @SINCE TAG: org.apache.zookeeper.ClientCnxn Method getDisableAutoResetWatch()
+NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method getLastZxid()
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method getPrintWatches()
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method getPrompt()
 OK: org.apache.zookeeper.KeeperException Method getResults()
+NO DOC BLOCK: org.apache.zookeeper.ZooKeeper Method getSaslClient()
 NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method getSessionTimeout()
 MISSING @SINCE TAG: org.apache.zookeeper.ZooKeeper Method getSessionTimeout()
+NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method getXid()
 MISSING @SINCE TAG: org.apache.zookeeper.ZooKeeper.States Method isConnected()
 OK: org.apache.zookeeper.ZooKeeper Method multi(java.lang.Iterable)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeper Method multiInternal(org.apache.zookeeper.MultiTransactionRecord)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method printMessage(java.lang.String)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method processCmd(org.apache.zookeeper.ZooKeeperMain.MyCommandOptions)
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Method processZKCmd(org.apache.zookeeper.ZooKeeperMain.MyCommandOptions)
-NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method queuePacket(org.apache.zookeeper.proto.RequestHeader, org.apache.zookeeper.proto.ReplyHeader, org.apache.jute.Record, org.apache.jute.Record, org.apache.zookeeper.AsyncCallback)
+NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method sendPacket(org.apache.jute.Record, org.apache.jute.Record, org.apache.zookeeper.AsyncCallback, int)
 MISSING @SINCE TAG: org.apache.zookeeper.ClientCnxn Method setDisableAutoResetWatch(boolean)
 NO DOC BLOCK: org.apache.zookeeper.ClientCnxn Method start()
 OK: org.apache.zookeeper.ZooKeeper Method testableLocalSocketAddress()
@@ -72,6 +76,7 @@ NO DOC BLOCK: org.apache.zookeeper.ZooKeeper.States Field CONNECTEDREADONLY
 NO DOC BLOCK: org.apache.zookeeper.ZooDefs.OpCode Field getChildren2
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Field history
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeperMain Field host
+NO DOC BLOCK: org.apache.zookeeper.Environment Field JAAS_CONF_KEY
 NO DOC BLOCK: org.apache.zookeeper.ZooDefs.OpCode Field multi
 NO DOC BLOCK: org.apache.zookeeper.ZooKeeper.States Field NOT_CONNECTED
 MISSING @SINCE TAG: org.apache.zookeeper.KeeperException.Code Field NOTREADONLY

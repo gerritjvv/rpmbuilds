@@ -20,7 +20,10 @@ package org.apache.zookeeper.test;
 
 import static org.apache.zookeeper.client.FourLetterWordMain.send4LetterWord;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
@@ -44,11 +47,13 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZKTestCase;
 import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.common.IOUtils;
 import org.apache.zookeeper.server.ServerCnxnFactory;
 import org.apache.zookeeper.server.ServerCnxnFactoryAccessor;
 import org.apache.zookeeper.server.ZKDatabase;
 import org.apache.zookeeper.server.ZooKeeperServer;
 import org.apache.zookeeper.server.persistence.FileTxnLog;
+import org.apache.zookeeper.server.quorum.QuorumPeer;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,7 +90,7 @@ public abstract class ClientBase extends ZKTestCase {
         public void process(WatchedEvent event) { /* nada */ }
     }
 
-    protected static class CountdownWatcher implements Watcher {
+    public static class CountdownWatcher implements Watcher {
         // XXX this doesn't need to be volatile! (Should probably be final)
         volatile CountDownLatch clientConnected;
         volatile boolean connected;
@@ -108,10 +113,12 @@ public abstract class ClientBase extends ZKTestCase {
                 notifyAll();
             }
         }
-        synchronized boolean isConnected() {
+        synchronized public boolean isConnected() {
             return connected;
         }
-        synchronized void waitForConnected(long timeout) throws InterruptedException, TimeoutException {
+        synchronized public void waitForConnected(long timeout)
+            throws InterruptedException, TimeoutException
+        {
             long expire = System.currentTimeMillis() + timeout;
             long left = timeout;
             while(!connected && left > 0) {
@@ -123,7 +130,9 @@ public abstract class ClientBase extends ZKTestCase {
 
             }
         }
-        synchronized void waitForDisconnected(long timeout) throws InterruptedException, TimeoutException {
+        synchronized public void waitForDisconnected(long timeout)
+            throws InterruptedException, TimeoutException
+        {
             long expire = System.currentTimeMillis() + timeout;
             long left = timeout;
             while(connected && left > 0) {
@@ -148,6 +157,12 @@ public abstract class ClientBase extends ZKTestCase {
     {
         CountdownWatcher watcher = new CountdownWatcher();
         return createClient(watcher, hp);
+    }
+
+    protected TestableZooKeeper createClient(CountdownWatcher watcher)
+        throws IOException, InterruptedException
+    {
+        return createClient(watcher, hostPort);
     }
 
     private LinkedList<ZooKeeper> allClients;
@@ -258,6 +273,23 @@ public abstract class ClientBase extends ZKTestCase {
             }
         }
         return false;
+    }
+
+    public static boolean waitForServerState(QuorumPeer qp, int timeout,
+            String serverState) {
+        long start = System.currentTimeMillis();
+        while (true) {
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                // ignore
+            }
+            if (qp.getServerState().equals(serverState))
+                return true;
+            if (System.currentTimeMillis() > start + timeout) {
+                return false;
+            }
+        }
     }
 
     static void verifyThreadTerminated(Thread thread, long millis)
@@ -545,5 +577,29 @@ public abstract class ClientBase extends ZKTestCase {
                 LOG.info(logmsg, Integer.valueOf(counts[i-1]), Integer.valueOf(counts[i]));
             }
         }
+    }
+
+    public static String readFile(File file) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        BufferedInputStream is = new BufferedInputStream(new FileInputStream(file));
+        try {
+            IOUtils.copyBytes(is, os, 1024, true);
+        } finally {
+            is.close();
+        }
+        return os.toString();
+    }
+
+    public static String join(String separator, Object[] parts) {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (Object part : parts) {
+            if (!first) {
+                sb.append(separator);
+                first = false;
+            }
+            sb.append(part);
+        }
+        return sb.toString();
     }
 }

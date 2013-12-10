@@ -4,7 +4,7 @@
 
 	<groupId>org.reducedata</groupId>
 	<artifactId>zookeeper</artifactId>
-	<version>3.4.3</version>
+	<version>3.4.5</version>
 	<packaging>jar</packaging>
 
 	<name>zookeeper</name>
@@ -26,7 +26,7 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<release>5</release>
+					<release>1</release>
 					<copyright>http://www.apache.org/licenses/LICENSE-2.0.html</copyright>
 					<distribution>zookeeper</distribution>
 					<group>utilities</group>
@@ -81,7 +81,7 @@
 							<filemode>775</filemode>
 							<sources>
 								<source>
-									<location>src/main/resources/zookeeper-3.4.3.jar</location>
+									<location>src/main/resources/zookeeper-3.4.5.jar</location>
 								</source>
 							</sources>
 						</mapping>
