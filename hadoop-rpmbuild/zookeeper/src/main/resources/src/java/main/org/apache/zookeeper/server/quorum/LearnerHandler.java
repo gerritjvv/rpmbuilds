@@ -233,7 +233,6 @@ public class LearnerHandler extends Thread {
     @Override
     public void run() {
         try {            
-            sock.setSoTimeout(leader.self.getTickTime()*leader.self.getInitLimit());
             ia = BinaryInputArchive.getArchive(new BufferedInputStream(sock
                     .getInputStream()));
             bufferedOutput = new BufferedOutputStream(sock.getOutputStream());
@@ -338,6 +337,12 @@ public class LearnerHandler extends Thread {
                         // whether to expect a trunc or a diff
                         boolean firstPacket=true;
 
+                        // If we are here, we can use committedLog to sync with
+                        // follower. Then we only need to decide whether to
+                        // send trunc or not
+                        packetToSend = Leader.DIFF;
+                        zxidToSend = maxCommittedLog;
+
                         for (Proposal propose: proposals) {
                             // skip the proposals the peer already has
                             if (propose.packet.getZxid() <= peerLastZxid) {
@@ -351,18 +356,10 @@ public class LearnerHandler extends Thread {
                                     // Does the peer have some proposals that the leader hasn't seen yet
                                     if (prevProposalZxid < peerLastZxid) {
                                         // send a trunc message before sending the diff
-                                        packetToSend = Leader.TRUNC;
-                                        LOG.info("Sending TRUNC");
+                                        packetToSend = Leader.TRUNC;                                        
                                         zxidToSend = prevProposalZxid;
                                         updates = zxidToSend;
-                                    } 
-                                    else {
-                                        // Just send the diff
-                                        packetToSend = Leader.DIFF;
-                                        LOG.info("Sending diff");
-                                        zxidToSend = maxCommittedLog;        
                                     }
-
                                 }
                                 queuePacket(propose.packet);
                                 QuorumPacket qcommit = new QuorumPacket(Leader.COMMIT, propose.packet.getZxid(),
@@ -381,19 +378,23 @@ public class LearnerHandler extends Thread {
                     } else {
                         LOG.warn("Unhandled proposal scenario");
                     }
+                } else if (peerLastZxid == leader.zk.getZKDatabase().getDataTreeLastProcessedZxid()) {
+                    // The leader may recently take a snapshot, so the committedLog
+                    // is empty. We don't need to send snapshot if the follow
+                    // is already sync with in-memory db.
+                    LOG.debug("committedLog is empty but leader and follower "
+                            + "are in sync, zxid=0x{}",
+                            Long.toHexString(peerLastZxid));
+                    packetToSend = Leader.DIFF;
+                    zxidToSend = peerLastZxid;
                 } else {
                     // just let the state transfer happen
                     LOG.debug("proposals is empty");
                 }               
 
+                LOG.info("Sending " + Leader.getPacketType(packetToSend));
                 leaderLastZxid = leader.startForwarding(this, updates);
-                if (peerLastZxid == leaderLastZxid) {
-                    LOG.debug("Leader and follower are in sync, sending empty diff. zxid=0x{}",
-                            Long.toHexString(leaderLastZxid));
-                    // We are in sync so we'll do an empty diff
-                    packetToSend = Leader.DIFF;
-                    zxidToSend = leaderLastZxid;
-                }
+
             } finally {
                 rl.unlock();
             }
@@ -453,6 +454,9 @@ public class LearnerHandler extends Thread {
             }
             leader.processAck(this.sid, qp.getZxid(), sock.getLocalSocketAddress());
             
+            // now that the ack has been processed expect the syncLimit
+            sock.setSoTimeout(leader.self.tickTime * leader.self.syncLimit);
+
             /*
              * Wait until leader starts up
              */
@@ -467,7 +471,6 @@ public class LearnerHandler extends Thread {
             //
             queuedPackets.add(new QuorumPacket(Leader.UPTODATE, -1, null, null));
 
-            
             while (true) {
                 qp = new QuorumPacket();
                 ia.readRecord(qp, "packet");

@@ -1,6 +1,0 @@
-#Source Hashes
-#Tue Jun 04 12:15:07 CEST 2013
-src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java=93f7be788cb4b3219a652e93aa34672e97189813
-src/main/java/kafka/bridge/examples/TextPublisher.java=9e91a74a4c23ce3ea1156652dcc7b72256f442fd
-src/main/java/kafka/bridge/pig/AvroKafkaStorage.java=c5aeff19bc80573fff15356280886c3b8ad24243
-src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java=5ef2d9c0c6399ae549349d48b9808d55dea697f3

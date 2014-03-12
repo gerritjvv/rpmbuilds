@@ -1,4 +1,0 @@
-#Classes with main methods
-#Tue Jun 04 12:15:08 CEST 2013
-src/main/java/kafka/etl/impl/DataGenerator.java=kafka.etl.impl.DataGenerator
-src/main/java/kafka/etl/impl/SimpleKafkaETLJob.java=kafka.etl.impl.SimpleKafkaETLJob

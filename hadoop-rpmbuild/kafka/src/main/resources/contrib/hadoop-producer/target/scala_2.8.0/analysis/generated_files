@@ -1,6 +1,0 @@
-#Generated Classes
-#Tue Jun 04 12:15:07 CEST 2013
-src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java=target/scala_2.8.0/classes/kafka/bridge/hadoop/KafkaOutputFormat.class
-src/main/java/kafka/bridge/examples/TextPublisher.java=target/scala_2.8.0/classes/kafka/bridge/examples/TextPublisher$TheMapper.class\:target/scala_2.8.0/classes/kafka/bridge/examples/TextPublisher.class
-src/main/java/kafka/bridge/pig/AvroKafkaStorage.java=target/scala_2.8.0/classes/kafka/bridge/pig/AvroKafkaStorage.class
-src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java=target/scala_2.8.0/classes/kafka/bridge/hadoop/KafkaRecordWriter.class

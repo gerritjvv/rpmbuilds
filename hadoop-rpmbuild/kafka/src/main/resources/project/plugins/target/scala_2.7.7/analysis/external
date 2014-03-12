@@ -1,4 +1,0 @@
-#External Dependencies
-#Tue Jun 04 12:15:02 CEST 2013
-/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/project/boot/scala-2.7.7/lib/scala-library.jar=Plugins.scala
-/home/gvanvuuren/checkouts/rpmbuilds/hadoop-rpmbuild/kafka/src/main/resources/kafka-0.7.2-incubating-src/project/boot/scala-2.7.7/org.scala-tools.sbt/sbt/0.7.5/sbt_2.7.7-0.7.5.jar=Plugins.scala

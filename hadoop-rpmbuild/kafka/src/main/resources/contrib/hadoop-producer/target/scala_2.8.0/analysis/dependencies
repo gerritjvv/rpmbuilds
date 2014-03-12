@@ -1,6 +1,0 @@
-#Source Dependencies
-#Tue Jun 04 12:15:07 CEST 2013
-src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java=src/main/java/kafka/bridge/examples/TextPublisher.java\:src/main/java/kafka/bridge/pig/AvroKafkaStorage.java
-src/main/java/kafka/bridge/examples/TextPublisher.java=
-src/main/java/kafka/bridge/pig/AvroKafkaStorage.java=
-src/main/java/kafka/bridge/hadoop/KafkaRecordWriter.java=src/main/java/kafka/bridge/hadoop/KafkaOutputFormat.java\:src/main/java/kafka/bridge/pig/AvroKafkaStorage.java

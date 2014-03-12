@@ -1,5 +1,0 @@
-#Classes with main methods
-#Tue Jun 04 12:15:07 CEST 2013
-src/main/scala/kafka/perf/ProducerPerformance.scala=kafka.perf.ProducerPerformance
-src/main/scala/kafka/perf/SimpleConsumerPerformance.scala=kafka.perf.SimpleConsumerPerformance
-src/main/scala/kafka/perf/ConsumerPerformance.scala=kafka.perf.ConsumerPerformance

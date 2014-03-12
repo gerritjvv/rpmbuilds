@@ -53,7 +53,7 @@ else
   . "$ZOOBINDIR"/zkEnv.sh
 fi
 
-if [ "x$SERVER_JVMFLAGS" ]
+if [ "x$SERVER_JVMFLAGS"  != "x" ]
 then
     JVMFLAGS="$SERVER_JVMFLAGS $JVMFLAGS"
 fi
@@ -91,6 +91,10 @@ else
     mkdir -p $(dirname "$ZOOPIDFILE")
 fi
 
+if [ ! -w "$ZOO_LOG_DIR" ] ; then
+mkdir -p "$ZOO_LOG_DIR"
+fi
+
 _ZOO_DAEMON_OUT="$ZOO_LOG_DIR/zookeeper.out"
 
 case $1 in
@@ -120,7 +124,11 @@ start)
     fi
     ;;
 start-foreground)
-    $JAVA "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
+    ZOO_CMD="exec $JAVA"
+    if [ "${ZOO_NOEXEC}" != "" ]; then
+      ZOO_CMD="$JAVA"
+    fi
+    $ZOO_CMD "-Dzookeeper.log.dir=${ZOO_LOG_DIR}" "-Dzookeeper.root.logger=${ZOO_LOG4J_PROP}" \
     -cp "$CLASSPATH" $JVMFLAGS $ZOOMAIN "$ZOOCFG"
     ;;
 print-cmd)
