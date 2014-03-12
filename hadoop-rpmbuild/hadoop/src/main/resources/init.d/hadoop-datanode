@@ -1,0 +1,1 @@
+/opt/hadoop/sbin/hadoop-daemon.sh --config /opt/hadoop/conf --script hdfs start datanode

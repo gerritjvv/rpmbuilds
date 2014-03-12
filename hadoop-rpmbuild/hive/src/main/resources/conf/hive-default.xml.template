@@ -71,6 +71,14 @@
 </property>
 
 <property>
+  <name>hive.cli.pretty.output.num.cols</name>
+  <value>-1</value>
+  <description>The number of columns to use when formatting output generated
+        by the DESCRIBE PRETTY table_name command.  If the value of this property
+        is -1, then hive will use the auto-detected terminal width.</description>
+</property>
+
+<property>
   <name>hive.exec.scratchdir</name>
   <value>/tmp/hive-${user.name}</value>
   <description>Scratch space for Hive jobs</description>
@@ -133,7 +141,7 @@
 
 <property>
   <name>javax.jdo.PersistenceManagerFactoryClass</name>
-  <value>org.datanucleus.jdo.JDOPersistenceManagerFactory</value>
+  <value>org.datanucleus.api.jdo.JDOPersistenceManagerFactory</value>
   <description>class implementing the jdo persistence</description>
 </property>
 
@@ -229,8 +237,8 @@
 
 <property>
   <name>datanucleus.identifierFactory</name>
-  <value>datanucleus</value>
-  <description>Name of the identifier factory to use when generating table/column names etc. 'datanucleus' is used for backward compatibility</description>
+  <value>datanucleus1</value>
+  <description>Name of the identifier factory to use when generating table/column names etc. 'datanucleus1' is used for backward compatibility with DataNucleus v1</description>
 </property>
 
 <property>
@@ -278,7 +286,25 @@
 <property>
   <name>hive.metastore.partition.name.whitelist.pattern</name>
   <value></value>
-  <description>Partition names will be checked against this regex pattern and rejected if not matched.  To use, enable hive.metastore.pre.event.listeners=org.apache.hadoop.hive.metastore.PartitionNameWhitelistPreEventListener  Listener will not register if this property value is empty.</description>
+  <description>Partition names will be checked against this regex pattern and rejected if not matched.</description>
+</property>
+
+<property>
+  <name>hive.metastore.disallow.incompatible.col.type.change</name>
+  <value></value>
+  <description>If true (default is false), ALTER TABLE operations which change the type of 
+    a column (say STRING) to an incompatible type (say MAP&lt;STRING, STRING&gt;) are disallowed.  
+    RCFile default serde (ColumnarSerde) serializes the values in such a way that the
+    datatypes can be converted from string to any type. The map is also serialized as
+    a string, which can be read as a string as well. However, with any binary 
+    serialization, this is not true. Blocking the ALTER TABLE prevents ClassCastExceptions
+    when subsequently trying to access old partitions. 
+      
+    Primitive types like INT, STRING, BIGINT, etc are compatible with each other and are 
+    not blocked.  
+
+    See HIVE-4409 for more details.
+</description>
 </property>
 
 <property>
@@ -348,6 +374,12 @@
 </property>
 
 <property>
+  <name>hive.default.rcfile.serde</name>
+  <value>org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe</value>
+  <description>The default SerDe hive will use for the rcfile format</description>
+</property>
+
+<property>
   <name>hive.fileformat.check</name>
   <value>true</value>
   <description>Whether to check file format or not when loading data files</description>
@@ -366,6 +398,25 @@
 </property>
 
 <property>
+  <name>hive.optimize.multigroupby.common.distincts</name>
+  <value>true</value>
+  <description>Whether to optimize a multi-groupby query with the same distinct.
+    Consider a query like:
+
+      from src
+        insert overwrite table dest1 select col1, count(distinct colx) group by col1
+        insert overwrite table dest2 select col2, count(distinct colx) group by col2;
+
+    With this parameter set to true, first we spray by the distinct value (colx), and then
+    perform the 2 groups bys. This makes sense if map-side aggregation is turned off. However,
+    with maps-side aggregation, it might be useful in some cases to treat the 2 inserts independently, 
+    thereby performing the query above in 2MR jobs instead of 3 (due to spraying by distinct key first).
+    If this parameter is turned off, we dont consider the fact that the distinct key is the same across
+    different MR jobs.
+  </description>
+</property>
+
+<property>
   <name>hive.groupby.mapaggr.checkinterval</name>
   <value>100000</value>
   <description>Number of rows after which size of the grouping keys/aggregation classes is performed</description>
@@ -380,19 +431,25 @@
 <property>
   <name>hive.mapjoin.followby.map.aggr.hash.percentmemory</name>
   <value>0.3</value>
-  <description>Portion of total memory to be used by map-side grup aggregation hash table, when this group by is followed by map join</description>
+  <description>Portion of total memory to be used by map-side group aggregation hash table, when this group by is followed by map join</description>
 </property>
 
 <property>
   <name>hive.map.aggr.hash.force.flush.memory.threshold</name>
   <value>0.9</value>
-  <description>The max memory to be used by map-side grup aggregation hash table, if the memory usage is higher than this number, force to flush data</description>
+  <description>The max memory to be used by map-side group aggregation hash table, if the memory usage is higher than this number, force to flush data</description>
 </property>
 
 <property>
   <name>hive.map.aggr.hash.percentmemory</name>
   <value>0.5</value>
-  <description>Portion of total memory to be used by map-side grup aggregation hash table</description>
+  <description>Portion of total memory to be used by map-side group aggregation hash table</description>
+</property>
+
+<property>
+  <name>hive.session.history.enabled</name>
+  <value>false</value>
+  <description>Whether to log hive query, query plan, runtime statistics etc </description>
 </property>
 
 <property>
@@ -478,7 +535,7 @@
     The merge is triggered if either of hive.merge.mapfiles or hive.merge.mapredfiles is set to true.
     If the user has set hive.merge.mapfiles to true and hive.merge.mapredfiles to false, the idea was the
     number of reducers are few, so the number of files anyway are small. However, with this optimization,
-    we are increasing the number of files possibly by a big margin. So, we merge aggresively.
+    we are increasing the number of files possibly by a big margin. So, we merge aggresively.</description>
 </property>
 
 <property>
@@ -486,7 +543,7 @@
   <value>false</value>
   <description>Whether the version of hadoop which is running supports sub-directories for tables/partitions.
     Many hive optimizations can be applied if the hadoop version supports sub-directories for
-    tables/partitions. It was added by MAPREDUCE-1501
+    tables/partitions. It was added by MAPREDUCE-1501</description>
 </property>
 
 <property>
@@ -507,6 +564,31 @@
 </property>
 
 <property>
+  <name>hive.map.groupby.sorted.testmode</name>
+  <value>false</value>
+  <description>If the bucketing/sorting properties of the table exactly match the grouping key, whether to
+    perform the group by in the mapper by using BucketizedHiveInputFormat. If the test mode is set, the plan
+    is not converted, but a query property is set to denote the same.
+  </description>
+</property>
+
+<property>
+  <name>hive.new.job.grouping.set.cardinality</name>
+  <value>30</value>
+  <description>
+    Whether a new map-reduce job should be launched for grouping sets/rollups/cubes.
+    For a query like: select a, b, c, count(1) from T group by a, b, c with rollup;
+    4 rows are created per row: (a, b, c), (a, b, null), (a, null, null), (null, null, null).
+    This can lead to explosion across map-reduce boundary if the cardinality of T is very high,
+    and map-side aggregation does not do a very good job. 
+
+    This parameter decides if hive should add an additional map-reduce job. If the grouping set
+    cardinality (4 in the example above), is more than this value, a new MR job is added under the
+    assumption that the orginal group by will reduce the data size.
+  </description>
+</property>
+
+<property>
   <name>hive.join.emit.interval</name>
   <value>1000</value>
   <description>How many rows in the right-most join operand Hive should buffer before emitting the join result. </description>
@@ -519,15 +601,9 @@
 </property>
 
 <property>
-  <name>hive.mapjoin.bucket.cache.size</name>
-  <value>100</value>
-  <description>How many values in each keys in the map-joined table should be cached in memory. </description>
-</property>
-
-<property>
-  <name>hive.mapjoin.cache.numrows</name>
-  <value>25000</value>
-  <description>How many rows should be cached by jdbm for map join. </description>
+  <name>hive.smbjoin.cache.rows</name>
+  <value>10000</value>
+  <description>How many rows with the same key value should be cached in memory per smb joined table. </description>
 </property>
 
 <property>
@@ -539,23 +615,6 @@
     job, process those skewed keys. The same key need not be skewed for all the tables, and so,
     the follow-up map-reduce job (for the skewed keys) would be much faster, since it would be a
     map-join.
-</description>
-</property>
-
-<property>
-  <name>hive.exec.list.bucketing.default.dir</name>
-  <value>HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME</value>
-  <description>Default directory name used in list bucketing.
-    List bucketing feature will create sub-directory for each skewed-value and a default directory
-    for non-skewed value. This config specifies the default name for the default directory.
-    Sub-directory is created by list bucketing DML and under partition directory. User doesn't need 
-    to know how to construct the canonical path. It just gives user choice if they want to change 
-    the default directory name.
-    For example, there are 2 skewed column c1 and c2. 2 skewed value: (1,a) and (2,b). subdirectory:
-    <partition-dir>/c1=1/c2=a/
-    <partition-dir>/c1=2/c2=b/
-    <partition-dir>/HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME/HIVE_DEFAULT_LIST_BUCKETING_DIR_NAME/
-    Note: This config won't impact users if they don't list bucketing.
 </description>
 </property>
 
@@ -670,7 +729,7 @@
 
 <property>
   <name>hive.hwi.war.file</name>
-  <value>lib/hive-hwi-0.10.0.war</value>
+  <value>lib/hive-hwi-0.12.0.war</value>
   <description>This sets the path to the HWI war file, relative to ${HIVE_HOME}. </description>
 </property>
 
@@ -705,6 +764,12 @@
 </property>
 
 <property>
+  <name>hive.metastore.init.hooks</name>
+  <value></value>
+  <description>A comma separated list of hooks to be invoked at the beginning of HMSHandler initialization. Aninit hook is specified as the name of Java class which extends org.apache.hadoop.hive.metastore.MetaStoreInitListener.</description>
+</property>
+
+<property>
   <name>hive.client.stats.publishers</name>
   <value></value>
   <description>Comma-separated list of statistics publishers to be invoked on counters on each job.  A client stats publisher is specified as the name of a Java class which implements the org.apache.hadoop.hive.ql.stats.ClientStatsPublisher interface.</description>
@@ -726,12 +791,6 @@
   <name>hive.merge.mapredfiles</name>
   <value>false</value>
   <description>Merge small files at the end of a map-reduce job</description>
-</property>
-
-<property>
-  <name>hive.mergejob.maponly</name>
-  <value>true</value>
-  <description>Try to generate a map-only job for merging files if CombineHiveInputFormat is supported.</description>
 </property>
 
 <property>
@@ -759,6 +818,12 @@
 </property>
 
 <property>
+  <name>hive.ignore.mapjoin.hint</name>
+  <value>true</value>
+  <description>Ignore the mapjoin hint</description>
+</property>
+
+<property>
   <name>hive.mapjoin.localtask.max.memory.usage</name>
   <value>0.90</value>
   <description>This number means how much memory the local task can take to hold the key/value into in-memory hash table; If the local task's memory usage is more than this number, the local task will be abort by themself. It means the data of small table is too large to be hold in the memory.</description>
@@ -782,6 +847,23 @@
   <description>Whether Hive enable the optimization about converting common join into mapjoin based on the input file size</description>
 </property>
 
+<property>
+  <name>hive.auto.convert.join.noconditionaltask</name>
+  <value>true</value>
+  <description>Whether Hive enable the optimization about converting common join into mapjoin based on the input file 
+    size. If this paramater is on, and the sum of size for n-1 of the tables/partitions for a n-way join is smaller than the
+    specified size, the join is directly converted to a mapjoin (there is no conditional task).
+  </description>
+</property>
+
+<property>
+  <name>hive.auto.convert.join.noconditionaltask.size</name>
+  <value>10000000</value>
+  <description>If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. However, if it
+    is on, and the sum of size for n-1 of the tables/partitions for a n-way join is smaller than this size, the join is directly
+    converted to a mapjoin(there is no conditional task). The default is 10MB
+  </description>
+</property>
 
 <property>
   <name>hive.script.auto.progress</name>
@@ -801,12 +883,53 @@
   <description>Read from a binary stream and treat each hive.binary.record.max.length bytes as a record.
   The last record before the end of stream can have less than hive.binary.record.max.length bytes</description>
 </property>
+    
+<property>
+  <name>hive.server2.transport.mode</name>
+  <value>binary</value>
+  <description>Server transport mode. "binary" or "http".</description>
+</property>    
 
+<property>
+  <name>hive.server2.thrift.http.port</name>
+  <value>10001</value>
+  <description>Port number when in HTTP mode.</description>
+</property> 
+
+<property>
+  <name>hive.server2.thrift.http.path</name>
+  <value>cliservice</value>
+  <description>Path component of URL endpoint when in HTTP mode.</description>
+</property> 
+
+<property>
+  <name>hive.server2.thrift.http.min.worker.threads</name>
+  <value>5</value>
+  <description>Minimum number of worker threads when in HTTP mode.</description>
+</property> 
+
+<property>
+  <name>hive.server2.thrift.http.max.worker.threads</name>
+  <value>500</value>
+  <description>Maximum number of worker threads when in HTTP mode.</description>
+</property> 
 
 <property>
   <name>hive.script.recordreader</name>
   <value>org.apache.hadoop.hive.ql.exec.TextRecordReader</value>
   <description>The default record reader for reading data from the user scripts. </description>
+</property>
+
+<property>
+  <name>stream.stderr.reporter.prefix</name>
+  <value>reporter:</value>
+  <description>Streaming jobs that log to stardard error with this prefix can log counter or status information.</description>
+</property>
+
+<property>
+  <name>stream.stderr.reporter.enabled</name>
+  <value>true</value>
+  <description>Enable consumption of status and counter messages for streaming jobs.</description>
 </property>
 
 <property>
@@ -884,10 +1007,57 @@
 </property>
 
 <property>
+  <name>hive.optimize.bucketingsorting</name>
+  <value>true</value>
+  <description>If hive.enforce.bucketing or hive.enforce.sorting is true, dont create a reducer for enforcing
+    bucketing/sorting for queries of the form: 
+    insert overwrite table T2 select * from T1;
+    where T1 and T2 are bucketed/sorted by the same keys into the same number of buckets.
+  </description>
+</property>
+
+<property>
   <name>hive.enforce.sortmergebucketmapjoin</name>
   <value>false</value>
   <description>If the user asked for sort-merge bucketed map-side join, and it cannot be performed,
     should the query fail or not ?
+  </description>
+</property>
+
+<property>
+  <name>hive.auto.convert.sortmerge.join</name>
+  <value>false</value>
+  <description>Will the join be automatically converted to a sort-merge join, if the joined tables pass
+    the criteria for sort-merge join.
+  </description>
+</property>
+
+<property>
+  <name>hive.auto.convert.sortmerge.join.bigtable.selection.policy</name>
+  <value>org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ</value>
+  <description>The policy to choose the big table for automatic conversion to sort-merge join.
+    By default, the table with the largest partitions is assigned the big table. All policies are:
+    . based on position of the table - the leftmost table is selected
+    org.apache.hadoop.hive.ql.optimizer.LeftmostBigTableSMJ.
+    . based on total size (all the partitions selected in the query) of the table 
+    org.apache.hadoop.hive.ql.optimizer.TableSizeBasedBigTableSelectorForAutoSMJ.
+    . based on average size (all the partitions selected in the query) of the table 
+    org.apache.hadoop.hive.ql.optimizer.AvgPartitionSizeBasedBigTableSelectorForAutoSMJ.
+    New policies can be added in future.
+  </description>
+</property>
+
+<property>
+  <name>hive.auto.convert.sortmerge.join.to.mapjoin</name>
+  <value>false</value>
+  <description>If hive.auto.convert.sortmerge.join is set to true, and a join was converted to a sort-merge join,
+    this parameter decides whether each table should be tried as a big table, and effectviely a map-join should be
+    tried. That would create a conditional task with n+1 children for a n-way join (1 child for each table as the
+    big table), and the backup task will be the sort-merge join. In some casess, a map-join would be faster than a
+    sort-merge join, if there is no advantage of having the output bucketed and sorted. For eg. if a very big sorted
+    and bucketed table with few files (say 10 files) are being joined with a very small sorter and bucketed table
+    with few files (10 files), the sort-merge join will only use 10 mappers, and a simple map-only join might be faster
+    if the complete small table can fit in memory, and a map-join can be performed.
   </description>
 </property>
 
@@ -988,6 +1158,20 @@
 </property>
 
 <property>
+  <name>hive.optimize.correlation</name>
+  <value>false</value>
+  <description>exploit intra-query correlations.</description>
+</property>
+
+<property>
+  <name>hive.optimize.reducededuplication.min.reducer</name>
+  <value>4</value>
+  <description>Reduce deduplication merges two RSs by moving key/parts/reducer-num of the child RS to parent RS.
+  That means if reducer-num of the child RS is fixed (order by or forced bucketing) and small, it can make very slow, single MR.
+  The optimization will be disabled if number of reducers is less than specified value.</description>
+</property>
+
+<property>
   <name>hive.exec.dynamic.partition</name>
   <value>true</value>
   <description>Whether or not to allow dynamic partitions in DML/DDL.</description>
@@ -1074,7 +1258,7 @@
 <property>
   <name>hive.stats.retries.wait</name>
   <value>3000</value>
-  <description>The base waiting window (in milliseconds) before the next retry. The actual wait time is calculated by baseWindow * failues + baseWindow * (failure + 1) * (random number between [0.0,1.0]).</description>
+  <description>The base waiting window (in milliseconds) before the next retry. The actual wait time is calculated by baseWindow * failues  baseWindow * (failure  1) * (random number between [0.0,1.0]).</description>
 </property>
 
 <property>
@@ -1095,9 +1279,28 @@
 </property>
 
 <property>
+  <name>hive.stats.collect.scancols</name>
+  <value>false</value>
+  <description>Whether column accesses are tracked in the QueryPlan.
+    This is useful to identify how tables are accessed and to determine if there are wasted columns that can be trimmed.
+  </description>
+</property>
+
+<property>
   <name>hive.stats.ndv.error</name>
   <value>20.0</value>
   <description>Standard error expressed in percentage. Provides a tradeoff between accuracy and compute cost.A lower value for error indicates higher accuracy and a higher compute cost.
+  </description>
+</property>
+
+<property>
+  <name>hive.stats.key.prefix.max.length</name>
+  <value>200</value>
+  <description>
+    Determines if when the prefix of the key used for intermediate stats collection
+    exceeds a certain length, a hash of the key is used instead.  If the value &lt; 0 then hashing
+    is never used, if the value >= 0 then hashing is used only when the key prefixes length
+    exceeds that value.  The key prefix is defined as everything preceding the task ID in the key.
   </description>
 </property>
 
@@ -1272,24 +1475,9 @@
 </property>
 
 <property>
-  <name>hive.security.metastore.authorization.manager</name>
-  <value>org.apache.hadoop.hive.ql.security.authorization.DefaultHiveMetastoreAuthorizationProvider</value>
-  <description>authorization manager class name to be used in the metastore for authorization.
-  The user defined authorization class should implement interface org.apache.hadoop.hive.ql.security.authorization.HiveMetastoreAuthorizationProvider. 
-  </description>
-</property>
-
-<property>
   <name>hive.security.authenticator.manager</name>
   <value>org.apache.hadoop.hive.ql.security.HadoopDefaultAuthenticator</value>
   <description>hive client authenticator manager class name.
-  The user defined authenticator should implement interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.</description>
-</property>
-
-<property>
-  <name>hive.security.metastore.authenticator.manager</name>
-  <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
-  <description>authenticator manager class name to be used in the metastore for authentication. 
   The user defined authenticator should implement interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider.</description>
 </property>
 
@@ -1425,6 +1613,12 @@
 </property>
 
 <property>
+  <name>hive.limit.pushdown.memory.usage</name>
+  <value>0.3f</value>
+  <description>The max memory to be used for hash in RS operator for top K selection.</description>
+</property>
+
+<property>
   <name>hive.rework.mapredwork</name>
   <value>false</value>
   <description>should rework the mapred work or not.
@@ -1548,6 +1742,15 @@
 </property>
 
 <property>
+  <name>hive.exec.orc.dictionary.key.size.threshold</name>
+  <value>0.8</value>
+  <description>
+    If the number of keys in a dictionary is greater than this fraction of the total number of
+    non-null rows, turn off dictionary encoding.  Use 1 to always use dictionary encoding.
+  </description>
+</property>
+
+<property>
   <name>hive.multi.insert.move.tasks.share.dependencies</name>
   <value>false</value>
   <description>
@@ -1572,9 +1775,22 @@
     Currently the query should be single sourced not having any subquery and should not have
     any aggregations or distincts (which incurrs RS), lateral views and joins.
     1. minimal : SELECT STAR, FILTER on partition columns, LIMIT only
-    2. more    : SELECT, FILTER, LIMIT only (+TABLESAMPLE, virtual columns)
+    2. more    : SELECT, FILTER, LIMIT only (TABLESAMPLE, virtual columns)
   </description>
 </property>
+
+<property>
+  <name>hive.cache.expr.evaluation</name>
+  <value>true</value>
+  <description>
+    If true, evaluation result of deterministic expression referenced twice or more will be cached.
+    For example, in filter condition like ".. where key + 10 > 10 or key + 10 = 0"
+    "key + 10" will be evaluated/cached once and reused for following expression ("key + 10 = 0").
+    Currently, this is applied only to expressions in select or filter operator.
+  </description>
+</property>
+
+
 
 <property>
   <name>hive.hmshandler.retry.attempts</name>
@@ -1588,7 +1804,6 @@
    <description>The number of miliseconds between HMSHandler retry attempts</description>
 </property>
 
-
 <property>
    <name>hive.server.read.socket.timeout</name>
    <value>10</value>
@@ -1601,6 +1816,208 @@
    <description>Whether to enable TCP keepalive for the Hive server. Keepalive will prevent accumulation of half-open connections.</description>
 </property>
 
+<property>
+   <name>hive.decode.partition.name</name>
+   <value>false</value>
+   <description>Whether to show the unquoted partition names in query results.</description>
+</property>
+
+<property>
+  <name>hive.log4j.file</name>
+  <value></value>
+  <description>Hive log4j configuration file.
+  If the property is not set, then logging will be initialized using hive-log4j.properties found on the classpath.
+  If the property is set, the value must be a valid URI (java.net.URI, e.g. "file:///tmp/my-logging.properties"), which you can then extract a URL from and pass to PropertyConfigurator.configure(URL).</description>
+</property>
+
+<property>
+  <name>hive.exec.log4j.file</name>
+  <value></value>
+  <description>Hive log4j configuration file for execution mode(sub command).
+  If the property is not set, then logging will be initialized using hive-exec-log4j.properties found on the classpath.
+  If the property is set, the value must be a valid URI (java.net.URI, e.g. "file:///tmp/my-logging.properties"), which you can then extract a URL from and pass to PropertyConfigurator.configure(URL).</description>
+</property>
+
+<property>
+  <name>hive.exec.infer.bucket.sort</name>
+  <value>false</value>
+  <description>
+    If this is set, when writing partitions, the metadata will include the bucketing/sorting
+    properties with which the data was written if any (this will not overwrite the metadata
+    inherited from the table if the table is bucketed/sorted)
+  </description>
+</property>
+
+<property>
+  <name>hive.exec.infer.bucket.sort.num.buckets.power.two</name>
+  <value>false</value>
+  <description>
+    If this is set, when setting the number of reducers for the map reduce task which writes the
+    final output files, it will choose a number which is a power of two, unless the user specifies
+    the number of reducers to use using mapred.reduce.tasks.  The number of reducers
+    may be set to a power of two, only to be followed by a merge task meaning preventing
+    anything from being inferred.
+    With hive.exec.infer.bucket.sort set to true:
+    Advantages:  If this is not set, the number of buckets for partitions will seem arbitrary,
+                 which means that the number of mappers used for optimized joins, for example, will
+                 be very low.  With this set, since the number of buckets used for any partition is
+                 a power of two, the number of mappers used for optimized joins will be the least
+                 number of buckets used by any partition being joined.
+    Disadvantages: This may mean a much larger or much smaller number of reducers being used in the
+                   final map reduce job, e.g. if a job was originally going to take 257 reducers,
+                   it will now take 512 reducers, similarly if the max number of reducers is 511,
+                   and a job was going to use this many, it will now use 256 reducers.
+                 
+  </description>
+</property>
+
+<property>
+  <name>hive.groupby.orderby.position.alias</name>
+  <value>false</value>
+  <description>Whether to enable using Column Position Alias in Group By or Order By</description>
+</property>
+
+ <property>
+  <name>hive.server2.thrift.min.worker.threads</name>
+  <value>5</value>
+  <description>Minimum number of Thrift worker threads</description>
+</property>
+
+<property>
+  <name>hive.server2.thrift.max.worker.threads</name>
+  <value>500</value>
+  <description>Maximum number of Thrift worker threads</description>
+</property>
+
+<property>
+  <name>hive.server2.async.exec.threads</name>
+  <value>50</value>
+  <description>Number of threads in the async thread pool for HiveServer2</description>
+</property>
+
+<property>
+  <name>hive.server2.async.exec.shutdown.timeout</name>
+  <value>10</value>
+  <description>Time (in seconds) for which HiveServer2 shutdown will wait for async 
+  threads to terminate</description>
+</property>
+
+<property>
+  <name>hive.server2.thrift.port</name>
+  <value>10000</value>
+  <description>Port number of HiveServer2 Thrift interface.
+  Can be overridden by setting $HIVE_SERVER2_THRIFT_PORT</description>
+</property>
+
+<property>
+  <name>hive.server2.thrift.bind.host</name>
+  <value>localhost</value>
+  <description>Bind host on which to run the HiveServer2 Thrift interface.
+  Can be overridden by setting $HIVE_SERVER2_THRIFT_BIND_HOST</description>
+</property>
+
+<property>
+  <name>hive.server2.authentication</name>
+  <value>NONE</value>
+  <description>
+    Client authentication types.
+       NONE: no authentication check
+       LDAP: LDAP/AD based authentication
+       KERBEROS: Kerberos/GSSAPI authentication
+       CUSTOM: Custom authentication provider
+               (Use with property hive.server2.custom.authentication.class)
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.custom.authentication.class</name>
+  <value></value>
+  <description>
+    Custom authentication class. Used when property
+    'hive.server2.authentication' is set to 'CUSTOM'. Provided class
+    must be a proper implementation of the interface
+    org.apache.hive.service.auth.PasswdAuthenticationProvider. HiveServer2
+    will call its Authenticate(user, passed) method to authenticate requests.
+    The implementation may optionally extend the Hadoop's
+    org.apache.hadoop.conf.Configured class to grab Hive's Configuration object.
+  </description>
+</property>
+
+<property>
+  <name>>hive.server2.authentication.kerberos.principal</name>
+  <value></value>
+  <description>
+    Kerberos server principal
+  </description>
+</property>
+
+<property>
+  <name>>hive.server2.authentication.kerberos.keytab</name>
+  <value></value>
+  <description>
+    Kerberos keytab file for server principal
+  </description>
+</property>
+ 
+<property>
+  <name>hive.server2.authentication.ldap.url</name>
+  <value></value>
+  <description>
+    LDAP connection URL
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.authentication.ldap.baseDN</name>
+  <value></value>
+  <description>
+    LDAP base DN
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.enable.doAs</name>
+  <value>true</value>
+  <description>
+   Setting this property to true will have hive server2 execute
+    hive operations as the user making the calls to it.
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.table.type.mapping</name>
+  <value>CLASSIC</value>
+  <description>
+   This setting reflects how HiveServer will report the table types for JDBC and other
+   client implementations that retrieves the available tables and supported table types
+     HIVE : Exposes the hive's native table tyes like MANAGED_TABLE, EXTERNAL_TABLE, VIRTUAL_VIEW
+     CLASSIC : More generic types like TABLE and VIEW
+  </description>
+</property>
+
+<property>
+  <name>hive.server2.thrift.sasl.qop</name>
+  <value>auth</auth>
+  <description>Sasl QOP value; Set it to one of following values to enable higher levels of
+     protection for hive server2 communication with clients.
+      "auth" - authentication only (default)
+      "auth-int" - authentication plus integrity protection
+      "auth-conf" - authentication plus integrity and confidentiality protection
+     This is applicable only hive server2 is configured to use kerberos authentication.
+ </description>
+</property>
+
+<property>
+  <name>hive.metastore.schema.verification</name>
+  <value>true</value>
+   <description>
+   Enforce metastore schema version consistency.
+   True: Verify that version information stored in metastore matches with one from Hive jars.  Also disable automatic
+         schema migration attempt. Users are required to manully migrate schema after Hive upgrade which ensures
+         proper metastore schema migration. (Default)
+   False: Warn if the version information stored in metastore doesn't match with one from in Hive jars.
+   </description>
+</property>
+
 
 </configuration>
-

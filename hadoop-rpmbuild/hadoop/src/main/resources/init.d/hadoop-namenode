@@ -1,0 +1,4 @@
+
+/opt/hadoop/sbin/hadoop-daemon.sh --config /opt/hadoo/conf --script hdfs start namenode
+
+

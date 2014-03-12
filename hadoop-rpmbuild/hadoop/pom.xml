@@ -4,7 +4,7 @@
 
   <groupId>org.apache</groupId>
   <artifactId>hadoop</artifactId>
-  <version>1.2.1</version>
+  <version>2.3.0</version>
   <packaging>jar</packaging>
 
   <name>hadoop</name>
@@ -47,12 +47,12 @@
 	  <mappings>
 
 	    <mapping>
-	      <directory>/opt/hadoop/conf</directory>
+	      <directory>/opt/hadoop/etc</directory>
 	      <filemode>775</filemode>
 	      <configuration>true</configuration>
 	      <sources>
 		<source>
-		  <location>src/main/resources/conf</location>
+		  <location>src/main/resources/etc</location>
 		</source>
 	      </sources>
 	    </mapping>
@@ -68,6 +68,20 @@
               </sources>
             </mapping>
 
+            <mapping>
+              <directory>/opt/hadoop</directory>
+              <directoryIncluded>false</directoryIncluded>
+              <username>root</username>
+              <groupname>root</groupname>
+              <filemode>775</filemode>
+              <sources>
+                <softlinkSource>
+                  <location>/opt/hadoop/etc/hadoop</location>
+                  <destination>conf</destination>
+                </softlinkSource>
+              </sources>
+            </mapping>
+
 	    <mapping>
               <directory>/etc/init.d/</directory>
               <directoryIncluded>false</directoryIncluded>
@@ -76,81 +90,25 @@
               <filemode>775</filemode>
               <sources>
                 <source>
-                  <location>src/main/resources/init.d/hadoop-component</location>
+                  <location>src/main/resources/init.d/hadoop-datanode</location>
+                </source>
+                <source>
+                  <location>src/main/resources/init.d/hadoop-mr-jobhistory</location>
+                </source>
+                <source>
+                  <location>src/main/resources/init.d/hadoop-namenode</location>
+                </source>
+                <source>
+                  <location>src/main/resources/init.d/hadoop-nodemanager</location>
+                </source>
+                <source>
+                  <location>src/main/resources/init.d/hadoop-proxyserver</location>
+                </source>
+                <source>
+                  <location>src/main/resources/init.d/hadoop-resourcemanager</location>
                 </source>
               </sources>
             </mapping>
-
-	    <mapping>
-              <directory>/etc/init.d/</directory>
-              <directoryIncluded>false</directoryIncluded>
-              <username>root</username>
-              <groupname>root</groupname>
-              <filemode>775</filemode>
-              <sources>
-                <softlinkSource>
-		  <location>/etc/init.d/hadoop-component</location>
-                  <destination>hadoop-secondarynamenode</destination>
-                </softlinkSource>
-              </sources>
-            </mapping>
-
-	    <mapping>
-              <directory>/etc/init.d/</directory>
-              <directoryIncluded>false</directoryIncluded>
-              <username>root</username>
-              <groupname>root</groupname>
-              <filemode>775</filemode>
-              <sources>
-                <softlinkSource>
-		  <location>/etc/init.d/hadoop-component</location>
-                  <destination>hadoop-namenode</destination>
-                </softlinkSource>
-              </sources>
-            </mapping>
-
-	    <mapping>
-              <directory>/etc/init.d/</directory>
-              <directoryIncluded>false</directoryIncluded>
-              <username>root</username>
-              <groupname>root</groupname>
-              <filemode>775</filemode>
-              <sources>
-                <softlinkSource>
-		  <location>/etc/init.d/hadoop-component</location>
-                  <destination>hadoop-jobtracker</destination>
-                </softlinkSource>
-              </sources>
-            </mapping>
-
-	    <mapping>
-              <directory>/etc/init.d/</directory>
-              <directoryIncluded>false</directoryIncluded>
-              <username>root</username>
-              <groupname>root</groupname>
-              <filemode>775</filemode>
-              <sources>
-                <softlinkSource>
-		  <location>/etc/init.d/hadoop-component</location>
-                  <destination>hadoop-datanode</destination>
-                </softlinkSource>
-              </sources>
-            </mapping>
-
-	    <mapping>
-              <directory>/etc/init.d/</directory>
-              <directoryIncluded>false</directoryIncluded>
-              <username>root</username>
-              <groupname>root</groupname>
-              <filemode>775</filemode>
-              <sources>
-                <softlinkSource>
-		  <location>/etc/init.d/hadoop-component</location>
-                  <destination>hadoop-tasktracker</destination>
-                </softlinkSource>
-              </sources>
-            </mapping>
-
 	    <mapping>
               <directory>/usr/bin/</directory>
               <directoryIncluded>false</directoryIncluded>
@@ -176,62 +134,54 @@
 	    </mapping>
 
 	    <mapping>
-	      <directory>/opt/hadoop</directory>
+	      <directory>/opt/hadoop/lib</directory>
 	      <filemode>775</filemode>
 	      <sources>
 		<source>
-		  <location>src/main/resources/hadoop-ant-1.2.1.jar</location>
+		  <location>src/main/resources/lib</location>
 		</source>
+	      </sources>
+	    </mapping>
+
+	    <mapping>
+	      <directory>/opt/hadoop/libexec</directory>
+	      <filemode>775</filemode>
+	      <sources>
 		<source>
-		  <location>src/main/resources/hadoop-core-1.2.1.jar</location>
+		  <location>src/main/resources/libexec</location>
 		</source>
+	      </sources>
+	    </mapping>
+
+	    <mapping>
+	      <directory>/opt/hadoop/include</directory>
+	      <filemode>775</filemode>
+	      <sources>
 		<source>
-		  <location>src/main/resources/hadoop-examples-1.2.1.jar</location>
+		  <location>src/main/resources/include</location>
 		</source>
+	      </sources>
+	    </mapping>
+
+	    <mapping>
+	      <directory>/opt/hadoop/share</directory>
+	      <filemode>775</filemode>
+	      <sources>
 		<source>
-		  <location>src/main/resources/hadoop-test-1.2.1.jar</location>
+		  <location>src/main/resources/share</location>
 		</source>
-		<source>
-		  <location>src/main/resources/hadoop-tools-1.2.1.jar</location>
-		</source>
-		<source>
-                  <location>src/main/resources/hadoop-client-1.2.1.jar</location>
+	      </sources>
+	    </mapping>
+
+	    <mapping>
+              <directory>/opt/hadoop/sbin</directory>
+              <filemode>775</filemode>
+              <sources>
+                <source>
+                  <location>src/main/resources/sbin</location>
                 </source>
-		<source>
-                  <location>src/main/resources/hadoop-minicluster-1.2.1.jar</location>
-                </source>
-	      </sources>
-	    </mapping>
-
-	    <mapping>
-	      <directory>/opt/hadoop/c++</directory>
-	      <filemode>775</filemode>
-	      <sources>
-		<source>
-		  <location>src/main/resources/c++</location>
-		</source>
-	      </sources>
-	    </mapping>
-
-	    <mapping>
-	      <directory>/opt/hadoop/contrib</directory>
-	      <filemode>775</filemode>
-	      <sources>
-		<source>
-		  <location>src/main/resources/contrib</location>
-		</source>
-	      </sources>
-	    </mapping>
-
-	    <mapping>
-	      <directory>/opt/hadoop/ivy</directory>
-	      <filemode>775</filemode>
-	      <sources>
-		<source>
-		  <location>src/main/resources/ivy</location>
-		</source>
-	      </sources>
-	    </mapping>
+              </sources>
+            </mapping>
 
 	    <mapping>
 	      <directory>/opt/hadoop/lib</directory>
@@ -250,15 +200,6 @@
 		</softlinkSource>
 	      </sources>
 	    </mapping>
-	    <mapping>
-              <directory>/opt/hadoop/libexec</directory>              
-              <filemode>775</filemode>
-              <sources>
-                <source>
-                  <location>src/main/resources/libexec</location>
-                </source>
-              </sources>
-            </mapping>
 
 	    <mapping>
 	      <directory>/opt/hadoop/pids</directory>

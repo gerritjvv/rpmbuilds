@@ -1,4 +1,4 @@
-Apache Hive (TM) 0.10.0
+Apache Hive (TM) 0.12.0
 ======================
 
 The Apache Hive (TM) data warehouse software facilitates querying and
@@ -76,22 +76,15 @@ Requirements
 Upgrading from older versions of Hive
 =====================================
 
-- Hive 0.10.0 includes changes to the MetaStore schema. If
+- Hive 0.12.0 includes changes to the MetaStore schema. If
   you are upgrading from an earlier version of Hive it is imperative
   that you upgrade the MetaStore schema by running the appropriate
   schema upgrade scripts located in the scripts/metastore/upgrade
   directory.
 
-  We have provided upgrade scripts for Derby and MySQL databases. If
-  you are using a different database for your MetaStore you will need
-  to provide your own upgrade script.
-
-- Hive 0.10.0 includes new configuration properties. If you
-  are upgrading from an earlier version of Hive it is imperative
-  that you replace all of the old copies of the hive-default.xml
-  configuration file with the new version located in the conf/
-  directory.
-
+- We have provided upgrade scripts for MySQL, PostgreSQL, Oracle and Derby
+  databases. If you are using a different database for your MetaStore
+  you will need to provide your own upgrade script.
 
 Useful mailing lists
 ====================

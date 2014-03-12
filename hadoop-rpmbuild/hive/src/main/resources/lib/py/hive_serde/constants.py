@@ -32,9 +32,12 @@ BIGINT_TYPE_NAME = "bigint"
 FLOAT_TYPE_NAME = "float"
 DOUBLE_TYPE_NAME = "double"
 STRING_TYPE_NAME = "string"
+CHAR_TYPE_NAME = "char"
+VARCHAR_TYPE_NAME = "varchar"
 DATE_TYPE_NAME = "date"
 DATETIME_TYPE_NAME = "datetime"
 TIMESTAMP_TYPE_NAME = "timestamp"
+DECIMAL_TYPE_NAME = "decimal"
 BINARY_TYPE_NAME = "binary"
 LIST_TYPE_NAME = "array"
 MAP_TYPE_NAME = "map"
@@ -52,9 +55,12 @@ PrimitiveTypes = set([
   "float",
   "double",
   "string",
+  "varchar",
+  "char",
   "date",
   "datetime",
   "timestamp",
+  "decimal",
   "binary",
 ])
 CollectionTypes = set([

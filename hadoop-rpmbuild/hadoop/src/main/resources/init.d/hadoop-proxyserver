@@ -1,0 +1,1 @@
+/opt/hadoop/sbin/yarn-daemon.sh start proxyserver --config /opt/hadoop/conf
